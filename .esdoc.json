@@ -6,9 +6,9 @@
       "name": "esdoc-standard-plugin",
       "option": {
         "brand": {
-          "title": "compose-graphics",
-          "site": "https://github.com/susisu/compose-graphics",
-          "repository": "https://github.com/susisu/compose-graphics.git"
+          "title": "mte-kernel",
+          "site": "https://github.com/susisu/mte-kernel",
+          "repository": "https://github.com/susisu/mte-kernel.git"
         },
         "accessor": {
           "access": ["public", "protected"],
@@ -24,7 +24,7 @@
     {
       "name": "esdoc-importpath-plugin",
       "option": {
-        "replaces": [{ "from": "^lib/.*\\.js$", "to": "dist/compose-graphics.js" }]
+        "replaces": [{ "from": "^lib/.*\\.js$", "to": "dist/mte-kernel.js" }]
       }
     }
   ]
