@@ -1,0 +1,31 @@
+{
+  "source": "lib",
+  "destination": "doc",
+  "plugins": [
+    {
+      "name": "esdoc-standard-plugin",
+      "option": {
+        "brand": {
+          "title": "compose-graphics",
+          "site": "https://github.com/susisu/compose-graphics",
+          "repository": "https://github.com/susisu/compose-graphics.git"
+        },
+        "accessor": {
+          "access": ["public", "protected"],
+          "autoPrivate": true
+        },
+        "test": {
+          "source": "test",
+          "interfaces": ["describe", "context", "it", "specify", "suite", "test"],
+          "includes": ["\\.js$"]
+        }
+      }
+    },
+    {
+      "name": "esdoc-importpath-plugin",
+      "option": {
+        "replaces": [{ "from": "^lib/.*\\.js$", "to": "dist/compose-graphics.js" }]
+      }
+    }
+  ]
+}
