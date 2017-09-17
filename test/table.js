@@ -1,5 +1,6 @@
 import { expect } from "chai";
 
+import { Focus } from "../lib/focus.js";
 import { TableCell } from "../lib/table-cell.js";
 import { TableRow } from "../lib/table-row.js";
 import { Table } from "../lib/table.js";
@@ -167,7 +168,7 @@ describe("Table", () => {
       expect(table.getCellAt(2, 2)).to.equal(cells[2][2]);
     });
 
-    it("should return undefined if there is no cell", () => {
+    it("should return undefined if no cell is found", () => {
       const table = new Table([
         new TableRow([new TableCell("A"), new TableCell("B")], "", ""),
         new TableRow([new TableCell("---")], "", ""),
@@ -177,6 +178,42 @@ describe("Table", () => {
       expect(table.getCellAt(0, -1)).to.be.undefined;
       expect(table.getCellAt(0, 2)).to.be.undefined;
       expect(table.getCellAt(3, 0)).to.be.undefined;
+    });
+  });
+
+  /**
+   * @test {Table#getFocusedCell}
+   */
+  describe("#getFocusedCell(focus)", () => {
+    it("should get the cell at the focus", () => {
+      const cells = [
+        [new TableCell("A"), new TableCell("B")],
+        [new TableCell("---")],
+        [new TableCell("C"), new TableCell("D"), new TableCell("E")]
+      ];
+      const table = new Table([
+        new TableRow(cells[0], "", ""),
+        new TableRow(cells[1], "", ""),
+        new TableRow(cells[2], " ", "  "),
+      ]);
+      expect(table.getFocusedCell(new Focus(0, 0, 1))).to.equal(cells[0][0]);
+      expect(table.getFocusedCell(new Focus(0, 1, 1))).to.equal(cells[0][1]);
+      expect(table.getFocusedCell(new Focus(1, 0, 1))).to.equal(cells[1][0]);
+      expect(table.getFocusedCell(new Focus(2, 0, 1))).to.equal(cells[2][0]);
+      expect(table.getFocusedCell(new Focus(2, 1, 1))).to.equal(cells[2][1]);
+      expect(table.getFocusedCell(new Focus(2, 2, 1))).to.equal(cells[2][2]);
+    });
+
+    it("should return undefined if no cell is found", () => {
+      const table = new Table([
+        new TableRow([new TableCell("A"), new TableCell("B")], "", ""),
+        new TableRow([new TableCell("---")], "", ""),
+        new TableRow([new TableCell("C"), new TableCell("D"), new TableCell("E")], " ", "  "),
+      ]);
+      expect(table.getFocusedCell(new Focus(-1, 0, 1))).to.be.undefined;
+      expect(table.getFocusedCell(new Focus(0, -1, 1))).to.be.undefined;
+      expect(table.getFocusedCell(new Focus(0, 2, 1))).to.be.undefined;
+      expect(table.getFocusedCell(new Focus(3, 0, 1))).to.be.undefined;
     });
   });
 
