@@ -1,5 +1,6 @@
 import { expect } from "chai";
 
+import { Point } from "../lib/point.js";
 import { Focus } from "../lib/focus.js";
 import { TableCell } from "../lib/table-cell.js";
 import { TableRow } from "../lib/table-row.js";
@@ -232,6 +233,113 @@ describe("Table", () => {
         + "|---|\n"
         + " |C|D|E|  ";
       expect(table.toText()).to.equal(text);
+    });
+  });
+
+  /**
+   * @test {Table#computeFocus}
+   */
+  describe("#computeFocus(pos, rowOffset)", () => {
+    it("should compute a focus from a point in the text editor", () => {
+      const table = new Table([
+        new TableRow([new TableCell("A"), new TableCell("B")], "", ""),
+        new TableRow([new TableCell("---")], "", ""),
+        new TableRow([new TableCell("C"), new TableCell("D"), new TableCell("E")], " ", "  "),
+      ]);
+      {
+        const focus = table.computeFocus(new Point(1, 0), 1);
+        expect(focus).to.be.an.instanceOf(Focus);
+        expect(focus.row).to.equal(0);
+        expect(focus.column).to.equal(-1);
+        expect(focus.offset).to.equal(0);
+      }
+      {
+        const focus = table.computeFocus(new Point(1, 1), 1);
+        expect(focus).to.be.an.instanceOf(Focus);
+        expect(focus.row).to.equal(0);
+        expect(focus.column).to.equal(0);
+        expect(focus.offset).to.equal(0);
+      }
+      {
+        const focus = table.computeFocus(new Point(1, 2), 1);
+        expect(focus).to.be.an.instanceOf(Focus);
+        expect(focus.row).to.equal(0);
+        expect(focus.column).to.equal(0);
+        expect(focus.offset).to.equal(1);
+      }
+      {
+        const focus = table.computeFocus(new Point(1, 3), 1);
+        expect(focus).to.be.an.instanceOf(Focus);
+        expect(focus.row).to.equal(0);
+        expect(focus.column).to.equal(1);
+        expect(focus.offset).to.equal(0);
+      }
+      {
+        const focus = table.computeFocus(new Point(1, 4), 1);
+        expect(focus).to.be.an.instanceOf(Focus);
+        expect(focus.row).to.equal(0);
+        expect(focus.column).to.equal(1);
+        expect(focus.offset).to.equal(1);
+      }
+      {
+        const focus = table.computeFocus(new Point(1, 5), 1);
+        expect(focus).to.be.an.instanceOf(Focus);
+        expect(focus.row).to.equal(0);
+        expect(focus.column).to.equal(2);
+        expect(focus.offset).to.equal(0);
+      }
+      {
+        const focus = table.computeFocus(new Point(3, 0), 1);
+        expect(focus).to.be.an.instanceOf(Focus);
+        expect(focus.row).to.equal(2);
+        expect(focus.column).to.equal(-1);
+        expect(focus.offset).to.equal(0);
+      }
+      {
+        const focus = table.computeFocus(new Point(3, 1), 1);
+        expect(focus).to.be.an.instanceOf(Focus);
+        expect(focus.row).to.equal(2);
+        expect(focus.column).to.equal(-1);
+        expect(focus.offset).to.equal(1);
+      }
+      {
+        const focus = table.computeFocus(new Point(3, 2), 1);
+        expect(focus).to.be.an.instanceOf(Focus);
+        expect(focus.row).to.equal(2);
+        expect(focus.column).to.equal(0);
+        expect(focus.offset).to.equal(0);
+      }
+      {
+        const focus = table.computeFocus(new Point(3, 7), 1);
+        expect(focus).to.be.an.instanceOf(Focus);
+        expect(focus.row).to.equal(2);
+        expect(focus.column).to.equal(2);
+        expect(focus.offset).to.equal(1);
+      }
+      {
+        const focus = table.computeFocus(new Point(3, 8), 1);
+        expect(focus).to.be.an.instanceOf(Focus);
+        expect(focus.row).to.equal(2);
+        expect(focus.column).to.equal(3);
+        expect(focus.offset).to.equal(0);
+      }
+      {
+        const focus = table.computeFocus(new Point(3, 9), 1);
+        expect(focus).to.be.an.instanceOf(Focus);
+        expect(focus.row).to.equal(2);
+        expect(focus.column).to.equal(3);
+        expect(focus.offset).to.equal(1);
+      }
+    });
+
+    it("should return undefined if the row index is out of bounds", () => {
+      const table = new Table([
+        new TableRow([new TableCell("A"), new TableCell("B")], "", ""),
+        new TableRow([new TableCell("---")], "", ""),
+        new TableRow([new TableCell("C"), new TableCell("D"), new TableCell("E")], " ", "  "),
+      ]);
+      expect(table.computeFocus(new Point(0, 1), 1)).to.be.undefined;
+      expect(table.computeFocus(new Point(4, 1), 1)).to.be.undefined;
     });
   });
 });
