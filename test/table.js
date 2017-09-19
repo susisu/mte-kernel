@@ -342,4 +342,87 @@ describe("Table", () => {
       expect(table.computeFocus(new Point(4, 1), 1)).to.be.undefined;
     });
   });
+
+  /**
+   * @test {Table#computePosition}
+   */
+  describe("#computePosition(focus, rowOffset)", () => {
+    it("should compute a position from a focus", () => {
+      const table = new Table([
+        new TableRow([new TableCell("A"), new TableCell("B")], "", ""),
+        new TableRow([new TableCell("---")], "", ""),
+        new TableRow([new TableCell("C"), new TableCell("D"), new TableCell("E")], " ", "  "),
+      ]);
+      {
+        const pos = table.computePosition(new Focus(2, -1, 0), 1);
+        expect(pos).to.be.an.instanceOf(Point);
+        expect(pos.row).to.equal(3);
+        expect(pos.column).to.equal(0);
+      }
+      {
+        const pos = table.computePosition(new Focus(2, -1, 1), 1);
+        expect(pos).to.be.an.instanceOf(Point);
+        expect(pos.row).to.equal(3);
+        expect(pos.column).to.equal(1);
+      }
+      {
+        const pos = table.computePosition(new Focus(2, 0, 0), 1);
+        expect(pos).to.be.an.instanceOf(Point);
+        expect(pos.row).to.equal(3);
+        expect(pos.column).to.equal(2);
+      }
+      {
+        const pos = table.computePosition(new Focus(2, 0, 1), 1);
+        expect(pos).to.be.an.instanceOf(Point);
+        expect(pos.row).to.equal(3);
+        expect(pos.column).to.equal(3);
+      }
+      {
+        const pos = table.computePosition(new Focus(2, 1, 0), 1);
+        expect(pos).to.be.an.instanceOf(Point);
+        expect(pos.row).to.equal(3);
+        expect(pos.column).to.equal(4);
+      }
+      {
+        const pos = table.computePosition(new Focus(2, 1, 1), 1);
+        expect(pos).to.be.an.instanceOf(Point);
+        expect(pos.row).to.equal(3);
+        expect(pos.column).to.equal(5);
+      }
+      {
+        const pos = table.computePosition(new Focus(2, 2, 0), 1);
+        expect(pos).to.be.an.instanceOf(Point);
+        expect(pos.row).to.equal(3);
+        expect(pos.column).to.equal(6);
+      }
+      {
+        const pos = table.computePosition(new Focus(2, 2, 1), 1);
+        expect(pos).to.be.an.instanceOf(Point);
+        expect(pos.row).to.equal(3);
+        expect(pos.column).to.equal(7);
+      }
+      {
+        const pos = table.computePosition(new Focus(2, 3, 0), 1);
+        expect(pos).to.be.an.instanceOf(Point);
+        expect(pos.row).to.equal(3);
+        expect(pos.column).to.equal(8);
+      }
+      {
+        const pos = table.computePosition(new Focus(2, 3, 1), 1);
+        expect(pos).to.be.an.instanceOf(Point);
+        expect(pos.row).to.equal(3);
+        expect(pos.column).to.equal(9);
+      }
+    });
+
+    it("should return undefined if the focus is out of the table", () => {
+      const table = new Table([
+        new TableRow([new TableCell("A"), new TableCell("B")], "", ""),
+        new TableRow([new TableCell("---")], "", ""),
+        new TableRow([new TableCell("C"), new TableCell("D"), new TableCell("E")], " ", "  "),
+      ]);
+      expect(table.computePosition(new Focus(-1, 0, 0), 1)).to.be.undefined;
+      expect(table.computePosition(new Focus(3, 0, 0), 1)).to.be.undefined;
+    });
+  });
 });
