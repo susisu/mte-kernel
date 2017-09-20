@@ -68,6 +68,46 @@ describe("TableCell", () => {
   });
 
   /**
+   * @test {TableCell#paddingLeft}
+   */
+  describe("#paddingLeft", () => {
+    it("should get the width of the left padding of the cell", () => {
+      {
+        const cell = new TableCell("");
+        expect(cell.paddingLeft).to.equal(0);
+      }
+      {
+        const cell = new TableCell("    ");
+        expect(cell.paddingLeft).to.equal(1);
+      }
+      {
+        const cell = new TableCell("  foo  ");
+        expect(cell.paddingLeft).to.equal(2);
+      }
+    });
+  });
+
+  /**
+   * @test {TableCell#paddingRight}
+   */
+  describe("#paddingRight", () => {
+    it("should get the width of the right padding of the cell", () => {
+      {
+        const cell = new TableCell("");
+        expect(cell.paddingRight).to.equal(0);
+      }
+      {
+        const cell = new TableCell("    ");
+        expect(cell.paddingRight).to.equal(3);
+      }
+      {
+        const cell = new TableCell("  foo  ");
+        expect(cell.paddingRight).to.equal(2);
+      }
+    });
+  });
+
+  /**
    * @test {TableCell#toText}
    */
   describe("#toText()", () => {
