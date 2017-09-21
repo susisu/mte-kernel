@@ -1,6 +1,7 @@
 import { expect } from "chai";
 
 import { Point } from "../lib/point.js";
+import { Range } from "../lib/range.js";
 import { Focus } from "../lib/focus.js";
 import { TableCell } from "../lib/table-cell.js";
 import { TableRow } from "../lib/table-row.js";
@@ -423,6 +424,73 @@ describe("Table", () => {
       ]);
       expect(table.computePosition(new Focus(-1, 0, 0), 1)).to.be.undefined;
       expect(table.computePosition(new Focus(3, 0, 0), 1)).to.be.undefined;
+    });
+  });
+
+  /**
+   * @test {Table#computeSelectionRange}
+   */
+  describe("#computeSelectionRange(focus, rowOffset)", () => {
+    it("should compute a selection range from a focus", () => {
+      const table = new Table([
+        new TableRow([new TableCell("A"), new TableCell("B")], "", ""),
+        new TableRow([new TableCell("---")], "", ""),
+        new TableRow([new TableCell("  C  "), new TableCell("D"), new TableCell("E")], " ", "  "),
+      ]);
+      {
+        const range = table.computeSelectionRange(new Focus(0, 0, 0), 1);
+        expect(range).to.be.an.instanceOf(Range);
+        expect(range.start.row).to.equal(1);
+        expect(range.start.column).to.equal(1);
+        expect(range.end.row).to.equal(1);
+        expect(range.end.column).to.equal(2);
+      }
+      {
+        const range = table.computeSelectionRange(new Focus(0, 0, 1), 1);
+        expect(range).to.be.an.instanceOf(Range);
+        expect(range.start.row).to.equal(1);
+        expect(range.start.column).to.equal(1);
+        expect(range.end.row).to.equal(1);
+        expect(range.end.column).to.equal(2);
+      }
+      {
+        const range = table.computeSelectionRange(new Focus(0, 1, 0), 1);
+        expect(range).to.be.an.instanceOf(Range);
+        expect(range.start.row).to.equal(1);
+        expect(range.start.column).to.equal(3);
+        expect(range.end.row).to.equal(1);
+        expect(range.end.column).to.equal(4);
+      }
+      {
+        const range = table.computeSelectionRange(new Focus(2, 0, 0), 1);
+        expect(range).to.be.an.instanceOf(Range);
+        expect(range.start.row).to.equal(3);
+        expect(range.start.column).to.equal(4);
+        expect(range.end.row).to.equal(3);
+        expect(range.end.column).to.equal(5);
+      }
+    });
+
+    it("should return undefined if the focus does not specify any cell", () => {
+      const table = new Table([
+        new TableRow([new TableCell("A"), new TableCell("B")], "", ""),
+        new TableRow([new TableCell("---")], "", ""),
+        new TableRow([new TableCell("C"), new TableCell("D"), new TableCell("E")], " ", "  "),
+      ]);
+      expect(table.computeSelectionRange(new Focus(-1, 0, 0), 1)).to.be.undefined;
+      expect(table.computeSelectionRange(new Focus(3, 0, 0), 1)).to.be.undefined;
+      expect(table.computeSelectionRange(new Focus(0, -1, 0), 1)).to.be.undefined;
+      expect(table.computeSelectionRange(new Focus(0, 2, 0), 1)).to.be.undefined;
+    });
+
+    it("should return undefined if the specified cell is empty", () => {
+      const table = new Table([
+        new TableRow([new TableCell(""), new TableCell("B")], "", ""),
+        new TableRow([new TableCell("---")], "", ""),
+        new TableRow([new TableCell("    "), new TableCell("D"), new TableCell("E")], " ", "  "),
+      ]);
+      expect(table.computeSelectionRange(new Focus(0, 0, 0), 1)).to.be.undefined;
+      expect(table.computeSelectionRange(new Focus(2, 0, 0), 1)).to.be.undefined;
     });
   });
 });
