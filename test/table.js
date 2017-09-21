@@ -122,6 +122,10 @@ describe("Table", () => {
 
     it("should return undefined if there is no delimiter row", () => {
       {
+        const table = new Table([]);
+        expect(table.getDelimiterRow()).to.be.undefined;
+      }
+      {
         const table = new Table([
           new TableRow([new TableCell("A"), new TableCell("B")], "", ""),
           new TableRow([new TableCell("C"), new TableCell("D"), new TableCell("E")], " ", "  "),
