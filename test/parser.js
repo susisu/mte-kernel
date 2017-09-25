@@ -41,12 +41,13 @@ describe("_readRow(text)", () => {
       expect(cells).to.be.an("array").of.length(0);
     }
     {
-      const row = _readRow("|");
+      const row = _readRow(" |  ");
       expect(row).to.be.an.instanceOf(TableRow);
-      expect(row.marginLeft).to.equal("");
+      expect(row.marginLeft).to.equal(" ");
       expect(row.marginRight).to.equal("");
       const cells = row.getCells();
-      expect(cells).to.be.an("array").of.length(0);
+      expect(cells).to.be.an("array").of.length(1);
+      expect(cells[0].rawContent).to.equal("  ");
     }
     {
       const row = _readRow("| A | B | C |");
@@ -100,7 +101,7 @@ describe("readTable(lines)", () => {
   it("should read a table from an array of texts, each text represents a row", () => {
     const lines = [
       "",
-      "|",
+      " |  ",
       "| A | B | C |",
       " | A | B | C |  ",
       " A | B | C ",
@@ -119,10 +120,11 @@ describe("readTable(lines)", () => {
     }
     {
       const row = rows[1];
-      expect(row.marginLeft).to.equal("");
+      expect(row.marginLeft).to.equal(" ");
       expect(row.marginRight).to.equal("");
       const cells = row.getCells();
-      expect(cells).to.be.an("array").of.length(0);
+      expect(cells).to.be.an("array").of.length(1);
+      expect(cells[0].rawContent).to.equal("  ");
     }
     {
       const row = rows[2];
