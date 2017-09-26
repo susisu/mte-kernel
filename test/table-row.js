@@ -64,6 +64,22 @@ describe("TableRow", () => {
   });
 
   /**
+   * @test {TableRow#getCells}
+   */
+  describe("#getCells()", () => {
+    it("should return an array of cells that the row contains", () => {
+      const originalCells = [new TableCell("  foo  "), new TableCell("  bar  ")];
+      const row = new TableRow(originalCells, " ", "  ");
+      const cells = row.getCells();
+      expect(cells).to.be.an("array").of.length(2);
+      expect(cells).to.not.equal(originalCells);
+      for (let i = 0; i < 2; i++) {
+        expect(cells[i]).to.equal(originalCells[i]);
+      }
+    });
+  });
+
+  /**
    * @test {TableRow#getCellAt}
    */
   describe("#getCellAt(index)", () => {
@@ -79,22 +95,6 @@ describe("TableRow", () => {
       const row = new TableRow(cells, " ", "  ");
       expect(row.getCellAt(-1)).to.be.undefined;
       expect(row.getCellAt(2)).to.be.undefined;
-    });
-  });
-
-  /**
-   * @test {TableRow#getCells}
-   */
-  describe("#getCells()", () => {
-    it("should return an array of cells that the row contains", () => {
-      const originalCells = [new TableCell("  foo  "), new TableCell("  bar  ")];
-      const row = new TableRow(originalCells, " ", "  ");
-      const cells = row.getCells();
-      expect(cells).to.be.an("array").of.length(2);
-      expect(cells).to.not.equal(originalCells);
-      for (let i = 0; i < 2; i++) {
-        expect(cells[i]).to.equal(originalCells[i]);
-      }
     });
   });
 
