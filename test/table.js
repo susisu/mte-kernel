@@ -107,6 +107,34 @@ describe("Table", () => {
   });
 
   /**
+   * @test {Table#getRowAt}
+   */
+  describe("#getRowAt(index)", () => {
+    it("should return the row at the specified index", () => {
+      const rows = [
+        new TableRow([new TableCell("A"), new TableCell("B")], "", ""),
+        new TableRow([new TableCell("---")], "", ""),
+        new TableRow([new TableCell("C"), new TableCell("D"), new TableCell("E")], " ", "  "),
+      ];
+      const table = new Table(rows);
+      expect(table.getRowAt(0)).to.equal(rows[0]);
+      expect(table.getRowAt(1)).to.equal(rows[1]);
+      expect(table.getRowAt(2)).to.equal(rows[2]);
+    });
+
+    it("should return undefined if no row is found", () => {
+      const rows = [
+        new TableRow([new TableCell("A"), new TableCell("B")], "", ""),
+        new TableRow([new TableCell("---")], "", ""),
+        new TableRow([new TableCell("C"), new TableCell("D"), new TableCell("E")], " ", "  "),
+      ];
+      const table = new Table(rows);
+      expect(table.getRowAt(-1)).to.be.undefined;
+      expect(table.getRowAt(3)).to.be.undefined;
+    });
+  });
+
+  /**
    * @test {Table#getDelimiterRow}
    */
   describe("#getDelimiterRow()", () => {
