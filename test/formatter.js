@@ -1,8 +1,36 @@
 import { expect } from "chai";
 
+import { Alignment } from "../lib/alignment";
 import { Table } from "../lib/table.js";
 import { readTable } from "../lib/parser.js";
-import { completeTable } from "../lib/formatter.js";
+import { _delimiterText, _extendArray, completeTable } from "../lib/formatter.js";
+
+/**
+ * @test {_delimiterText}
+ */
+describe("_delimiterText(width, alignment)", () => {
+  it("should return a delimiter text for the specified alignment", () => {
+    expect(_delimiterText(5, Alignment.DEFAULT)).to.equal(" ----- ");
+    expect(_delimiterText(5, Alignment.LEFT)).to.equal(":----- ");
+    expect(_delimiterText(5, Alignment.RIGHT)).to.equal(" -----:");
+    expect(_delimiterText(5, Alignment.CENTER)).to.equal(":-----:");
+  });
+
+  it("should throw an error if the alignment is unknown", () => {
+    expect(() => { _delimiterText(5, "top"); }).to.throw(Error, /unknown/i);
+  });
+});
+
+/**
+ * @test {_extendArray}
+ */
+describe("_extendArray(arr, size, callback)", () => {
+  it("should create a new array that is extended to the specified size, filling empty elements by return values of the callback", () => {
+    expect(_extendArray([], 2, i => i)).to.deep.equal([0, 1]);
+    expect(_extendArray([0, 1], 4, i => i)).to.deep.equal([0, 1, 2, 3]);
+    expect(_extendArray([0, 1, 2, 3], 2, i => i)).to.deep.equal([0, 1, 2, 3]);
+  });
+});
 
 /**
  * @test {completeTable}
