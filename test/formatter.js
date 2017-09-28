@@ -3,7 +3,7 @@ import { expect } from "chai";
 import { Alignment } from "../lib/alignment";
 import { Table } from "../lib/table.js";
 import { readTable } from "../lib/parser.js";
-import { _delimiterText, _extendArray, completeTable } from "../lib/formatter.js";
+import { _delimiterText, _extendArray, completeTable, _computeWidth } from "../lib/formatter.js";
 
 /**
  * @test {_delimiterText}
@@ -154,5 +154,59 @@ describe("completeTable(table, options)", () => {
   it("should throw an error if table has no rows", () => {
     const table = new Table([]);
     expect(() => { completeTable(table,  { delimiterWidth: 3 }); }).to.throw(Error, /empty/i);
+  });
+});
+
+/**
+ * @test {_computeWidth}
+ */
+describe("_computeWidth(text, options)", () => {
+  it("should compute the width of a text based on EAW properties", () => {
+    {
+      const options = {
+        normalize      : false,
+        wideChars      : new Set(),
+        narrowChars    : new Set(),
+        ambiguousAsWide: false
+      };
+      expect(_computeWidth("ℵAあＡｱ∀", options)).to.equal(8);
+      expect(_computeWidth("\u0065\u0301", options)).to.equal(2);
+    }
+    {
+      const options = {
+        normalize      : false,
+        wideChars      : new Set(),
+        narrowChars    : new Set(),
+        ambiguousAsWide: true
+      };
+      expect(_computeWidth("ℵAあＡｱ∀", options)).to.equal(9);
+    }
+    {
+      const options = {
+        normalize      : false,
+        wideChars      : new Set(["∀"]),
+        narrowChars    : new Set(),
+        ambiguousAsWide: false
+      };
+      expect(_computeWidth("ℵAあＡｱ∀", options)).to.equal(9);
+    }
+    {
+      const options = {
+        normalize      : false,
+        wideChars      : new Set(),
+        narrowChars    : new Set(["∀"]),
+        ambiguousAsWide: true
+      };
+      expect(_computeWidth("ℵAあＡｱ∀", options)).to.equal(8);
+    }
+    {
+      const options = {
+        normalize      : true,
+        wideChars      : new Set(),
+        narrowChars    : new Set(),
+        ambiguousAsWide: false
+      };
+      expect(_computeWidth("\u0065\u0301", options)).to.equal(1);
+    }
   });
 });
