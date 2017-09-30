@@ -7,8 +7,8 @@ import {
   _delimiterText,
   _extendArray,
   completeTable,
-  _computeWidth,
-  _align
+  _computeTextWidth,
+  _alignText
 } from "../lib/formatter.js";
 
 /**
@@ -164,9 +164,9 @@ describe("completeTable(table, options)", () => {
 });
 
 /**
- * @test {_computeWidth}
+ * @test {_computeTextWidth}
  */
-describe("_computeWidth(text, options)", () => {
+describe("_computeTextWidth(text, options)", () => {
   it("should compute the width of a text based on EAW properties", () => {
     {
       const options = {
@@ -175,8 +175,8 @@ describe("_computeWidth(text, options)", () => {
         narrowChars    : new Set(),
         ambiguousAsWide: false
       };
-      expect(_computeWidth("ℵAあＡｱ∀", options)).to.equal(8);
-      expect(_computeWidth("\u0065\u0301", options)).to.equal(2);
+      expect(_computeTextWidth("ℵAあＡｱ∀", options)).to.equal(8);
+      expect(_computeTextWidth("\u0065\u0301", options)).to.equal(2);
     }
     {
       const options = {
@@ -185,7 +185,7 @@ describe("_computeWidth(text, options)", () => {
         narrowChars    : new Set(),
         ambiguousAsWide: true
       };
-      expect(_computeWidth("ℵAあＡｱ∀", options)).to.equal(9);
+      expect(_computeTextWidth("ℵAあＡｱ∀", options)).to.equal(9);
     }
     {
       const options = {
@@ -194,7 +194,7 @@ describe("_computeWidth(text, options)", () => {
         narrowChars    : new Set(),
         ambiguousAsWide: false
       };
-      expect(_computeWidth("ℵAあＡｱ∀", options)).to.equal(9);
+      expect(_computeTextWidth("ℵAあＡｱ∀", options)).to.equal(9);
     }
     {
       const options = {
@@ -203,7 +203,7 @@ describe("_computeWidth(text, options)", () => {
         narrowChars    : new Set(["∀"]),
         ambiguousAsWide: true
       };
-      expect(_computeWidth("ℵAあＡｱ∀", options)).to.equal(8);
+      expect(_computeTextWidth("ℵAあＡｱ∀", options)).to.equal(8);
     }
     {
       const options = {
@@ -212,15 +212,15 @@ describe("_computeWidth(text, options)", () => {
         narrowChars    : new Set(),
         ambiguousAsWide: false
       };
-      expect(_computeWidth("\u0065\u0301", options)).to.equal(1);
+      expect(_computeTextWidth("\u0065\u0301", options)).to.equal(1);
     }
   });
 });
 
 /**
- * @test {_align}
+ * @test {_alignText}
  */
-describe("_align(text, width, alignment, options)", () => {
+describe("_alignText(text, width, alignment, options)", () => {
   it("should align the text", () => {
     {
       const options = {
@@ -229,16 +229,16 @@ describe("_align(text, width, alignment, options)", () => {
         narrowChars    : new Set(),
         ambiguousAsWide: false
       };
-      expect(_align("foo", 5, Alignment.LEFT, options)).to.equal("foo  ");
-      expect(_align("foo", 5, Alignment.RIGHT, options)).to.equal("  foo");
-      expect(_align("foo", 5, Alignment.CENTER, options)).to.equal(" foo ");
+      expect(_alignText("foo", 5, Alignment.LEFT, options)).to.equal("foo  ");
+      expect(_alignText("foo", 5, Alignment.RIGHT, options)).to.equal("  foo");
+      expect(_alignText("foo", 5, Alignment.CENTER, options)).to.equal(" foo ");
 
-      expect(_align("foobar", 5, Alignment.LEFT, options)).to.equal("foobar");
-      expect(_align("foobar", 5, Alignment.RIGHT, options)).to.equal("foobar");
-      expect(_align("foobar", 5, Alignment.CENTER, options)).to.equal("foobar");
+      expect(_alignText("foobar", 5, Alignment.LEFT, options)).to.equal("foobar");
+      expect(_alignText("foobar", 5, Alignment.RIGHT, options)).to.equal("foobar");
+      expect(_alignText("foobar", 5, Alignment.CENTER, options)).to.equal("foobar");
 
-      expect(_align("∀", 5, Alignment.LEFT, options)).to.equal("∀    ");
-      expect(_align("\u0065\u0301", 5, Alignment.LEFT, options)).to.equal("\u0065\u0301   ");
+      expect(_alignText("∀", 5, Alignment.LEFT, options)).to.equal("∀    ");
+      expect(_alignText("\u0065\u0301", 5, Alignment.LEFT, options)).to.equal("\u0065\u0301   ");
     }
     {
       const options = {
@@ -247,9 +247,9 @@ describe("_align(text, width, alignment, options)", () => {
         narrowChars    : new Set(),
         ambiguousAsWide: false
       };
-      expect(_align("foo", 7, Alignment.LEFT, options)).to.equal("foo    ");
-      expect(_align("foo", 7, Alignment.RIGHT, options)).to.equal("    foo");
-      expect(_align("foo", 7, Alignment.CENTER, options)).to.equal("  foo  ");
+      expect(_alignText("foo", 7, Alignment.LEFT, options)).to.equal("foo    ");
+      expect(_alignText("foo", 7, Alignment.RIGHT, options)).to.equal("    foo");
+      expect(_alignText("foo", 7, Alignment.CENTER, options)).to.equal("  foo  ");
     }
     {
       const options = {
@@ -258,7 +258,7 @@ describe("_align(text, width, alignment, options)", () => {
         narrowChars    : new Set(),
         ambiguousAsWide: true
       };
-      expect(_align("∀", 5, Alignment.LEFT, options)).to.equal("∀   ");
+      expect(_alignText("∀", 5, Alignment.LEFT, options)).to.equal("∀   ");
     }
     {
       const options = {
@@ -267,7 +267,7 @@ describe("_align(text, width, alignment, options)", () => {
         narrowChars    : new Set(),
         ambiguousAsWide: false
       };
-      expect(_align("∀", 5, Alignment.LEFT, options)).to.equal("∀   ");
+      expect(_alignText("∀", 5, Alignment.LEFT, options)).to.equal("∀   ");
     }
     {
       const options = {
@@ -276,7 +276,7 @@ describe("_align(text, width, alignment, options)", () => {
         narrowChars    : new Set("∀"),
         ambiguousAsWide: true
       };
-      expect(_align("∀", 5, Alignment.LEFT, options)).to.equal("∀    ");
+      expect(_alignText("∀", 5, Alignment.LEFT, options)).to.equal("∀    ");
     }
     {
       const options = {
@@ -285,7 +285,7 @@ describe("_align(text, width, alignment, options)", () => {
         narrowChars    : new Set(),
         ambiguousAsWide: false
       };
-      expect(_align("\u0065\u0301", 5, Alignment.LEFT, options)).to.equal("\u0065\u0301    ");
+      expect(_alignText("\u0065\u0301", 5, Alignment.LEFT, options)).to.equal("\u0065\u0301    ");
     }
   });
 
@@ -296,7 +296,7 @@ describe("_align(text, width, alignment, options)", () => {
       narrowChars    : new Set(),
       ambiguousAsWide: false
     };
-    expect(() => { _align("foo", 5, "top", options); }).to.throw(Error, /unknown/i);
+    expect(() => { _alignText("foo", 5, "top", options); }).to.throw(Error, /unknown/i);
   });
 
   it("should throw an error if default alignment is specified", () => {
@@ -306,6 +306,6 @@ describe("_align(text, width, alignment, options)", () => {
       narrowChars    : new Set(),
       ambiguousAsWide: false
     };
-    expect(() => { _align("foo", 5, Alignment.DEFAULT, options); }).to.throw(Error, /unexpected/i);
+    expect(() => { _alignText("foo", 5, Alignment.DEFAULT, options); }).to.throw(Error, /unexpected/i);
   });
 });
