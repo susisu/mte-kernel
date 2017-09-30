@@ -220,122 +220,92 @@ describe("_computeWidth(text, options)", () => {
 /**
  * @test {_align}
  */
-describe("_align(text, alignment, options)", () => {
+describe("_align(text, width, alignment, options)", () => {
   it("should align the text", () => {
     {
       const options = {
-        width           : 5,
-        defaultAlignment: Alignment.LEFT,
-        normalize       : false,
-        wideChars       : new Set(),
-        narrowChars     : new Set(),
-        ambiguousAsWide : false
+        normalize      : false,
+        wideChars      : new Set(),
+        narrowChars    : new Set(),
+        ambiguousAsWide: false
       };
-      expect(_align("foo", Alignment.DEFAULT, options)).to.equal("foo  ");
-      expect(_align("foo", Alignment.LEFT, options)).to.equal("foo  ");
-      expect(_align("foo", Alignment.RIGHT, options)).to.equal("  foo");
-      expect(_align("foo", Alignment.CENTER, options)).to.equal(" foo ");
+      expect(_align("foo", 5, Alignment.LEFT, options)).to.equal("foo  ");
+      expect(_align("foo", 5, Alignment.RIGHT, options)).to.equal("  foo");
+      expect(_align("foo", 5, Alignment.CENTER, options)).to.equal(" foo ");
 
-      expect(_align("foobar", Alignment.DEFAULT, options)).to.equal("foobar");
-      expect(_align("foobar", Alignment.LEFT, options)).to.equal("foobar");
-      expect(_align("foobar", Alignment.RIGHT, options)).to.equal("foobar");
-      expect(_align("foobar", Alignment.CENTER, options)).to.equal("foobar");
+      expect(_align("foobar", 5, Alignment.LEFT, options)).to.equal("foobar");
+      expect(_align("foobar", 5, Alignment.RIGHT, options)).to.equal("foobar");
+      expect(_align("foobar", 5, Alignment.CENTER, options)).to.equal("foobar");
 
-      expect(_align("∀", Alignment.LEFT, options)).to.equal("∀    ");
-      expect(_align("\u0065\u0301", Alignment.LEFT, options)).to.equal("\u0065\u0301   ");
+      expect(_align("∀", 5, Alignment.LEFT, options)).to.equal("∀    ");
+      expect(_align("\u0065\u0301", 5, Alignment.LEFT, options)).to.equal("\u0065\u0301   ");
     }
     {
       const options = {
-        width           : 7,
-        defaultAlignment: Alignment.LEFT,
-        normalize       : false,
-        wideChars       : new Set(),
-        narrowChars     : new Set(),
-        ambiguousAsWide : false
+        normalize      : false,
+        wideChars      : new Set(),
+        narrowChars    : new Set(),
+        ambiguousAsWide: false
       };
-      expect(_align("foo", Alignment.DEFAULT, options)).to.equal("foo    ");
-      expect(_align("foo", Alignment.LEFT, options)).to.equal("foo    ");
-      expect(_align("foo", Alignment.RIGHT, options)).to.equal("    foo");
-      expect(_align("foo", Alignment.CENTER, options)).to.equal("  foo  ");
+      expect(_align("foo", 7, Alignment.LEFT, options)).to.equal("foo    ");
+      expect(_align("foo", 7, Alignment.RIGHT, options)).to.equal("    foo");
+      expect(_align("foo", 7, Alignment.CENTER, options)).to.equal("  foo  ");
     }
     {
       const options = {
-        width           : 5,
-        defaultAlignment: Alignment.RIGHT,
-        normalize       : false,
-        wideChars       : new Set(),
-        narrowChars     : new Set(),
-        ambiguousAsWide : false
+        normalize      : false,
+        wideChars      : new Set(),
+        narrowChars    : new Set(),
+        ambiguousAsWide: true
       };
-      expect(_align("foo", Alignment.DEFAULT, options)).to.equal("  foo");
+      expect(_align("∀", 5, Alignment.LEFT, options)).to.equal("∀   ");
     }
     {
       const options = {
-        width           : 5,
-        defaultAlignment: Alignment.LEFT,
-        normalize       : false,
-        wideChars       : new Set(),
-        narrowChars     : new Set(),
-        ambiguousAsWide : true
+        normalize      : false,
+        wideChars      : new Set("∀"),
+        narrowChars    : new Set(),
+        ambiguousAsWide: false
       };
-      expect(_align("∀", Alignment.LEFT, options)).to.equal("∀   ");
+      expect(_align("∀", 5, Alignment.LEFT, options)).to.equal("∀   ");
     }
     {
       const options = {
-        width           : 5,
-        defaultAlignment: Alignment.LEFT,
-        normalize       : false,
-        wideChars       : new Set("∀"),
-        narrowChars     : new Set(),
-        ambiguousAsWide : false
+        normalize      : false,
+        wideChars      : new Set(),
+        narrowChars    : new Set("∀"),
+        ambiguousAsWide: true
       };
-      expect(_align("∀", Alignment.LEFT, options)).to.equal("∀   ");
+      expect(_align("∀", 5, Alignment.LEFT, options)).to.equal("∀    ");
     }
     {
       const options = {
-        width           : 5,
-        defaultAlignment: Alignment.LEFT,
-        normalize       : false,
-        wideChars       : new Set(),
-        narrowChars     : new Set("∀"),
-        ambiguousAsWide : true
+        normalize      : true,
+        wideChars      : new Set(),
+        narrowChars    : new Set(),
+        ambiguousAsWide: false
       };
-      expect(_align("∀", Alignment.LEFT, options)).to.equal("∀    ");
-    }
-    {
-      const options = {
-        width           : 5,
-        defaultAlignment: Alignment.LEFT,
-        normalize       : true,
-        wideChars       : new Set(),
-        narrowChars     : new Set(),
-        ambiguousAsWide : false
-      };
-      expect(_align("\u0065\u0301", Alignment.LEFT, options)).to.equal("\u0065\u0301    ");
+      expect(_align("\u0065\u0301", 5, Alignment.LEFT, options)).to.equal("\u0065\u0301    ");
     }
   });
 
   it("should throw an error if the alignment is unknown", () => {
     const options = {
-      width           : 5,
-      defaultAlignment: Alignment.LEFT,
-      normalize       : false,
-      wideChars       : new Set(),
-      narrowChars     : new Set(),
-      ambiguousAsWide : false
+      normalize      : false,
+      wideChars      : new Set(),
+      narrowChars    : new Set(),
+      ambiguousAsWide: false
     };
-    expect(() => { _align("foo", "top", options); }).to.throw(Error, /unknown/i);
+    expect(() => { _align("foo", 5, "top", options); }).to.throw(Error, /unknown/i);
   });
 
-  it("should throw an error if the default alignment is wrongly specified", () => {
+  it("should throw an error if default alignment is specified", () => {
     const options = {
-      width           : 5,
-      defaultAlignment: Alignment.DEFAULT,
-      normalize       : false,
-      wideChars       : new Set(),
-      narrowChars     : new Set(),
-      ambiguousAsWide : false
+      normalize      : false,
+      wideChars      : new Set(),
+      narrowChars    : new Set(),
+      ambiguousAsWide: false
     };
-    expect(() => { _align("foo", Alignment.DEFAULT, options); }).to.throw(Error, /default/i);
+    expect(() => { _align("foo", 5, Alignment.DEFAULT, options); }).to.throw(Error, /unexpected/i);
   });
 });
