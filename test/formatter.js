@@ -8,7 +8,8 @@ import {
   _extendArray,
   completeTable,
   _computeTextWidth,
-  _alignText
+  _alignText,
+  _padText
 } from "../lib/formatter.js";
 
 /**
@@ -307,5 +308,15 @@ describe("_alignText(text, width, alignment, options)", () => {
       ambiguousAsWide: false
     };
     expect(() => { _alignText("foo", 5, Alignment.DEFAULT, options); }).to.throw(Error, /unexpected/i);
+  });
+});
+
+/**
+ * @test {_padText}
+ */
+describe("_padText(text)", () => {
+  it("should add one space paddings to both sides of the text", () => {
+    expect(_padText("")).to.equal("  ");
+    expect(_padText("foo")).to.equal(" foo ");
   });
 });
