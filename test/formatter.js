@@ -1,6 +1,7 @@
 import { expect } from "chai";
 
-import { Alignment } from "../lib/alignment";
+import { Alignment, DefaultAlignment, HeaderAlignment } from "../lib/alignment";
+import { TableRow } from "../lib/table-row.js";
 import { Table } from "../lib/table.js";
 import { readTable } from "../lib/parser.js";
 import {
@@ -9,7 +10,8 @@ import {
   completeTable,
   _computeTextWidth,
   _alignText,
-  _padText
+  _padText,
+  formatTable
 } from "../lib/formatter.js";
 
 /**
@@ -318,5 +320,211 @@ describe("_padText(text)", () => {
   it("should add one space paddings to both sides of the text", () => {
     expect(_padText("")).to.equal("  ");
     expect(_padText("foo")).to.equal(" foo ");
+  });
+});
+
+/**
+ * @test {formatTable}
+ */
+describe("formatTable(table, options)", () => {
+  it("should format a table", () => {
+    const twOptions = {
+      normalize      : false,
+      wideChars      : new Set(),
+      narrowChars    : new Set(),
+      ambiguousAsWide: false
+    };
+    {
+      const options = {
+        minDelimiterWidth: 3,
+        defaultAlignment : DefaultAlignment.LEFT,
+        headerAlignment  : HeaderAlignment.FOLLOW,
+        textWidthOptions : twOptions
+      };
+      const table = new Table([]);
+      const formatted = formatTable(table, options);
+      expect(formatted.table).to.be.an.instanceOf(Table);
+      expect(formatted.table.getHeight()).to.equal(0);
+      expect(formatted.marginLeft).to.equal("");
+    }
+    {
+      const options = {
+        minDelimiterWidth: 3,
+        defaultAlignment : DefaultAlignment.LEFT,
+        headerAlignment  : HeaderAlignment.FOLLOW,
+        textWidthOptions : twOptions
+      };
+      {
+        const table = new Table([
+          new TableRow([], "", " "),
+          new TableRow([], "  ", "   ")
+        ]);
+        const formatted = formatTable(table, options);
+        expect(formatted.table).to.be.an.instanceOf(Table);
+        const rows = formatted.table.getRows();
+        for (const row of rows) {
+          expect(row.getWidth()).to.equal(0);
+          expect(row.marginLeft).to.equal("");
+          expect(row.marginRight).to.equal("");
+        }
+        expect(formatted.marginLeft).to.equal("");
+      }
+      {
+        const table = new Table([
+          new TableRow([], " ", " "),
+          new TableRow([], "  ", "   ")
+        ]);
+        const formatted = formatTable(table, options);
+        expect(formatted.table).to.be.an.instanceOf(Table);
+        const rows = formatted.table.getRows();
+        for (const row of rows) {
+          expect(row.getWidth()).to.equal(0);
+          expect(row.marginLeft).to.equal(" ");
+          expect(row.marginRight).to.equal("");
+        }
+        expect(formatted.marginLeft).to.equal(" ");
+      }
+    }
+    {
+      const options = {
+        minDelimiterWidth: 3,
+        defaultAlignment : DefaultAlignment.LEFT,
+        headerAlignment  : HeaderAlignment.FOLLOW,
+        textWidthOptions : twOptions
+      };
+      {
+        const tableText =
+            "| A | B |\n"
+          + "| --- |:----- |\n"
+          + "  | C |  ";
+        const expectText =
+            "| A   | B   |\n"
+          + "| --- |:--- |\n"
+          + "| C   |";
+        const table = readTable(tableText.split("\n"));
+        const formatted = formatTable(table, options);
+        expect(formatted.table).to.be.an.instanceOf(Table);
+        expect(formatted.table.toText()).to.equal(expectText);
+        expect(formatted.marginLeft).to.equal("");
+      }
+      {
+        const tableText =
+            " | A | B |\n"
+          + "| --- |:----- |\n"
+          + "  | C |  ";
+        const expectText =
+            " | A   | B   |\n"
+          + " | --- |:--- |\n"
+          + " | C   |";
+        const table = readTable(tableText.split("\n"));
+        const formatted = formatTable(table, options);
+        expect(formatted.table).to.be.an.instanceOf(Table);
+        expect(formatted.table.toText()).to.equal(expectText);
+        expect(formatted.marginLeft).to.equal(" ");
+      }
+    }
+    {
+      const options = {
+        minDelimiterWidth: 5,
+        defaultAlignment : DefaultAlignment.LEFT,
+        headerAlignment  : HeaderAlignment.FOLLOW,
+        textWidthOptions : twOptions
+      };
+      const tableText =
+          "| A | B |\n"
+        + "| --- |:----- |\n"
+        + "  | C |  ";
+      const expectText =
+          "| A     | B     |\n"
+        + "| ----- |:----- |\n"
+        + "| C     |";
+      const table = readTable(tableText.split("\n"));
+      const formatted = formatTable(table, options);
+      expect(formatted.table).to.be.an.instanceOf(Table);
+      expect(formatted.table.toText()).to.equal(expectText);
+      expect(formatted.marginLeft).to.equal("");
+    }
+    {
+      const options = {
+        minDelimiterWidth: 3,
+        defaultAlignment : DefaultAlignment.CENTER,
+        headerAlignment  : HeaderAlignment.FOLLOW,
+        textWidthOptions : twOptions
+      };
+      const tableText =
+          "| A | B |\n"
+        + "| --- |:----- |\n"
+        + "  | C |  ";
+      const expectText =
+          "|  A  | B   |\n"
+        + "| --- |:--- |\n"
+        + "|  C  |";
+      const table = readTable(tableText.split("\n"));
+      const formatted = formatTable(table, options);
+      expect(formatted.table).to.be.an.instanceOf(Table);
+      expect(formatted.table.toText()).to.equal(expectText);
+      expect(formatted.marginLeft).to.equal("");
+    }
+    {
+      const options = {
+        minDelimiterWidth: 3,
+        defaultAlignment : DefaultAlignment.LEFT,
+        headerAlignment  : HeaderAlignment.CENTER,
+        textWidthOptions : twOptions
+      };
+      const tableText =
+          "| A | B |\n"
+        + "| --- |:----- |\n"
+        + "  | C |  ";
+      const expectText =
+          "|  A  |  B  |\n"
+        + "| --- |:--- |\n"
+        + "| C   |";
+      const table = readTable(tableText.split("\n"));
+      const formatted = formatTable(table, options);
+      expect(formatted.table).to.be.an.instanceOf(Table);
+      expect(formatted.table.toText()).to.equal(expectText);
+      expect(formatted.marginLeft).to.equal("");
+    }
+    {
+      const options = {
+        minDelimiterWidth: 3,
+        defaultAlignment : DefaultAlignment.LEFT,
+        headerAlignment  : HeaderAlignment.FOLLOW,
+        textWidthOptions : twOptions
+      };
+      const tableText =
+          "| A | B |\n"
+        + "  | CDE |  ";
+      const expectText =
+          "| A   | B |\n"
+        + "| CDE |";
+      const table = readTable(tableText.split("\n"));
+      const formatted = formatTable(table, options);
+      expect(formatted.table).to.be.an.instanceOf(Table);
+      expect(formatted.table.toText()).to.equal(expectText);
+      expect(formatted.marginLeft).to.equal("");
+    }
+    {
+      const options = {
+        minDelimiterWidth: 3,
+        defaultAlignment : DefaultAlignment.LEFT,
+        headerAlignment  : HeaderAlignment.FOLLOW,
+        textWidthOptions : twOptions
+      };
+      const tableText =
+          "| A | B |\n"
+        + "| ---:|\n"
+        + "  | CDE | FG | ";
+      const expectText =
+          "|   A | B  |\n"
+        + "| ---:|\n"
+        + "| CDE | FG |";
+      const table = readTable(tableText.split("\n"));
+      const formatted = formatTable(table, options);
+      expect(formatted.table).to.be.an.instanceOf(Table);
+      expect(formatted.table.toText()).to.equal(expectText);
+      expect(formatted.marginLeft).to.equal("");
+    }
   });
 });
