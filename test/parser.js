@@ -41,6 +41,14 @@ describe("_readRow(text)", () => {
       expect(cells).to.be.an("array").of.length(0);
     }
     {
+      const row = _readRow(" ");
+      expect(row).to.be.an.instanceOf(TableRow);
+      expect(row.marginLeft).to.equal(" ");
+      expect(row.marginRight).to.equal("");
+      const cells = row.getCells();
+      expect(cells).to.be.an("array").of.length(0);
+    }
+    {
       const row = _readRow(" |  ");
       expect(row).to.be.an.instanceOf(TableRow);
       expect(row.marginLeft).to.equal(" ");

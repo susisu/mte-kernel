@@ -103,9 +103,15 @@ describe("TableRow", () => {
    */
   describe("#toText()", () => {
     it("should return a text representation of the row", () => {
-      const cells = [new TableCell("  foo  "), new TableCell("  bar  ")];
-      const row = new TableRow(cells, " ", "  ");
-      expect(row.toText()).to.equal(" |  foo  |  bar  |  ");
+      {
+        const row = new TableRow([], " ", "  ");
+        expect(row.toText()).to.equal(" ");
+      }
+      {
+        const cells = [new TableCell("  foo  "), new TableCell("  bar  ")];
+        const row = new TableRow(cells, " ", "  ");
+        expect(row.toText()).to.equal(" |  foo  |  bar  |  ");
+      }
     });
   });
 
