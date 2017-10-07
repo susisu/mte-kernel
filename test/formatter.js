@@ -47,115 +47,111 @@ describe("_extendArray(arr, size, callback)", () => {
 describe("completeTable(table, options)", () => {
   it("should complete the given table by adding missing delimiter and cells", () => {
     {
-      const tableText =
-          "| A | B |\n"
-        + "| --- |:----- |\n"
-        + "  | C | D |  ";
-      const expectText =
-          "| A | B |\n"
-        + "| --- |:----- |\n"
-        + "  | C | D |  ";
-      const table = readTable(tableText.split("\n"));
+      const tableLines = [
+        "| A | B |",
+        "| --- |:----- |",
+        "  | C | D |  "
+      ];
+      const expectLines = [
+        "| A | B |",
+        "| --- |:----- |",
+        "  | C | D |  "
+      ];
+      const table = readTable(tableLines);
       const completed = completeTable(table, { delimiterWidth: 3 });
       expect(completed).to.be.an("object");
       expect(completed.table).to.be.an.instanceOf(Table);
-      expect(completed.table.toText()).to.equal(expectText);
+      expect(completed.table.toLines()).to.deep.equal(expectLines);
       expect(completed.delimiterInserted).to.be.false;
     }
     {
-      const tableText =
-          "| A |\n"
-        + "| --- |:----- |\n"
-        + "  | C | D |  ";
-      const expectText =
-          "| A ||\n"
-        + "| --- |:----- |\n"
-        + "  | C | D |  ";
-      const table = readTable(tableText.split("\n"));
+      const tableLines = [
+        "| A | ",
+        "| --- |:----- | --- |",
+        "  | B | C | D |  "
+      ];
+      const expectLines = [
+        "| A | ||",
+        "| --- |:----- | --- |",
+        "  | B | C | D |  "
+      ];
+      const table = readTable(tableLines);
       const completed = completeTable(table, { delimiterWidth: 3 });
       expect(completed).to.be.an("object");
       expect(completed.table).to.be.an.instanceOf(Table);
-      expect(completed.table.toText()).to.equal(expectText);
+      expect(completed.table.toLines()).to.deep.equal(expectLines);
       expect(completed.delimiterInserted).to.be.false;
     }
     {
-      const tableText =
-          "| A | B |\n"
-        + "| --- |\n"
-        + "  | C | D |  ";
-      const expectText =
-          "| A | B |\n"
-        + "| --- | --- |\n"
-        + "  | C | D |  ";
-      const table = readTable(tableText.split("\n"));
+      const tableLines = [
+        "| A | B | C |",
+        "| --- |      ",
+        "  | D | E | F |  "
+      ];
+      const expectLines = [
+        "| A | B | C |",
+        "| --- | ---- | --- |",
+        "  | D | E | F |  "
+      ];
+      const table = readTable(tableLines);
       const completed = completeTable(table, { delimiterWidth: 3 });
       expect(completed).to.be.an("object");
       expect(completed.table).to.be.an.instanceOf(Table);
-      expect(completed.table.toText()).to.equal(expectText);
+      expect(completed.table.toLines()).to.deep.equal(expectLines);
       expect(completed.delimiterInserted).to.be.false;
     }
     {
-      const tableText =
-          "| A | B |\n"
-        + "  | C | D |  ";
-      const expectText =
-          "| A | B |\n"
-        + "| --- | --- |\n"
-        + "  | C | D |  ";
-      const table = readTable(tableText.split("\n"));
+      const tableLines = [
+        "| A | B |",
+        "  | C | D |  "
+      ];
+      const expectLines = [
+        "| A | B |",
+        "| --- | --- |",
+        "  | C | D |  "
+      ];
+      const table = readTable(tableLines);
       const completed = completeTable(table, { delimiterWidth: 3 });
       expect(completed).to.be.an("object");
       expect(completed.table).to.be.an.instanceOf(Table);
-      expect(completed.table.toText()).to.equal(expectText);
+      expect(completed.table.toLines()).to.deep.equal(expectLines);
       expect(completed.delimiterInserted).to.be.true;
     }
     {
-      const tableText =
-          "| A | B |\n"
-        + "| --- |:----- |\n"
-        + "  | C |";
-      const expectText =
-          "| A | B |\n"
-        + "| --- |:----- |\n"
-        + "  | C ||";
-      const table = readTable(tableText.split("\n"));
+      const tableLines = [
+        "| A | B | C |",
+        "| --- |:----- | --- |",
+        "  | D | "
+      ];
+      const expectLines = [
+        "| A | B | C |",
+        "| --- |:----- | --- |",
+        "  | D | ||"
+      ];
+      const table = readTable(tableLines);
       const completed = completeTable(table, { delimiterWidth: 3 });
       expect(completed).to.be.an("object");
       expect(completed.table).to.be.an.instanceOf(Table);
-      expect(completed.table.toText()).to.equal(expectText);
+      expect(completed.table.toLines()).to.deep.equal(expectLines);
       expect(completed.delimiterInserted).to.be.false;
     }
     {
-      const tableText =
-          "| A | B |\n"
-        + "| --- |:----- |\n"
-        + "  | C |  ";
-      const expectText =
-          "| A | B |\n"
-        + "| --- |:----- |\n"
-        + "  | C |  |";
-      const table = readTable(tableText.split("\n"));
+      const tableLines = [
+        "|",
+        "|",
+        " |  "
+      ];
+      const expectLines = [
+        "||",
+        "| --- |",
+        "||",
+        " |  |"
+      ];
+      const table = readTable(tableLines);
       const completed = completeTable(table, { delimiterWidth: 3 });
       expect(completed).to.be.an("object");
       expect(completed.table).to.be.an.instanceOf(Table);
-      expect(completed.table.toText()).to.equal(expectText);
-      expect(completed.delimiterInserted).to.be.false;
-    }
-    {
-      const tableText =
-          "|\n"
-        + "|\n"
-        + " |  ";
-      const expectText =
-          "||\n"
-        + "| --- |\n"
-        + "||\n"
-        + " |  |";
-      const table = readTable(tableText.split("\n"));
-      const completed = completeTable(table, { delimiterWidth: 3 });
-      expect(completed).to.be.an("object");
-      expect(completed.table).to.be.an.instanceOf(Table);
-      expect(completed.table.toText()).to.equal(expectText);
+      expect(completed.table.toLines()).to.deep.equal(expectLines);
       expect(completed.delimiterInserted).to.be.true;
     }
   });
@@ -393,33 +389,37 @@ describe("formatTable(table, options)", () => {
         textWidthOptions : twOptions
       };
       {
-        const tableText =
-            "| A | B |\n"
-          + "| --- |:----- |\n"
-          + "  | C |  ";
-        const expectText =
-            "| A   | B   |\n"
-          + "| --- |:--- |\n"
-          + "| C   |";
-        const table = readTable(tableText.split("\n"));
+        const tableLines = [
+          "| A | B |",
+          "| --- |:----- |",
+          "  | C |  "
+        ];
+        const expectLines = [
+          "| A   | B   |",
+          "| --- |:--- |",
+          "| C   |"
+        ];
+        const table = readTable(tableLines);
         const formatted = formatTable(table, options);
         expect(formatted.table).to.be.an.instanceOf(Table);
-        expect(formatted.table.toText()).to.equal(expectText);
+        expect(formatted.table.toLines()).to.deep.equal(expectLines);
         expect(formatted.marginLeft).to.equal("");
       }
       {
-        const tableText =
-            " | A | B |\n"
-          + "| --- |:----- |\n"
-          + "  | C |  ";
-        const expectText =
-            " | A   | B   |\n"
-          + " | --- |:--- |\n"
-          + " | C   |";
-        const table = readTable(tableText.split("\n"));
+        const tableLines = [
+          " | A | B |",
+          "| --- |:----- |",
+          "  | C |  "
+        ];
+        const expectLines = [
+          " | A   | B   |",
+          " | --- |:--- |",
+          " | C   |"
+        ];
+        const table = readTable(tableLines);
         const formatted = formatTable(table, options);
         expect(formatted.table).to.be.an.instanceOf(Table);
-        expect(formatted.table.toText()).to.equal(expectText);
+        expect(formatted.table.toLines()).to.deep.equal(expectLines);
         expect(formatted.marginLeft).to.equal(" ");
       }
     }
@@ -430,18 +430,20 @@ describe("formatTable(table, options)", () => {
         headerAlignment  : HeaderAlignment.FOLLOW,
         textWidthOptions : twOptions
       };
-      const tableText =
-          "| A | B |\n"
-        + "| --- |:----- |\n"
-        + "  | C |  ";
-      const expectText =
-          "| A     | B     |\n"
-        + "| ----- |:----- |\n"
-        + "| C     |";
-      const table = readTable(tableText.split("\n"));
+      const tableLines = [
+        "| A | B |",
+        "| --- |:----- |",
+        "  | C |  "
+      ];
+      const expectLines = [
+        "| A     | B     |",
+        "| ----- |:----- |",
+        "| C     |"
+      ];
+      const table = readTable(tableLines);
       const formatted = formatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
-      expect(formatted.table.toText()).to.equal(expectText);
+      expect(formatted.table.toLines()).to.deep.equal(expectLines);
       expect(formatted.marginLeft).to.equal("");
     }
     {
@@ -451,18 +453,20 @@ describe("formatTable(table, options)", () => {
         headerAlignment  : HeaderAlignment.FOLLOW,
         textWidthOptions : twOptions
       };
-      const tableText =
-          "| A | B |\n"
-        + "| --- |:----- |\n"
-        + "  | C |  ";
-      const expectText =
-          "|  A  | B   |\n"
-        + "| --- |:--- |\n"
-        + "|  C  |";
-      const table = readTable(tableText.split("\n"));
+      const tableLines = [
+        "| A | B |",
+        "| --- |:----- |",
+        "  | C |  "
+      ];
+      const expectLines = [
+        "|  A  | B   |",
+        "| --- |:--- |",
+        "|  C  |"
+      ];
+      const table = readTable(tableLines);
       const formatted = formatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
-      expect(formatted.table.toText()).to.equal(expectText);
+      expect(formatted.table.toLines()).to.deep.equal(expectLines);
       expect(formatted.marginLeft).to.equal("");
     }
     {
@@ -472,18 +476,20 @@ describe("formatTable(table, options)", () => {
         headerAlignment  : HeaderAlignment.CENTER,
         textWidthOptions : twOptions
       };
-      const tableText =
-          "| A | B |\n"
-        + "| --- |:----- |\n"
-        + "  | C |  ";
-      const expectText =
-          "|  A  |  B  |\n"
-        + "| --- |:--- |\n"
-        + "| C   |";
-      const table = readTable(tableText.split("\n"));
+      const tableLines = [
+        "| A | B |",
+        "| --- |:----- |",
+        "  | C |  "
+      ];
+      const expectLines = [
+        "|  A  |  B  |",
+        "| --- |:--- |",
+        "| C   |"
+      ];
+      const table = readTable(tableLines);
       const formatted = formatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
-      expect(formatted.table.toText()).to.equal(expectText);
+      expect(formatted.table.toLines()).to.deep.equal(expectLines);
       expect(formatted.marginLeft).to.equal("");
     }
     {
@@ -493,16 +499,18 @@ describe("formatTable(table, options)", () => {
         headerAlignment  : HeaderAlignment.FOLLOW,
         textWidthOptions : twOptions
       };
-      const tableText =
-          "| A | B |\n"
-        + "  | CDE |  ";
-      const expectText =
-          "| A   | B |\n"
-        + "| CDE |";
-      const table = readTable(tableText.split("\n"));
+      const tableLines = [
+        "| A | B |",
+        "  | CDE |  "
+      ];
+      const expectLines = [
+        "| A   | B |",
+        "| CDE |"
+      ];
+      const table = readTable(tableLines);
       const formatted = formatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
-      expect(formatted.table.toText()).to.equal(expectText);
+      expect(formatted.table.toLines()).to.deep.equal(expectLines);
       expect(formatted.marginLeft).to.equal("");
     }
     {
@@ -512,18 +520,43 @@ describe("formatTable(table, options)", () => {
         headerAlignment  : HeaderAlignment.FOLLOW,
         textWidthOptions : twOptions
       };
-      const tableText =
-          "| A | B |\n"
-        + "| ---:|\n"
-        + "  | CDE | FG | ";
-      const expectText =
-          "|   A | B  |\n"
-        + "| ---:|\n"
-        + "| CDE | FG |";
-      const table = readTable(tableText.split("\n"));
+      const tableLines = [
+        "| A | B |",
+        "| ---:|",
+        "  | CDE | FG | "
+      ];
+      const expectLines = [
+        "|   A | B  |",
+        "| ---:|",
+        "| CDE | FG |"
+      ];
+      const table = readTable(tableLines);
       const formatted = formatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
-      expect(formatted.table.toText()).to.equal(expectText);
+      expect(formatted.table.toLines()).to.deep.equal(expectLines);
+      expect(formatted.marginLeft).to.equal("");
+    }
+    {
+      const options = {
+        minDelimiterWidth: 3,
+        defaultAlignment : DefaultAlignment.LEFT,
+        headerAlignment  : HeaderAlignment.FOLLOW,
+        textWidthOptions : twOptions
+      };
+      const tableLines = [
+        "|",
+        "|",
+        " |  "
+      ];
+      const expectLines = [
+        "|  |",
+        "|  |",
+        "|  |"
+      ];
+      const table = readTable(tableLines);
+      const formatted = formatTable(table, options);
+      expect(formatted.table).to.be.an.instanceOf(Table);
+      expect(formatted.table.toLines()).to.deep.equal(expectLines);
       expect(formatted.marginLeft).to.equal("");
     }
   });

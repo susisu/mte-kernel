@@ -252,20 +252,27 @@ describe("Table", () => {
   });
 
   /**
-   * @test {Table#toText}
+   * @test {Table#toLines}
    */
-  describe("#toText()", () => {
-    it("should return a text representation of the table", () => {
-      const table = new Table([
-        new TableRow([new TableCell("A"), new TableCell("B")], "", ""),
-        new TableRow([new TableCell("---")], "", ""),
-        new TableRow([new TableCell("C"), new TableCell("D"), new TableCell("E")], " ", "  "),
-      ]);
-      const text =
-          "|A|B|\n"
-        + "|---|\n"
-        + " |C|D|E|  ";
-      expect(table.toText()).to.equal(text);
+  describe("#toLines()", () => {
+    it("should return an array of text representations of the rows", () => {
+      {
+        const table = new Table([]);
+        expect(table.toLines()).to.deep.equal([]);
+      }
+      {
+        const table = new Table([
+          new TableRow([new TableCell("A"), new TableCell("B")], "", ""),
+          new TableRow([new TableCell("---")], "", ""),
+          new TableRow([new TableCell("C"), new TableCell("D"), new TableCell("E")], " ", "  "),
+        ]);
+        const lines = [
+          "|A|B|",
+          "|---|",
+          " |C|D|E|  "
+        ];
+        expect(table.toLines()).to.deep.equal(lines);
+      }
     });
   });
 
