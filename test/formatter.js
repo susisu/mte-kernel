@@ -11,8 +11,10 @@ import {
   _computeTextWidth,
   _alignText,
   _padText,
-  formatTable,
-  weakFormatTable
+  _formatTable,
+  _weakFormatTable,
+  FormatType,
+  formatTable
 } from "../lib/formatter.js";
 
 /**
@@ -321,9 +323,9 @@ describe("_padText(text)", () => {
 });
 
 /**
- * @test {formatTable}
+ * @test {_formatTable}
  */
-describe("formatTable(table, options)", () => {
+describe("_formatTable(table, options)", () => {
   it("should format a table", () => {
     const twOptions = {
       normalize      : false,
@@ -339,7 +341,7 @@ describe("formatTable(table, options)", () => {
         textWidthOptions : twOptions
       };
       const table = new Table([]);
-      const formatted = formatTable(table, options);
+      const formatted = _formatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
       expect(formatted.table.getHeight()).to.equal(0);
       expect(formatted.marginLeft).to.equal("");
@@ -356,7 +358,7 @@ describe("formatTable(table, options)", () => {
           new TableRow([], "", " "),
           new TableRow([], "  ", "   ")
         ]);
-        const formatted = formatTable(table, options);
+        const formatted = _formatTable(table, options);
         expect(formatted.table).to.be.an.instanceOf(Table);
         const rows = formatted.table.getRows();
         for (const row of rows) {
@@ -371,7 +373,7 @@ describe("formatTable(table, options)", () => {
           new TableRow([], " ", " "),
           new TableRow([], "  ", "   ")
         ]);
-        const formatted = formatTable(table, options);
+        const formatted = _formatTable(table, options);
         expect(formatted.table).to.be.an.instanceOf(Table);
         const rows = formatted.table.getRows();
         for (const row of rows) {
@@ -401,7 +403,7 @@ describe("formatTable(table, options)", () => {
           "| C   |"
         ];
         const table = readTable(tableLines);
-        const formatted = formatTable(table, options);
+        const formatted = _formatTable(table, options);
         expect(formatted.table).to.be.an.instanceOf(Table);
         expect(formatted.table.toLines()).to.deep.equal(expectLines);
         expect(formatted.marginLeft).to.equal("");
@@ -418,7 +420,7 @@ describe("formatTable(table, options)", () => {
           " | C   |"
         ];
         const table = readTable(tableLines);
-        const formatted = formatTable(table, options);
+        const formatted = _formatTable(table, options);
         expect(formatted.table).to.be.an.instanceOf(Table);
         expect(formatted.table.toLines()).to.deep.equal(expectLines);
         expect(formatted.marginLeft).to.equal(" ");
@@ -442,7 +444,7 @@ describe("formatTable(table, options)", () => {
         "| C     |"
       ];
       const table = readTable(tableLines);
-      const formatted = formatTable(table, options);
+      const formatted = _formatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
       expect(formatted.table.toLines()).to.deep.equal(expectLines);
       expect(formatted.marginLeft).to.equal("");
@@ -465,7 +467,7 @@ describe("formatTable(table, options)", () => {
         "|  C  |"
       ];
       const table = readTable(tableLines);
-      const formatted = formatTable(table, options);
+      const formatted = _formatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
       expect(formatted.table.toLines()).to.deep.equal(expectLines);
       expect(formatted.marginLeft).to.equal("");
@@ -488,7 +490,7 @@ describe("formatTable(table, options)", () => {
         "| C   |"
       ];
       const table = readTable(tableLines);
-      const formatted = formatTable(table, options);
+      const formatted = _formatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
       expect(formatted.table.toLines()).to.deep.equal(expectLines);
       expect(formatted.marginLeft).to.equal("");
@@ -509,7 +511,7 @@ describe("formatTable(table, options)", () => {
         "| CDE |"
       ];
       const table = readTable(tableLines);
-      const formatted = formatTable(table, options);
+      const formatted = _formatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
       expect(formatted.table.toLines()).to.deep.equal(expectLines);
       expect(formatted.marginLeft).to.equal("");
@@ -532,7 +534,7 @@ describe("formatTable(table, options)", () => {
         "| CDE | FG |"
       ];
       const table = readTable(tableLines);
-      const formatted = formatTable(table, options);
+      const formatted = _formatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
       expect(formatted.table.toLines()).to.deep.equal(expectLines);
       expect(formatted.marginLeft).to.equal("");
@@ -555,7 +557,7 @@ describe("formatTable(table, options)", () => {
         "|  |"
       ];
       const table = readTable(tableLines);
-      const formatted = formatTable(table, options);
+      const formatted = _formatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
       expect(formatted.table.toLines()).to.deep.equal(expectLines);
       expect(formatted.marginLeft).to.equal("");
@@ -565,9 +567,9 @@ describe("formatTable(table, options)", () => {
 
 
 /**
- * @test {weakFormatTable}
+ * @test {_weakFormatTable}
  */
-describe("weakFormatTable(table, options)", () => {
+describe("_weakFormatTable(table, options)", () => {
   it("should format a table weakly", () => {
     const twOptions = {
       normalize      : false,
@@ -583,7 +585,7 @@ describe("weakFormatTable(table, options)", () => {
         textWidthOptions : twOptions
       };
       const table = new Table([]);
-      const formatted = weakFormatTable(table, options);
+      const formatted = _weakFormatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
       expect(formatted.table.getHeight()).to.equal(0);
       expect(formatted.marginLeft).to.equal("");
@@ -600,7 +602,7 @@ describe("weakFormatTable(table, options)", () => {
           new TableRow([], "", " "),
           new TableRow([], "  ", "   ")
         ]);
-        const formatted = weakFormatTable(table, options);
+        const formatted = _weakFormatTable(table, options);
         expect(formatted.table).to.be.an.instanceOf(Table);
         const rows = formatted.table.getRows();
         for (const row of rows) {
@@ -615,7 +617,7 @@ describe("weakFormatTable(table, options)", () => {
           new TableRow([], " ", " "),
           new TableRow([], "  ", "   ")
         ]);
-        const formatted = weakFormatTable(table, options);
+        const formatted = _weakFormatTable(table, options);
         expect(formatted.table).to.be.an.instanceOf(Table);
         const rows = formatted.table.getRows();
         for (const row of rows) {
@@ -645,7 +647,7 @@ describe("weakFormatTable(table, options)", () => {
           "| C |"
         ];
         const table = readTable(tableLines);
-        const formatted = weakFormatTable(table, options);
+        const formatted = _weakFormatTable(table, options);
         expect(formatted.table).to.be.an.instanceOf(Table);
         expect(formatted.table.toLines()).to.deep.equal(expectLines);
         expect(formatted.marginLeft).to.equal("");
@@ -662,7 +664,7 @@ describe("weakFormatTable(table, options)", () => {
           " | C |"
         ];
         const table = readTable(tableLines);
-        const formatted = weakFormatTable(table, options);
+        const formatted = _weakFormatTable(table, options);
         expect(formatted.table).to.be.an.instanceOf(Table);
         expect(formatted.table.toLines()).to.deep.equal(expectLines);
         expect(formatted.marginLeft).to.equal(" ");
@@ -686,7 +688,7 @@ describe("weakFormatTable(table, options)", () => {
         "| C |"
       ];
       const table = readTable(tableLines);
-      const formatted = weakFormatTable(table, options);
+      const formatted = _weakFormatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
       expect(formatted.table.toLines()).to.deep.equal(expectLines);
       expect(formatted.marginLeft).to.equal("");
@@ -709,7 +711,7 @@ describe("weakFormatTable(table, options)", () => {
         "| C |"
       ];
       const table = readTable(tableLines);
-      const formatted = weakFormatTable(table, options);
+      const formatted = _weakFormatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
       expect(formatted.table.toLines()).to.deep.equal(expectLines);
       expect(formatted.marginLeft).to.equal("");
@@ -732,7 +734,7 @@ describe("weakFormatTable(table, options)", () => {
         "| C |"
       ];
       const table = readTable(tableLines);
-      const formatted = weakFormatTable(table, options);
+      const formatted = _weakFormatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
       expect(formatted.table.toLines()).to.deep.equal(expectLines);
       expect(formatted.marginLeft).to.equal("");
@@ -753,7 +755,7 @@ describe("weakFormatTable(table, options)", () => {
         "| CDE |"
       ];
       const table = readTable(tableLines);
-      const formatted = weakFormatTable(table, options);
+      const formatted = _weakFormatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
       expect(formatted.table.toLines()).to.deep.equal(expectLines);
       expect(formatted.marginLeft).to.equal("");
@@ -776,7 +778,7 @@ describe("weakFormatTable(table, options)", () => {
         "| CDE | FG |"
       ];
       const table = readTable(tableLines);
-      const formatted = weakFormatTable(table, options);
+      const formatted = _weakFormatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
       expect(formatted.table.toLines()).to.deep.equal(expectLines);
       expect(formatted.marginLeft).to.equal("");
@@ -799,10 +801,95 @@ describe("weakFormatTable(table, options)", () => {
         "|  |"
       ];
       const table = readTable(tableLines);
-      const formatted = weakFormatTable(table, options);
+      const formatted = _weakFormatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
       expect(formatted.table.toLines()).to.deep.equal(expectLines);
       expect(formatted.marginLeft).to.equal("");
     }
+  });
+});
+
+/**
+ * @test {formatTable}
+ */
+describe("formatTable(table, options)", () => {
+  it("should format a table, normally or weakly", () => {
+    const twOptions = {
+      normalize      : false,
+      wideChars      : new Set(),
+      narrowChars    : new Set(),
+      ambiguousAsWide: false
+    };
+    {
+      const options = {
+        formatType       : FormatType.NORMAL,
+        minDelimiterWidth: 3,
+        defaultAlignment : DefaultAlignment.LEFT,
+        headerAlignment  : HeaderAlignment.FOLLOW,
+        textWidthOptions : twOptions
+      };
+      const tableLines = [
+        "| A | B |",
+        "| --- |:----- |",
+        "  | C |  "
+      ];
+      const expectLines = [
+        "| A   | B   |",
+        "| --- |:--- |",
+        "| C   |"
+      ];
+      const table = readTable(tableLines);
+      const formatted = formatTable(table, options);
+      expect(formatted.table).to.be.an.instanceOf(Table);
+      expect(formatted.table.toLines()).to.deep.equal(expectLines);
+      expect(formatted.marginLeft).to.equal("");
+    }
+    {
+      const options = {
+        formatType       : FormatType.WEAK,
+        minDelimiterWidth: 3,
+        defaultAlignment : DefaultAlignment.LEFT,
+        headerAlignment  : HeaderAlignment.FOLLOW,
+        textWidthOptions : twOptions
+      };
+      const tableLines = [
+        "| A | B |",
+        "| --- |:----- |",
+        "  | C |  "
+      ];
+      const expectLines = [
+        "| A | B |",
+        "| --- |:--- |",
+        "| C |"
+      ];
+      const table = readTable(tableLines);
+      const formatted = formatTable(table, options);
+      expect(formatted.table).to.be.an.instanceOf(Table);
+      expect(formatted.table.toLines()).to.deep.equal(expectLines);
+      expect(formatted.marginLeft).to.equal("");
+    }
+  });
+
+  it("should throw an error if an unknown format type is specified", () => {
+    const twOptions = {
+      normalize      : false,
+      wideChars      : new Set(),
+      narrowChars    : new Set(),
+      ambiguousAsWide: false
+    };
+    const options = {
+      formatType       : "strong",
+      minDelimiterWidth: 3,
+      defaultAlignment : DefaultAlignment.LEFT,
+      headerAlignment  : HeaderAlignment.FOLLOW,
+      textWidthOptions : twOptions
+    };
+    const tableLines = [
+      "| A | B |",
+      "| --- |:----- |",
+      "  | C |  "
+    ];
+    const table = readTable(tableLines);
+    expect(() => { formatTable(table, options); }).to.throw(Error, /unknown/i);
   });
 });
