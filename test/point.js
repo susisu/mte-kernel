@@ -45,4 +45,17 @@ describe("Point", () => {
       expect(() => { point.column = 3; }).to.throw(TypeError);
     });
   });
+
+  /**
+   * @test {Point#equals}
+   */
+  describe("#equals(point)", () => {
+    it("should return true if two points are equal", () => {
+      const point = new Point(1, 2);
+      expect(point.equals(new Point(1, 2))).to.be.true;
+      expect(point.equals(new Point(1, 3))).to.be.false;
+      expect(point.equals(new Point(3, 2))).to.be.false;
+      expect(point.equals(new Point(3, 4))).to.be.false;
+    });
+  });
 });
