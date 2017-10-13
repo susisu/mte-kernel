@@ -65,7 +65,7 @@ describe("Focus", () => {
    * @test {Focus#posEquals}
    */
   describe("#posEquals(focus)", () => {
-    it("should return true if two focuses points the same cell", () => {
+    it("should return true if two focuses point the same cell", () => {
       const focus = new Focus(1, 2, 0);
       expect(focus.posEquals(new Focus(1, 2, 0))).to.be.true;
       expect(focus.posEquals(new Focus(1, 2, 3))).to.be.true;
