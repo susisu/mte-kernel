@@ -60,4 +60,18 @@ describe("Focus", () => {
       expect(() => { focus.offset = 3; }).to.throw(TypeError);
     });
   });
+
+  /**
+   * @test {Focus#posEquals}
+   */
+  describe("#posEquals(focus)", () => {
+    it("should return true if two focuses points the same cell", () => {
+      const focus = new Focus(1, 2, 0);
+      expect(focus.posEquals(new Focus(1, 2, 0))).to.be.true;
+      expect(focus.posEquals(new Focus(1, 2, 3))).to.be.true;
+      expect(focus.posEquals(new Focus(1, 3, 0))).to.be.false;
+      expect(focus.posEquals(new Focus(3, 2, 0))).to.be.false;
+      expect(focus.posEquals(new Focus(3, 4, 0))).to.be.false;
+    });
+  });
 });
