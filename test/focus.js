@@ -74,4 +74,49 @@ describe("Focus", () => {
       expect(focus.posEquals(new Focus(3, 4, 0))).to.be.false;
     });
   });
+
+  /**
+   * @test {Focus#setRow}
+   */
+  describe("#setRow(row)", () => {
+    it("should create a copy of the focus object by setting its row to the specified value", () => {
+      const focus = new Focus(1, 2, 3);
+      const copy = focus.setRow(4);
+      expect(copy).to.be.an.instanceOf(Focus);
+      expect(copy).to.not.equal(focus);
+      expect(copy.row).to.equal(4);
+      expect(copy.column).to.equal(2);
+      expect(copy.offset).to.equal(3);
+    });
+  });
+
+  /**
+   * @test {Focus#setColumn}
+   */
+  describe("#setColumn(row)", () => {
+    it("should create a copy of the focus object by setting its column to the specified value", () => {
+      const focus = new Focus(1, 2, 3);
+      const copy = focus.setColumn(4);
+      expect(copy).to.be.an.instanceOf(Focus);
+      expect(copy).to.not.equal(focus);
+      expect(copy.row).to.equal(1);
+      expect(copy.column).to.equal(4);
+      expect(copy.offset).to.equal(3);
+    });
+  });
+
+  /**
+   * @test {Focus#setOffset}
+   */
+  describe("#setOffset(row)", () => {
+    it("should create a copy of the focus object by setting its offset to the specified value", () => {
+      const focus = new Focus(1, 2, 3);
+      const copy = focus.setOffset(4);
+      expect(copy).to.be.an.instanceOf(Focus);
+      expect(copy).to.not.equal(focus);
+      expect(copy.row).to.equal(1);
+      expect(copy.column).to.equal(2);
+      expect(copy.offset).to.equal(4);
+    });
+  });
 });
