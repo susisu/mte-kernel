@@ -61,7 +61,7 @@ describe("completeTable(table, options)", () => {
         "  | C | D |  "
       ];
       const table = readTable(tableLines);
-      const completed = completeTable(table, { delimiterWidth: 3 });
+      const completed = completeTable(table, { minDelimiterWidth: 3 });
       expect(completed).to.be.an("object");
       expect(completed.table).to.be.an.instanceOf(Table);
       expect(completed.table.toLines()).to.deep.equal(expectLines);
@@ -79,7 +79,7 @@ describe("completeTable(table, options)", () => {
         "  | B | C | D |  "
       ];
       const table = readTable(tableLines);
-      const completed = completeTable(table, { delimiterWidth: 3 });
+      const completed = completeTable(table, { minDelimiterWidth: 3 });
       expect(completed).to.be.an("object");
       expect(completed.table).to.be.an.instanceOf(Table);
       expect(completed.table.toLines()).to.deep.equal(expectLines);
@@ -97,7 +97,7 @@ describe("completeTable(table, options)", () => {
         "  | D | E | F |  "
       ];
       const table = readTable(tableLines);
-      const completed = completeTable(table, { delimiterWidth: 3 });
+      const completed = completeTable(table, { minDelimiterWidth: 3 });
       expect(completed).to.be.an("object");
       expect(completed.table).to.be.an.instanceOf(Table);
       expect(completed.table.toLines()).to.deep.equal(expectLines);
@@ -114,7 +114,7 @@ describe("completeTable(table, options)", () => {
         "  | C | D |  "
       ];
       const table = readTable(tableLines);
-      const completed = completeTable(table, { delimiterWidth: 3 });
+      const completed = completeTable(table, { minDelimiterWidth: 3 });
       expect(completed).to.be.an("object");
       expect(completed.table).to.be.an.instanceOf(Table);
       expect(completed.table.toLines()).to.deep.equal(expectLines);
@@ -132,7 +132,7 @@ describe("completeTable(table, options)", () => {
         "  | D | ||"
       ];
       const table = readTable(tableLines);
-      const completed = completeTable(table, { delimiterWidth: 3 });
+      const completed = completeTable(table, { minDelimiterWidth: 3 });
       expect(completed).to.be.an("object");
       expect(completed.table).to.be.an.instanceOf(Table);
       expect(completed.table.toLines()).to.deep.equal(expectLines);
@@ -151,7 +151,7 @@ describe("completeTable(table, options)", () => {
         " |  |"
       ];
       const table = readTable(tableLines);
-      const completed = completeTable(table, { delimiterWidth: 3 });
+      const completed = completeTable(table, { minDelimiterWidth: 3 });
       expect(completed).to.be.an("object");
       expect(completed.table).to.be.an.instanceOf(Table);
       expect(completed.table.toLines()).to.deep.equal(expectLines);
@@ -161,7 +161,7 @@ describe("completeTable(table, options)", () => {
 
   it("should throw an error if table has no rows", () => {
     const table = new Table([]);
-    expect(() => { completeTable(table,  { delimiterWidth: 3 }); }).to.throw(Error, /empty/i);
+    expect(() => { completeTable(table,  { minDelimiterWidth: 3 }); }).to.throw(Error, /empty/i);
   });
 });
 
