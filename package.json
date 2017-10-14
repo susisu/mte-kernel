@@ -11,7 +11,7 @@
   "scripts": {
     "lint": "eslint lib test",
     "fix": "eslint lib test --fix",
-    "test": "mocha --compilers js:babel-core/register",
+    "test": "mocha --require babel-core/register",
     "cover": "nyc -r html -r text npm test",
     "build": "rollup -c",
     "doc": "esdoc",
