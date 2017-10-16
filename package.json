@@ -35,7 +35,7 @@
     "esdoc": "^1.0.3",
     "esdoc-importpath-plugin": "^1.0.1",
     "esdoc-standard-plugin": "^1.0.0",
-    "eslint": "^4.8.0",
+    "eslint": "^4.9.0",
     "mocha": "^4.0.1",
     "npm-run-all": "^4.1.1",
     "nyc": "^11.2.1",
