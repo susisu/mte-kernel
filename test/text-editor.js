@@ -30,16 +30,16 @@ describe("ITextEditor", () => {
   });
 
   /**
-   * @test {ITextEditor#setSelection}
+   * @test {ITextEditor#setSelectionRange}
    */
-  describe("#setSelection()", () => {
+  describe("#setSelectionRange()", () => {
     it("should be not implemented, throw an error", () => {
       const textEditor = new ITextEditor();
       const range = new Range(
         new Point(0, 0),
         new Point(0, 1)
       );
-      expect(() => { textEditor.setSelection(range); }).to.throw(Error, /not implemented/i);
+      expect(() => { textEditor.setSelectionRange(range); }).to.throw(Error, /not implemented/i);
     });
   });
 
