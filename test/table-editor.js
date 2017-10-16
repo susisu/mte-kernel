@@ -4,9 +4,25 @@ import { Point } from "../lib/point.js";
 import { Range } from "../lib/range.js";
 import { Focus } from "../lib/focus.js";
 import { Table } from "../lib/table.js";
-import { TableEditor } from "../lib/table-editor.js";
+import { _isTableRow, TableEditor } from "../lib/table-editor.js";
 
 import { TextEditor } from "./text-editor-mock.js";
+
+/**
+ * @test {_isTableRow}
+ */
+describe("_isTableRow(line)", () => {
+  it("should return true if the line starts with a pipe", () => {
+    expect(_isTableRow("|")).to.be.true;
+    expect(_isTableRow("|foo")).to.be.true;
+    expect(_isTableRow(" \t|")).to.be.true;
+    expect(_isTableRow(" \t|foo")).to.be.true;
+    expect(_isTableRow("")).to.be.false;
+    expect(_isTableRow("foo")).to.be.false;
+    expect(_isTableRow(" \t")).to.be.false;
+    expect(_isTableRow(" \tfoo")).to.be.false;
+  });
+});
 
 /**
  * @test {TableEditor}
