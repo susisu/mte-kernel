@@ -271,4 +271,91 @@ describe("TableEditor", () => {
       expect(tableEditor._findTable()).to.be.undefined;
     });
   });
+
+  /**
+   * @test {TableEditor#_updateLines}
+   */
+  describe("#_updateLines(startRow, endRow, newLines, oldLines = undefined)", () => {
+    it("should update lines in the specified range", () => {
+      {
+        const textEditor = new TextEditor([
+          "foo",
+          "| A   | B   |",
+          "| --- | --- |",
+          "| C   | D   |",
+          "bar"
+        ]);
+        const tableEditor = new TableEditor(textEditor);
+        const newLines = [
+          "| E   | F   |",
+          "| --- | --- |",
+          "| G   | H   |"
+        ];
+        tableEditor._updateLines(1, 4, newLines);
+        expect(textEditor.getLines()).to.deep.equal([
+          "foo",
+          "| E   | F   |",
+          "| --- | --- |",
+          "| G   | H   |",
+          "bar"
+        ]);
+      }
+      {
+        const textEditor = new TextEditor([
+          "foo",
+          "| A   | B   |",
+          "| --- | --- |",
+          "| C   | D   |",
+          "bar"
+        ]);
+        const tableEditor = new TableEditor(textEditor);
+        const oldLines = [
+          "| A   | B   |",
+          "| --- | --- |",
+          "| C   | D   |"
+        ];
+        const newLines = [
+          "| A   | B   |",
+          "| --- | --- |",
+          "| G   | H   |"
+        ];
+        tableEditor._updateLines(1, 4, newLines, oldLines);
+        expect(textEditor.getLines()).to.deep.equal([
+          "foo",
+          "| A   | B   |",
+          "| --- | --- |",
+          "| G   | H   |",
+          "bar"
+        ]);
+      }
+      {
+        const textEditor = new TextEditor([
+          "foo",
+          "| A   | B   |",
+          "| --- | --- |",
+          "| C   | D   |",
+          "bar"
+        ]);
+        const tableEditor = new TableEditor(textEditor);
+        const oldLines = [
+          "| A   | B   |",
+          "| --- | --- |",
+          "| C   | D   |"
+        ];
+        const newLines = [
+          "| E   | F   |",
+          "| --- | --- |",
+          "| G   | H   |"
+        ];
+        tableEditor._updateLines(1, 4, newLines, oldLines);
+        expect(textEditor.getLines()).to.deep.equal([
+          "foo",
+          "| E   | F   |",
+          "| --- | --- |",
+          "| G   | H   |",
+          "bar"
+        ]);
+      }
+    });
+  });
 });
