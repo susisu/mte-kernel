@@ -277,9 +277,9 @@ describe("Table", () => {
   });
 
   /**
-   * @test {Table#computeFocus}
+   * @test {Table#focusOfPosition}
    */
-  describe("#computeFocus(pos, rowOffset)", () => {
+  describe("#focusOfPosition(pos, rowOffset)", () => {
     it("should compute a focus from a point in the text editor", () => {
       const table = new Table([
         new TableRow([new TableCell("A"), new TableCell("B")], "", ""),
@@ -287,84 +287,84 @@ describe("Table", () => {
         new TableRow([new TableCell("C"), new TableCell("D"), new TableCell("E")], " ", "  "),
       ]);
       {
-        const focus = table.computeFocus(new Point(1, 0), 1);
+        const focus = table.focusOfPosition(new Point(1, 0), 1);
         expect(focus).to.be.an.instanceOf(Focus);
         expect(focus.row).to.equal(0);
         expect(focus.column).to.equal(-1);
         expect(focus.offset).to.equal(0);
       }
       {
-        const focus = table.computeFocus(new Point(1, 1), 1);
+        const focus = table.focusOfPosition(new Point(1, 1), 1);
         expect(focus).to.be.an.instanceOf(Focus);
         expect(focus.row).to.equal(0);
         expect(focus.column).to.equal(0);
         expect(focus.offset).to.equal(0);
       }
       {
-        const focus = table.computeFocus(new Point(1, 2), 1);
+        const focus = table.focusOfPosition(new Point(1, 2), 1);
         expect(focus).to.be.an.instanceOf(Focus);
         expect(focus.row).to.equal(0);
         expect(focus.column).to.equal(0);
         expect(focus.offset).to.equal(1);
       }
       {
-        const focus = table.computeFocus(new Point(1, 3), 1);
+        const focus = table.focusOfPosition(new Point(1, 3), 1);
         expect(focus).to.be.an.instanceOf(Focus);
         expect(focus.row).to.equal(0);
         expect(focus.column).to.equal(1);
         expect(focus.offset).to.equal(0);
       }
       {
-        const focus = table.computeFocus(new Point(1, 4), 1);
+        const focus = table.focusOfPosition(new Point(1, 4), 1);
         expect(focus).to.be.an.instanceOf(Focus);
         expect(focus.row).to.equal(0);
         expect(focus.column).to.equal(1);
         expect(focus.offset).to.equal(1);
       }
       {
-        const focus = table.computeFocus(new Point(1, 5), 1);
+        const focus = table.focusOfPosition(new Point(1, 5), 1);
         expect(focus).to.be.an.instanceOf(Focus);
         expect(focus.row).to.equal(0);
         expect(focus.column).to.equal(2);
         expect(focus.offset).to.equal(0);
       }
       {
-        const focus = table.computeFocus(new Point(3, 0), 1);
+        const focus = table.focusOfPosition(new Point(3, 0), 1);
         expect(focus).to.be.an.instanceOf(Focus);
         expect(focus.row).to.equal(2);
         expect(focus.column).to.equal(-1);
         expect(focus.offset).to.equal(0);
       }
       {
-        const focus = table.computeFocus(new Point(3, 1), 1);
+        const focus = table.focusOfPosition(new Point(3, 1), 1);
         expect(focus).to.be.an.instanceOf(Focus);
         expect(focus.row).to.equal(2);
         expect(focus.column).to.equal(-1);
         expect(focus.offset).to.equal(1);
       }
       {
-        const focus = table.computeFocus(new Point(3, 2), 1);
+        const focus = table.focusOfPosition(new Point(3, 2), 1);
         expect(focus).to.be.an.instanceOf(Focus);
         expect(focus.row).to.equal(2);
         expect(focus.column).to.equal(0);
         expect(focus.offset).to.equal(0);
       }
       {
-        const focus = table.computeFocus(new Point(3, 7), 1);
+        const focus = table.focusOfPosition(new Point(3, 7), 1);
         expect(focus).to.be.an.instanceOf(Focus);
         expect(focus.row).to.equal(2);
         expect(focus.column).to.equal(2);
         expect(focus.offset).to.equal(1);
       }
       {
-        const focus = table.computeFocus(new Point(3, 8), 1);
+        const focus = table.focusOfPosition(new Point(3, 8), 1);
         expect(focus).to.be.an.instanceOf(Focus);
         expect(focus.row).to.equal(2);
         expect(focus.column).to.equal(3);
         expect(focus.offset).to.equal(0);
       }
       {
-        const focus = table.computeFocus(new Point(3, 9), 1);
+        const focus = table.focusOfPosition(new Point(3, 9), 1);
         expect(focus).to.be.an.instanceOf(Focus);
         expect(focus.row).to.equal(2);
         expect(focus.column).to.equal(3);
@@ -378,15 +378,15 @@ describe("Table", () => {
         new TableRow([new TableCell("---")], "", ""),
         new TableRow([new TableCell("C"), new TableCell("D"), new TableCell("E")], " ", "  "),
       ]);
-      expect(table.computeFocus(new Point(0, 1), 1)).to.be.undefined;
-      expect(table.computeFocus(new Point(4, 1), 1)).to.be.undefined;
+      expect(table.focusOfPosition(new Point(0, 1), 1)).to.be.undefined;
+      expect(table.focusOfPosition(new Point(4, 1), 1)).to.be.undefined;
     });
   });
 
   /**
-   * @test {Table#computePosition}
+   * @test {Table#positionOfFocus}
    */
-  describe("#computePosition(focus, rowOffset)", () => {
+  describe("#positionOfFocus(focus, rowOffset)", () => {
     it("should compute a position from a focus", () => {
       const table = new Table([
         new TableRow([new TableCell("A"), new TableCell("B")], "", ""),
@@ -394,61 +394,61 @@ describe("Table", () => {
         new TableRow([new TableCell("C"), new TableCell("D"), new TableCell("E")], " ", "  "),
       ]);
       {
-        const pos = table.computePosition(new Focus(2, -1, 0), 1);
+        const pos = table.positionOfFocus(new Focus(2, -1, 0), 1);
         expect(pos).to.be.an.instanceOf(Point);
         expect(pos.row).to.equal(3);
         expect(pos.column).to.equal(0);
       }
       {
-        const pos = table.computePosition(new Focus(2, -1, 1), 1);
+        const pos = table.positionOfFocus(new Focus(2, -1, 1), 1);
         expect(pos).to.be.an.instanceOf(Point);
         expect(pos.row).to.equal(3);
         expect(pos.column).to.equal(1);
       }
       {
-        const pos = table.computePosition(new Focus(2, 0, 0), 1);
+        const pos = table.positionOfFocus(new Focus(2, 0, 0), 1);
         expect(pos).to.be.an.instanceOf(Point);
         expect(pos.row).to.equal(3);
         expect(pos.column).to.equal(2);
       }
       {
-        const pos = table.computePosition(new Focus(2, 0, 1), 1);
+        const pos = table.positionOfFocus(new Focus(2, 0, 1), 1);
         expect(pos).to.be.an.instanceOf(Point);
         expect(pos.row).to.equal(3);
         expect(pos.column).to.equal(3);
       }
       {
-        const pos = table.computePosition(new Focus(2, 1, 0), 1);
+        const pos = table.positionOfFocus(new Focus(2, 1, 0), 1);
         expect(pos).to.be.an.instanceOf(Point);
         expect(pos.row).to.equal(3);
         expect(pos.column).to.equal(4);
       }
       {
-        const pos = table.computePosition(new Focus(2, 1, 1), 1);
+        const pos = table.positionOfFocus(new Focus(2, 1, 1), 1);
         expect(pos).to.be.an.instanceOf(Point);
         expect(pos.row).to.equal(3);
         expect(pos.column).to.equal(5);
       }
       {
-        const pos = table.computePosition(new Focus(2, 2, 0), 1);
+        const pos = table.positionOfFocus(new Focus(2, 2, 0), 1);
         expect(pos).to.be.an.instanceOf(Point);
         expect(pos.row).to.equal(3);
         expect(pos.column).to.equal(6);
       }
       {
-        const pos = table.computePosition(new Focus(2, 2, 1), 1);
+        const pos = table.positionOfFocus(new Focus(2, 2, 1), 1);
         expect(pos).to.be.an.instanceOf(Point);
         expect(pos.row).to.equal(3);
         expect(pos.column).to.equal(7);
       }
       {
-        const pos = table.computePosition(new Focus(2, 3, 0), 1);
+        const pos = table.positionOfFocus(new Focus(2, 3, 0), 1);
         expect(pos).to.be.an.instanceOf(Point);
         expect(pos.row).to.equal(3);
         expect(pos.column).to.equal(8);
       }
       {
-        const pos = table.computePosition(new Focus(2, 3, 1), 1);
+        const pos = table.positionOfFocus(new Focus(2, 3, 1), 1);
         expect(pos).to.be.an.instanceOf(Point);
         expect(pos.row).to.equal(3);
         expect(pos.column).to.equal(9);
@@ -461,15 +461,15 @@ describe("Table", () => {
         new TableRow([new TableCell("---")], "", ""),
         new TableRow([new TableCell("C"), new TableCell("D"), new TableCell("E")], " ", "  "),
       ]);
-      expect(table.computePosition(new Focus(-1, 0, 0), 1)).to.be.undefined;
-      expect(table.computePosition(new Focus(3, 0, 0), 1)).to.be.undefined;
+      expect(table.positionOfFocus(new Focus(-1, 0, 0), 1)).to.be.undefined;
+      expect(table.positionOfFocus(new Focus(3, 0, 0), 1)).to.be.undefined;
     });
   });
 
   /**
-   * @test {Table#computeSelectionRange}
+   * @test {Table#selectionRangeOfFocus}
    */
-  describe("#computeSelectionRange(focus, rowOffset)", () => {
+  describe("#selectionRangeOfFocus(focus, rowOffset)", () => {
     it("should compute a selection range from a focus", () => {
       const table = new Table([
         new TableRow([new TableCell("A"), new TableCell("B")], "", ""),
@@ -477,7 +477,7 @@ describe("Table", () => {
         new TableRow([new TableCell("  C  "), new TableCell("D"), new TableCell("E")], " ", "  "),
       ]);
       {
-        const range = table.computeSelectionRange(new Focus(0, 0, 0), 1);
+        const range = table.selectionRangeOfFocus(new Focus(0, 0, 0), 1);
         expect(range).to.be.an.instanceOf(Range);
         expect(range.start.row).to.equal(1);
         expect(range.start.column).to.equal(1);
@@ -485,7 +485,7 @@ describe("Table", () => {
         expect(range.end.column).to.equal(2);
       }
       {
-        const range = table.computeSelectionRange(new Focus(0, 0, 1), 1);
+        const range = table.selectionRangeOfFocus(new Focus(0, 0, 1), 1);
         expect(range).to.be.an.instanceOf(Range);
         expect(range.start.row).to.equal(1);
         expect(range.start.column).to.equal(1);
@@ -493,7 +493,7 @@ describe("Table", () => {
         expect(range.end.column).to.equal(2);
       }
       {
-        const range = table.computeSelectionRange(new Focus(0, 1, 0), 1);
+        const range = table.selectionRangeOfFocus(new Focus(0, 1, 0), 1);
         expect(range).to.be.an.instanceOf(Range);
         expect(range.start.row).to.equal(1);
         expect(range.start.column).to.equal(3);
@@ -501,7 +501,7 @@ describe("Table", () => {
         expect(range.end.column).to.equal(4);
       }
       {
-        const range = table.computeSelectionRange(new Focus(2, 0, 0), 1);
+        const range = table.selectionRangeOfFocus(new Focus(2, 0, 0), 1);
         expect(range).to.be.an.instanceOf(Range);
         expect(range.start.row).to.equal(3);
         expect(range.start.column).to.equal(4);
@@ -516,10 +516,10 @@ describe("Table", () => {
         new TableRow([new TableCell("---")], "", ""),
         new TableRow([new TableCell("C"), new TableCell("D"), new TableCell("E")], " ", "  "),
       ]);
-      expect(table.computeSelectionRange(new Focus(-1, 0, 0), 1)).to.be.undefined;
-      expect(table.computeSelectionRange(new Focus(3, 0, 0), 1)).to.be.undefined;
-      expect(table.computeSelectionRange(new Focus(0, -1, 0), 1)).to.be.undefined;
-      expect(table.computeSelectionRange(new Focus(0, 2, 0), 1)).to.be.undefined;
+      expect(table.selectionRangeOfFocus(new Focus(-1, 0, 0), 1)).to.be.undefined;
+      expect(table.selectionRangeOfFocus(new Focus(3, 0, 0), 1)).to.be.undefined;
+      expect(table.selectionRangeOfFocus(new Focus(0, -1, 0), 1)).to.be.undefined;
+      expect(table.selectionRangeOfFocus(new Focus(0, 2, 0), 1)).to.be.undefined;
     });
 
     it("should return undefined if the specified cell is empty", () => {
@@ -528,8 +528,8 @@ describe("Table", () => {
         new TableRow([new TableCell("---")], "", ""),
         new TableRow([new TableCell("    "), new TableCell("D"), new TableCell("E")], " ", "  "),
       ]);
-      expect(table.computeSelectionRange(new Focus(0, 0, 0), 1)).to.be.undefined;
-      expect(table.computeSelectionRange(new Focus(2, 0, 0), 1)).to.be.undefined;
+      expect(table.selectionRangeOfFocus(new Focus(0, 0, 0), 1)).to.be.undefined;
+      expect(table.selectionRangeOfFocus(new Focus(2, 0, 0), 1)).to.be.undefined;
     });
   });
 });
