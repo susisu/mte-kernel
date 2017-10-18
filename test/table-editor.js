@@ -64,25 +64,25 @@ describe("TableEditor", () => {
         "bar"
       ]);
       const tableEditor = new TableEditor(textEditor);
-      textEditor.setCursorPos(new Point(0, 0));
+      textEditor.setCursorPosition(new Point(0, 0));
       expect(tableEditor.cursorIsInTable()).to.be.false;
-      textEditor.setCursorPos(new Point(0, 3));
+      textEditor.setCursorPosition(new Point(0, 3));
       expect(tableEditor.cursorIsInTable()).to.be.false;
-      textEditor.setCursorPos(new Point(1, 0));
+      textEditor.setCursorPosition(new Point(1, 0));
       expect(tableEditor.cursorIsInTable()).to.be.true;
-      textEditor.setCursorPos(new Point(1, 13));
+      textEditor.setCursorPosition(new Point(1, 13));
       expect(tableEditor.cursorIsInTable()).to.be.true;
-      textEditor.setCursorPos(new Point(2, 0));
+      textEditor.setCursorPosition(new Point(2, 0));
       expect(tableEditor.cursorIsInTable()).to.be.true;
-      textEditor.setCursorPos(new Point(2, 13));
+      textEditor.setCursorPosition(new Point(2, 13));
       expect(tableEditor.cursorIsInTable()).to.be.true;
-      textEditor.setCursorPos(new Point(3, 0));
+      textEditor.setCursorPosition(new Point(3, 0));
       expect(tableEditor.cursorIsInTable()).to.be.true;
-      textEditor.setCursorPos(new Point(3, 13));
+      textEditor.setCursorPosition(new Point(3, 13));
       expect(tableEditor.cursorIsInTable()).to.be.true;
-      textEditor.setCursorPos(new Point(4, 0));
+      textEditor.setCursorPosition(new Point(4, 0));
       expect(tableEditor.cursorIsInTable()).to.be.false;
-      textEditor.setCursorPos(new Point(4, 3));
+      textEditor.setCursorPosition(new Point(4, 3));
       expect(tableEditor.cursorIsInTable()).to.be.false;
     });
   });
@@ -100,7 +100,7 @@ describe("TableEditor", () => {
         "bar"
       ]);
       const tableEditor = new TableEditor(textEditor);
-      textEditor.setCursorPos(new Point(1, 0));
+      textEditor.setCursorPosition(new Point(1, 0));
       {
         const info = tableEditor._findTable();
         expect(info).to.be.an("object");
@@ -125,7 +125,7 @@ describe("TableEditor", () => {
         expect(info.focus.column).to.equal(-1);
         expect(info.focus.offset).to.equal(0);
       }
-      textEditor.setCursorPos(new Point(1, 2));
+      textEditor.setCursorPosition(new Point(1, 2));
       {
         const info = tableEditor._findTable();
         expect(info).to.be.an("object");
@@ -150,7 +150,7 @@ describe("TableEditor", () => {
         expect(info.focus.column).to.equal(0);
         expect(info.focus.offset).to.equal(1);
       }
-      textEditor.setCursorPos(new Point(1, 9));
+      textEditor.setCursorPosition(new Point(1, 9));
       {
         const info = tableEditor._findTable();
         expect(info).to.be.an("object");
@@ -175,7 +175,7 @@ describe("TableEditor", () => {
         expect(info.focus.column).to.equal(1);
         expect(info.focus.offset).to.equal(2);
       }
-      textEditor.setCursorPos(new Point(1, 13));
+      textEditor.setCursorPosition(new Point(1, 13));
       {
         const info = tableEditor._findTable();
         expect(info).to.be.an("object");
@@ -200,7 +200,7 @@ describe("TableEditor", () => {
         expect(info.focus.column).to.equal(2);
         expect(info.focus.offset).to.equal(0);
       }
-      textEditor.setCursorPos(new Point(2, 2));
+      textEditor.setCursorPosition(new Point(2, 2));
       {
         const info = tableEditor._findTable();
         expect(info).to.be.an("object");
@@ -225,7 +225,7 @@ describe("TableEditor", () => {
         expect(info.focus.column).to.equal(0);
         expect(info.focus.offset).to.equal(1);
       }
-      textEditor.setCursorPos(new Point(3, 2));
+      textEditor.setCursorPosition(new Point(3, 2));
       {
         const info = tableEditor._findTable();
         expect(info).to.be.an("object");
@@ -261,13 +261,13 @@ describe("TableEditor", () => {
         "bar"
       ]);
       const tableEditor = new TableEditor(textEditor);
-      textEditor.setCursorPos(new Point(0, 0));
+      textEditor.setCursorPosition(new Point(0, 0));
       expect(tableEditor._findTable()).to.be.undefined;
-      textEditor.setCursorPos(new Point(0, 3));
+      textEditor.setCursorPosition(new Point(0, 3));
       expect(tableEditor._findTable()).to.be.undefined;
-      textEditor.setCursorPos(new Point(4, 0));
+      textEditor.setCursorPosition(new Point(4, 0));
       expect(tableEditor._findTable()).to.be.undefined;
-      textEditor.setCursorPos(new Point(4, 3));
+      textEditor.setCursorPosition(new Point(4, 3));
       expect(tableEditor._findTable()).to.be.undefined;
     });
   });

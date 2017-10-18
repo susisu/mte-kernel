@@ -9,23 +9,23 @@ import { ITextEditor } from "../lib/text-editor.js";
  */
 describe("ITextEditor", () => {
   /**
-   * @test {ITextEditor#getCursorPos}
+   * @test {ITextEditor#getCursorPosition}
    */
-  describe("#getCursorPos()", () => {
+  describe("#getCursorPosition()", () => {
     it("should be not implemented, throw an error", () => {
       const textEditor = new ITextEditor();
-      expect(() => { textEditor.getCursorPos(); }).to.throw(Error, /not implemented/i);
+      expect(() => { textEditor.getCursorPosition(); }).to.throw(Error, /not implemented/i);
     });
   });
 
   /**
-   * @test {ITextEditor#setCursorPos}
+   * @test {ITextEditor#setCursorPosition}
    */
-  describe("#setCursorPos(pos)", () => {
+  describe("#setCursorPosition(pos)", () => {
     it("should be not implemented, throw an error", () => {
       const textEditor = new ITextEditor();
       const pos = new Point(0, 0);
-      expect(() => { textEditor.setCursorPos(pos); }).to.throw(Error, /not implemented/i);
+      expect(() => { textEditor.setCursorPosition(pos); }).to.throw(Error, /not implemented/i);
     });
   });
 

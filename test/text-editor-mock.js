@@ -10,11 +10,11 @@ export class TextEditor extends ITextEditor {
     this._selectionRange = null;
   }
 
-  getCursorPos() {
+  getCursorPosition() {
     return this._cursorPos;
   }
 
-  setCursorPos(pos) {
+  setCursorPosition(pos) {
     this._cursorPos = pos;
   }
 
