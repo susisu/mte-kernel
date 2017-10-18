@@ -455,7 +455,7 @@ describe("Table", () => {
       }
     });
 
-    it("should return undefined if the focus is out of the table", () => {
+    it("should return undefined if the focused row is out of the table", () => {
       const table = new Table([
         new TableRow([new TableCell("A"), new TableCell("B")], "", ""),
         new TableRow([new TableCell("---")], "", ""),
