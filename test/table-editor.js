@@ -431,4 +431,124 @@ describe("TableEditor", () => {
       }
     });
   });
+
+  /**
+   * @test {TableEditor#_selectFocus}
+   */
+  describe("#_selectFocus(table, focus, rowOffset)", () => {
+    it("should select the focued cell in the text editor if the cell is not empty", () => {
+      const textEditor = new TextEditor([
+        "foo",
+        "| A    | B   |",
+        "| ---- | --- |",
+        "| test |     |",
+        "bar"
+      ]);
+      textEditor.setCursorPosition(new Point(1, 0));
+      const tableEditor = new TableEditor(textEditor);
+      const info = tableEditor._findTable();
+      {
+        const focus = new Focus(0, 0, 0);
+        tableEditor._selectFocus(info.table, focus, info.range.start.row);
+        const range = textEditor.getSelectionRange();
+        expect(range.start.row).to.equal(1);
+        expect(range.start.column).to.equal(2);
+        expect(range.end.row).to.equal(1);
+        expect(range.end.column).to.equal(3);
+      }
+      {
+        const focus = new Focus(0, 0, 2);
+        tableEditor._selectFocus(info.table, focus, info.range.start.row);
+        const range = textEditor.getSelectionRange();
+        expect(range.start.row).to.equal(1);
+        expect(range.start.column).to.equal(2);
+        expect(range.end.row).to.equal(1);
+        expect(range.end.column).to.equal(3);
+      }
+      {
+        const focus = new Focus(0, 1, 3);
+        tableEditor._selectFocus(info.table, focus, info.range.start.row);
+        const range = textEditor.getSelectionRange();
+        expect(range.start.row).to.equal(1);
+        expect(range.start.column).to.equal(9);
+        expect(range.end.row).to.equal(1);
+        expect(range.end.column).to.equal(10);
+      }
+      {
+        const focus = new Focus(2, 0, 0);
+        tableEditor._selectFocus(info.table, focus, info.range.start.row);
+        const range = textEditor.getSelectionRange();
+        expect(range.start.row).to.equal(3);
+        expect(range.start.column).to.equal(2);
+        expect(range.end.row).to.equal(3);
+        expect(range.end.column).to.equal(6);
+      }
+    });
+
+    it("should move the cursor position if the cell is empty", () => {
+      const textEditor = new TextEditor([
+        "foo",
+        "| A    | B   |",
+        "| ---- | --- |",
+        "| test |     |",
+        "bar"
+      ]);
+      textEditor.setCursorPosition(new Point(1, 0));
+      const tableEditor = new TableEditor(textEditor);
+      const info = tableEditor._findTable();
+      {
+        const focus = new Focus(2, 1, 0);
+        tableEditor._selectFocus(info.table, focus, info.range.start.row);
+        const pos = textEditor.getCursorPosition();
+        expect(pos.row).to.equal(3);
+        expect(pos.column).to.equal(8);
+        expect(textEditor.getSelectionRange()).to.be.null;
+      }
+      {
+        const focus = new Focus(0, -1, 0);
+        tableEditor._selectFocus(info.table, focus, info.range.start.row);
+        const pos = textEditor.getCursorPosition();
+        expect(pos.row).to.equal(1);
+        expect(pos.column).to.equal(0);
+        expect(textEditor.getSelectionRange()).to.be.null;
+      }
+      {
+        const focus = new Focus(0, 2, 0);
+        tableEditor._selectFocus(info.table, focus, info.range.start.row);
+        const pos = textEditor.getCursorPosition();
+        expect(pos.row).to.equal(1);
+        expect(pos.column).to.equal(14);
+        expect(textEditor.getSelectionRange()).to.be.null;
+      }
+    });
+
+    it("should do nothing if the focused row is out of the table", () => {
+      const textEditor = new TextEditor([
+        "foo",
+        "| A    | B   |",
+        "| ---- | --- |",
+        "| test |     |",
+        "bar"
+      ]);
+      textEditor.setCursorPosition(new Point(1, 0));
+      const tableEditor = new TableEditor(textEditor);
+      const info = tableEditor._findTable();
+      {
+        const focus = new Focus(-1, 0, 0);
+        tableEditor._selectFocus(info.table, focus, info.range.start.row);
+        const pos = textEditor.getCursorPosition();
+        expect(pos.row).to.equal(1);
+        expect(pos.column).to.equal(0);
+        expect(textEditor.getSelectionRange()).to.be.null;
+      }
+      {
+        const focus = new Focus(3, 0, 0);
+        tableEditor._selectFocus(info.table, focus, info.range.start.row);
+        const pos = textEditor.getCursorPosition();
+        expect(pos.row).to.equal(1);
+        expect(pos.column).to.equal(0);
+        expect(textEditor.getSelectionRange()).to.be.null;
+      }
+    });
+  });
 });
