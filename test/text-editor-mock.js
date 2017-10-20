@@ -16,6 +16,7 @@ export class TextEditor extends ITextEditor {
 
   setCursorPosition(pos) {
     this._cursorPos = pos;
+    this._selectionRange = null;
   }
 
   getSelectionRange() {
@@ -23,6 +24,7 @@ export class TextEditor extends ITextEditor {
   }
 
   setSelectionRange(range) {
+    this._cursorPos = range.end;
     this._selectionRange = range;
   }
 
