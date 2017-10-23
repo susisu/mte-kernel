@@ -362,7 +362,7 @@ describe("TableEditor", () => {
   /**
    * @test {TableEditor#_moveToFocus}
    */
-  describe("#_moveToFocus(table, focus, rowOffset)", () => {
+  describe("#_moveToFocus(startRow, table, focus)", () => {
     it("should move the cursor position to the focused cell", () => {
       const textEditor = new TextEditor([
         "foo",
@@ -376,28 +376,28 @@ describe("TableEditor", () => {
       const info = tableEditor._findTable();
       {
         const focus = new Focus(0, 1, 2);
-        tableEditor._moveToFocus(info.table, focus, info.range.start.row);
+        tableEditor._moveToFocus(info.range.start.row, info.table, focus);
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(1);
         expect(pos.column).to.equal(9);
       }
       {
         const focus = new Focus(2, 0, 1);
-        tableEditor._moveToFocus(info.table, focus, info.range.start.row);
+        tableEditor._moveToFocus(info.range.start.row, info.table, focus);
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(3);
         expect(pos.column).to.equal(2);
       }
       {
         const focus = new Focus(0, -1, 0);
-        tableEditor._moveToFocus(info.table, focus, info.range.start.row);
+        tableEditor._moveToFocus(info.range.start.row, info.table, focus);
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(1);
         expect(pos.column).to.equal(0);
       }
       {
         const focus = new Focus(0, 2, 0);
-        tableEditor._moveToFocus(info.table, focus, info.range.start.row);
+        tableEditor._moveToFocus(info.range.start.row, info.table, focus);
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(1);
         expect(pos.column).to.equal(13);
@@ -417,14 +417,14 @@ describe("TableEditor", () => {
       const info = tableEditor._findTable();
       {
         const focus = new Focus(-1, 0, 0);
-        tableEditor._moveToFocus(info.table, focus, info.range.start.row);
+        tableEditor._moveToFocus(info.range.start.row, info.table, focus);
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(1);
         expect(pos.column).to.equal(0);
       }
       {
         const focus = new Focus(3, 0, 0);
-        tableEditor._moveToFocus(info.table, focus, info.range.start.row);
+        tableEditor._moveToFocus(info.range.start.row, info.table, focus);
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(1);
         expect(pos.column).to.equal(0);
@@ -435,7 +435,7 @@ describe("TableEditor", () => {
   /**
    * @test {TableEditor#_selectFocus}
    */
-  describe("#_selectFocus(table, focus, rowOffset)", () => {
+  describe("#_selectFocus(startRow, table, focus)", () => {
     it("should select the focued cell in the text editor if the cell is not empty", () => {
       const textEditor = new TextEditor([
         "foo",
@@ -449,7 +449,7 @@ describe("TableEditor", () => {
       const info = tableEditor._findTable();
       {
         const focus = new Focus(0, 0, 0);
-        tableEditor._selectFocus(info.table, focus, info.range.start.row);
+        tableEditor._selectFocus(info.range.start.row, info.table, focus);
         const range = textEditor.getSelectionRange();
         expect(range.start.row).to.equal(1);
         expect(range.start.column).to.equal(2);
@@ -458,7 +458,7 @@ describe("TableEditor", () => {
       }
       {
         const focus = new Focus(0, 0, 2);
-        tableEditor._selectFocus(info.table, focus, info.range.start.row);
+        tableEditor._selectFocus(info.range.start.row, info.table, focus);
         const range = textEditor.getSelectionRange();
         expect(range.start.row).to.equal(1);
         expect(range.start.column).to.equal(2);
@@ -467,7 +467,7 @@ describe("TableEditor", () => {
       }
       {
         const focus = new Focus(0, 1, 3);
-        tableEditor._selectFocus(info.table, focus, info.range.start.row);
+        tableEditor._selectFocus(info.range.start.row, info.table, focus);
         const range = textEditor.getSelectionRange();
         expect(range.start.row).to.equal(1);
         expect(range.start.column).to.equal(9);
@@ -476,7 +476,7 @@ describe("TableEditor", () => {
       }
       {
         const focus = new Focus(2, 0, 0);
-        tableEditor._selectFocus(info.table, focus, info.range.start.row);
+        tableEditor._selectFocus(info.range.start.row, info.table, focus);
         const range = textEditor.getSelectionRange();
         expect(range.start.row).to.equal(3);
         expect(range.start.column).to.equal(2);
@@ -498,7 +498,7 @@ describe("TableEditor", () => {
       const info = tableEditor._findTable();
       {
         const focus = new Focus(2, 1, 0);
-        tableEditor._selectFocus(info.table, focus, info.range.start.row);
+        tableEditor._selectFocus(info.range.start.row, info.table, focus);
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(3);
         expect(pos.column).to.equal(8);
@@ -506,7 +506,7 @@ describe("TableEditor", () => {
       }
       {
         const focus = new Focus(0, -1, 0);
-        tableEditor._selectFocus(info.table, focus, info.range.start.row);
+        tableEditor._selectFocus(info.range.start.row, info.table, focus);
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(1);
         expect(pos.column).to.equal(0);
@@ -514,7 +514,7 @@ describe("TableEditor", () => {
       }
       {
         const focus = new Focus(0, 2, 0);
-        tableEditor._selectFocus(info.table, focus, info.range.start.row);
+        tableEditor._selectFocus(info.range.start.row, info.table, focus);
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(1);
         expect(pos.column).to.equal(14);
@@ -535,7 +535,7 @@ describe("TableEditor", () => {
       const info = tableEditor._findTable();
       {
         const focus = new Focus(-1, 0, 0);
-        tableEditor._selectFocus(info.table, focus, info.range.start.row);
+        tableEditor._selectFocus(info.range.start.row, info.table, focus);
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(1);
         expect(pos.column).to.equal(0);
@@ -543,7 +543,7 @@ describe("TableEditor", () => {
       }
       {
         const focus = new Focus(3, 0, 0);
-        tableEditor._selectFocus(info.table, focus, info.range.start.row);
+        tableEditor._selectFocus(info.range.start.row, info.table, focus);
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(1);
         expect(pos.column).to.equal(0);
