@@ -65,6 +65,7 @@ describe("options(obj)", () => {
         minDelimiterWidth: 3,
         defaultAlignment : DefaultAlignment.LEFT,
         headerAlignment  : HeaderAlignment.FOLLOW,
+        smartCursor      : false,
         textWidthOptions : {
           normalize      : true,
           wideChars      : new Set(),
@@ -83,6 +84,7 @@ describe("options(obj)", () => {
         minDelimiterWidth: 5,
         defaultAlignment : DefaultAlignment.LEFT,
         headerAlignment  : HeaderAlignment.FOLLOW,
+        smartCursor      : false,
         textWidthOptions : {
           normalize      : true,
           wideChars      : new Set(),
@@ -100,6 +102,7 @@ describe("options(obj)", () => {
         minDelimiterWidth: 3,
         defaultAlignment : DefaultAlignment.LEFT,
         headerAlignment  : HeaderAlignment.FOLLOW,
+        smartCursor      : false,
         textWidthOptions : {
           normalize      : true,
           wideChars      : new Set(),
@@ -120,6 +123,7 @@ describe("options(obj)", () => {
         minDelimiterWidth: 3,
         defaultAlignment : DefaultAlignment.LEFT,
         headerAlignment  : HeaderAlignment.FOLLOW,
+        smartCursor      : false,
         textWidthOptions : {
           normalize      : false,
           wideChars      : new Set(),
@@ -134,6 +138,7 @@ describe("options(obj)", () => {
         minDelimiterWidth: 5,
         defaultAlignment : DefaultAlignment.CENTER,
         headerAlignment  : HeaderAlignment.CENTER,
+        smartCursor      : true,
         textWidthOptions : {
           normalize      : false,
           wideChars      : new Set("→"),
@@ -146,6 +151,7 @@ describe("options(obj)", () => {
         minDelimiterWidth: 5,
         defaultAlignment : DefaultAlignment.CENTER,
         headerAlignment  : HeaderAlignment.CENTER,
+        smartCursor      : true,
         textWidthOptions : {
           normalize      : false,
           wideChars      : new Set("→"),
