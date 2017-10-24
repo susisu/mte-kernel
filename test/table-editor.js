@@ -3,7 +3,7 @@ import { expect } from "chai";
 import { Point } from "../lib/point.js";
 import { Range } from "../lib/range.js";
 import { Focus } from "../lib/focus.js";
-import { DefaultAlignment } from "../lib/alignment.js";
+import { Alignment, DefaultAlignment } from "../lib/alignment.js";
 import { Table } from "../lib/table.js";
 import { options } from "../lib/options.js";
 import { _isTableRow, TableEditor } from "../lib/table-editor.js";
@@ -990,6 +990,134 @@ describe("TableEditor", () => {
       const tableEditor = new TableEditor(textEditor);
       const ops = {};
       tableEditor.escape(options(ops));
+      const pos = textEditor.getCursorPosition();
+      expect(pos.row).to.equal(0);
+      expect(pos.column).to.equal(0);
+      expect(textEditor.getSelectionRange()).to.be.null;
+      expect(textEditor.getLines()).to.deep.equal([
+        "foo",
+        "| A | B |",
+        " | ----- | --- |",
+        "  | C | D |",
+        "bar"
+      ]);
+    });
+  });
+
+  /**
+   * @test {TableEditor#align}
+   */
+  describe("#align(alignment, options)", () => {
+    it("should alter alignment of a column", () => {
+      {
+        const textEditor = new TextEditor([
+          "foo",
+          "| A | B |",
+          " | ----- | --- |",
+          "  | C | D |",
+          "bar"
+        ]);
+        textEditor.setCursorPosition(new Point(1, 2));
+        const tableEditor = new TableEditor(textEditor);
+        const ops = {};
+        tableEditor.align(Alignment.RIGHT, options(ops));
+        const pos = textEditor.getCursorPosition();
+        expect(pos.row).to.equal(1);
+        expect(pos.column).to.equal(4);
+        expect(textEditor.getSelectionRange()).to.be.null;
+        expect(textEditor.getLines()).to.deep.equal([
+          "foo",
+          "|   A | B   |",
+          "| ---:| --- |",
+          "|   C | D   |",
+          "bar"
+        ]);
+      }
+      {
+        const textEditor = new TextEditor([
+          "foo",
+          "| A | B |",
+          "  | C | D |",
+          "bar"
+        ]);
+        textEditor.setCursorPosition(new Point(2, 4));
+        const tableEditor = new TableEditor(textEditor);
+        const ops = {};
+        tableEditor.align(Alignment.RIGHT, options(ops));
+        const pos = textEditor.getCursorPosition();
+        expect(pos.row).to.equal(3);
+        expect(pos.column).to.equal(4);
+        expect(textEditor.getSelectionRange()).to.be.null;
+        expect(textEditor.getLines()).to.deep.equal([
+          "foo",
+          "|   A | B   |",
+          "| ---:| --- |",
+          "|   C | D   |",
+          "bar"
+        ]);
+      }
+      {
+        const textEditor = new TextEditor([
+          "foo",
+          "| A | B |",
+          " | ----- | --- |",
+          "  | C | D |",
+          "bar"
+        ]);
+        textEditor.setCursorPosition(new Point(1, 0));
+        const tableEditor = new TableEditor(textEditor);
+        const ops = {};
+        tableEditor.align(Alignment.RIGHT, options(ops));
+        const pos = textEditor.getCursorPosition();
+        expect(pos.row).to.equal(1);
+        expect(pos.column).to.equal(0);
+        expect(textEditor.getSelectionRange()).to.be.null;
+        expect(textEditor.getLines()).to.deep.equal([
+          "foo",
+          "| A   | B   |",
+          "| --- | --- |",
+          "| C   | D   |",
+          "bar"
+        ]);
+      }
+      {
+        const textEditor = new TextEditor([
+          "foo",
+          "| A | B |",
+          " | ----- | --- |",
+          "  | C | D |",
+          "bar"
+        ]);
+        textEditor.setCursorPosition(new Point(1, 9));
+        const tableEditor = new TableEditor(textEditor);
+        const ops = {};
+        tableEditor.align(Alignment.RIGHT, options(ops));
+        const pos = textEditor.getCursorPosition();
+        expect(pos.row).to.equal(1);
+        expect(pos.column).to.equal(13);
+        expect(textEditor.getSelectionRange()).to.be.null;
+        expect(textEditor.getLines()).to.deep.equal([
+          "foo",
+          "| A   | B   |",
+          "| --- | --- |",
+          "| C   | D   |",
+          "bar"
+        ]);
+      }
+    });
+
+    it("should do nothing if there is no table", () => {
+      const textEditor = new TextEditor([
+        "foo",
+        "| A | B |",
+        " | ----- | --- |",
+        "  | C | D |",
+        "bar"
+      ]);
+      textEditor.setCursorPosition(new Point(0, 0));
+      const tableEditor = new TableEditor(textEditor);
+      const ops = {};
+      tableEditor.align(Alignment.RIGHT, options(ops));
       const pos = textEditor.getCursorPosition();
       expect(pos.row).to.equal(0);
       expect(pos.column).to.equal(0);
