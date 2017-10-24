@@ -90,7 +90,7 @@ describe("TableEditor", () => {
   });
 
   /**
-   * @test{TableEditor#_findTable}
+   * @test {TableEditor#_findTable}
    */
   describe("#_findTable()", () => {
     it("should find a table under the current cursor position and return an object that describes the table", () => {
