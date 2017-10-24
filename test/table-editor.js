@@ -574,6 +574,7 @@ describe("TableEditor", () => {
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(1);
         expect(pos.column).to.equal(0);
+        expect(textEditor.getSelectionRange()).to.be.null;
         expect(textEditor.getLines()).to.deep.equal([
           "foo",
           "| A   | B   |",
@@ -600,6 +601,7 @@ describe("TableEditor", () => {
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(1);
         expect(pos.column).to.equal(4);
+        expect(textEditor.getSelectionRange()).to.be.null;
         expect(textEditor.getLines()).to.deep.equal([
           "foo",
           "|   A   |   B   |",
@@ -623,6 +625,7 @@ describe("TableEditor", () => {
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(3);
         expect(pos.column).to.equal(0);
+        expect(textEditor.getSelectionRange()).to.be.null;
         expect(textEditor.getLines()).to.deep.equal([
           "foo",
           "| A   | B   |",
@@ -646,6 +649,7 @@ describe("TableEditor", () => {
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(3);
         expect(pos.column).to.equal(2);
+        expect(textEditor.getSelectionRange()).to.be.null;
         expect(textEditor.getLines()).to.deep.equal([
           "foo",
           "| A   | B   |",
@@ -669,6 +673,7 @@ describe("TableEditor", () => {
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(3);
         expect(pos.column).to.equal(2);
+        expect(textEditor.getSelectionRange()).to.be.null;
         expect(textEditor.getLines()).to.deep.equal([
           "foo",
           "| A   | B   |",
@@ -692,6 +697,7 @@ describe("TableEditor", () => {
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(3);
         expect(pos.column).to.equal(3);
+        expect(textEditor.getSelectionRange()).to.be.null;
         expect(textEditor.getLines()).to.deep.equal([
           "foo",
           "| A   | B   |",
@@ -715,6 +721,7 @@ describe("TableEditor", () => {
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(3);
         expect(pos.column).to.equal(3);
+        expect(textEditor.getSelectionRange()).to.be.null;
         expect(textEditor.getLines()).to.deep.equal([
           "foo",
           "| A   | B   |",
@@ -738,6 +745,7 @@ describe("TableEditor", () => {
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(3);
         expect(pos.column).to.equal(8);
+        expect(textEditor.getSelectionRange()).to.be.null;
         expect(textEditor.getLines()).to.deep.equal([
           "foo",
           "| A   | B   |",
@@ -761,6 +769,7 @@ describe("TableEditor", () => {
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(3);
         expect(pos.column).to.equal(13);
+        expect(textEditor.getSelectionRange()).to.be.null;
         expect(textEditor.getLines()).to.deep.equal([
           "foo",
           "| A   | B   |",
@@ -784,6 +793,7 @@ describe("TableEditor", () => {
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(2);
         expect(pos.column).to.equal(5);
+        expect(textEditor.getSelectionRange()).to.be.null;
         expect(textEditor.getLines()).to.deep.equal([
           "foo",
           "| A   | B   |",
@@ -806,6 +816,7 @@ describe("TableEditor", () => {
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(3);
         expect(pos.column).to.equal(2);
+        expect(textEditor.getSelectionRange()).to.be.null;
         expect(textEditor.getLines()).to.deep.equal([
           "foo",
           "| A   | B   |",
@@ -832,6 +843,7 @@ describe("TableEditor", () => {
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(0);
         expect(pos.column).to.equal(0);
+        expect(textEditor.getSelectionRange()).to.be.null;
         expect(textEditor.getLines()).to.deep.equal([
           "foo",
           "| A | B |",
@@ -855,6 +867,7 @@ describe("TableEditor", () => {
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(4);
         expect(pos.column).to.equal(0);
+        expect(textEditor.getSelectionRange()).to.be.null;
         expect(textEditor.getLines()).to.deep.equal([
           "foo",
           "| A | B |",
@@ -886,6 +899,7 @@ describe("TableEditor", () => {
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(4);
         expect(pos.column).to.equal(0);
+        expect(textEditor.getSelectionRange()).to.be.null;
         expect(textEditor.getLines()).to.deep.equal([
           "foo",
           "| A   | B   |",
@@ -908,6 +922,7 @@ describe("TableEditor", () => {
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(4);
         expect(pos.column).to.equal(0);
+        expect(textEditor.getSelectionRange()).to.be.null;
         expect(textEditor.getLines()).to.deep.equal([
           "foo",
           "| A   | B   |",
@@ -930,6 +945,7 @@ describe("TableEditor", () => {
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(4);
         expect(pos.column).to.equal(0);
+        expect(textEditor.getSelectionRange()).to.be.null;
         expect(textEditor.getLines()).to.deep.equal([
           "foo",
           "| A   | B   |",
@@ -951,6 +967,7 @@ describe("TableEditor", () => {
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(4);
         expect(pos.column).to.equal(0);
+        expect(textEditor.getSelectionRange()).to.be.null;
         expect(textEditor.getLines()).to.deep.equal([
           "foo",
           "| A   | B   |",
@@ -976,6 +993,7 @@ describe("TableEditor", () => {
       const pos = textEditor.getCursorPosition();
       expect(pos.row).to.equal(0);
       expect(pos.column).to.equal(0);
+      expect(textEditor.getSelectionRange()).to.be.null;
       expect(textEditor.getLines()).to.deep.equal([
         "foo",
         "| A | B |",
