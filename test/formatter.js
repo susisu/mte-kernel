@@ -14,7 +14,8 @@ import {
   _formatTable,
   _weakFormatTable,
   FormatType,
-  formatTable
+  formatTable,
+  alterAlignment
 } from "../lib/formatter.js";
 
 /**
@@ -891,5 +892,92 @@ describe("formatTable(table, options)", () => {
     ];
     const table = readTable(tableLines);
     expect(() => { formatTable(table, options); }).to.throw(Error, /unknown/i);
+  });
+});
+
+/**
+ * @test {alterAlignment}
+ */
+describe("alterAlignment(table, columnIndex, alignment, options)", () => {
+  it("should alter a column's alignment at the index to the specified alignment", () => {
+    {
+      const options = {
+        minDelimiterWidth: 3
+      };
+      const tableLines = [
+        "| A | B |",
+        " | --- |:----- |",
+        "  | C |  "
+      ];
+      const expectLines = [
+        "| A | B |",
+        " | --- | ---:|",
+        "  | C |  "
+      ];
+      const table = readTable(tableLines);
+      const altered = alterAlignment(table, 1, Alignment.RIGHT, options);
+      expect(altered).to.be.an.instanceOf(Table);
+      expect(altered.toLines()).to.deep.equal(expectLines);
+    }
+    {
+      const options = {
+        minDelimiterWidth: 5
+      };
+      const tableLines = [
+        "| A | B |",
+        " | --- |:----- |",
+        "  | C |  "
+      ];
+      const expectLines = [
+        "| A | B |",
+        " | --- | -----:|",
+        "  | C |  "
+      ];
+      const table = readTable(tableLines);
+      const altered = alterAlignment(table, 1, Alignment.RIGHT, options);
+      expect(altered).to.be.an.instanceOf(Table);
+      expect(altered.toLines()).to.deep.equal(expectLines);
+    }
+  });
+
+  it("should return the original table if alternation can not be done", () => {
+    {
+      const options = {
+        minDelimiterWidth: 3
+      };
+      const tableLines = [
+        "| A | B |",
+        "  | C |  "
+      ];
+      const table = readTable(tableLines);
+      const altered = alterAlignment(table, 1, Alignment.RIGHT, options);
+      expect(altered).to.equal(table);
+    }
+    {
+      const options = {
+        minDelimiterWidth: 3
+      };
+      const tableLines = [
+        "| A | B |",
+        " | --- |:----- |",
+        "  | C |  "
+      ];
+      const table = readTable(tableLines);
+      const altered = alterAlignment(table, -1, Alignment.RIGHT, options);
+      expect(altered).to.equal(table);
+    }
+    {
+      const options = {
+        minDelimiterWidth: 3
+      };
+      const tableLines = [
+        "| A | B |",
+        " | --- |:----- |",
+        "  | C |  "
+      ];
+      const table = readTable(tableLines);
+      const altered = alterAlignment(table, 2, Alignment.RIGHT, options);
+      expect(altered).to.equal(table);
+    }
   });
 });
