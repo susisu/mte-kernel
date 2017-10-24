@@ -2,37 +2,37 @@ import { expect } from "chai";
 
 import { DefaultAlignment, HeaderAlignment } from "../lib/alignment.js";
 import { FormatType } from "../lib/formatter.js";
-import { _read, _readMulti, options } from "../lib/options.js";
+import { _value, _values, options } from "../lib/options.js";
 
 /**
- * @test {_read}
+ * @test {_value}
  */
-describe("_read(obj, key, defaultVal)", () => {
+describe("_value(obj, key, defaultVal)", () => {
   it("should read a value from the object or use the default value if not exists", () => {
     const obj = {
       foo: 1
     };
-    expect(_read(obj, "foo", 2)).to.equal(1);
-    expect(_read(obj, "bar", 2)).to.equal(2);
+    expect(_value(obj, "foo", 2)).to.equal(1);
+    expect(_value(obj, "bar", 2)).to.equal(2);
   });
 
   it("should return the default value if obj is not an object", () => {
-    expect(_read(undefined, "foo", 2)).to.equal(2);
-    expect(_read(null, "foo", 2)).to.equal(2);
+    expect(_value(undefined, "foo", 2)).to.equal(2);
+    expect(_value(null, "foo", 2)).to.equal(2);
   });
 });
 
 /**
- * @test {_readMulti}
+ * @test {_values}
  */
-describe("_readMulti(obj, keys)", () => {
+describe("_values(obj, keys)", () => {
   it("should read multiple values from the object or use the default values if not exist", () => {
     const obj = {
       foo  : 1,
       bar  : 2,
       dummy: 0
     };
-    expect(_readMulti(obj, { foo: 3, bar: 4, baz: 5 })).to.deep.equal({
+    expect(_values(obj, { foo: 3, bar: 4, baz: 5 })).to.deep.equal({
       foo: 1,
       bar: 2,
       baz: 5
@@ -40,12 +40,12 @@ describe("_readMulti(obj, keys)", () => {
   });
 
   it("should use the default values if obj is not an object", () => {
-    expect(_readMulti(undefined, { foo: 3, bar: 4, baz: 5 })).to.deep.equal({
+    expect(_values(undefined, { foo: 3, bar: 4, baz: 5 })).to.deep.equal({
       foo: 3,
       bar: 4,
       baz: 5
     });
-    expect(_readMulti(null, { foo: 3, bar: 4, baz: 5 })).to.deep.equal({
+    expect(_values(null, { foo: 3, bar: 4, baz: 5 })).to.deep.equal({
       foo: 3,
       bar: 4,
       baz: 5
