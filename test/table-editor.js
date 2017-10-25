@@ -1005,9 +1005,9 @@ describe("TableEditor", () => {
   });
 
   /**
-   * @test {TableEditor#align}
+   * @test {TableEditor#alignColumn}
    */
-  describe("#align(alignment, options)", () => {
+  describe("#alignColumn(alignment, options)", () => {
     it("should alter alignment of a column", () => {
       {
         const textEditor = new TextEditor([
@@ -1020,7 +1020,7 @@ describe("TableEditor", () => {
         textEditor.setCursorPosition(new Point(1, 2));
         const tableEditor = new TableEditor(textEditor);
         const ops = {};
-        tableEditor.align(Alignment.RIGHT, options(ops));
+        tableEditor.alignColumn(Alignment.RIGHT, options(ops));
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(1);
         expect(pos.column).to.equal(4);
@@ -1043,7 +1043,7 @@ describe("TableEditor", () => {
         textEditor.setCursorPosition(new Point(2, 4));
         const tableEditor = new TableEditor(textEditor);
         const ops = {};
-        tableEditor.align(Alignment.RIGHT, options(ops));
+        tableEditor.alignColumn(Alignment.RIGHT, options(ops));
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(3);
         expect(pos.column).to.equal(4);
@@ -1067,7 +1067,7 @@ describe("TableEditor", () => {
         textEditor.setCursorPosition(new Point(1, 0));
         const tableEditor = new TableEditor(textEditor);
         const ops = {};
-        tableEditor.align(Alignment.RIGHT, options(ops));
+        tableEditor.alignColumn(Alignment.RIGHT, options(ops));
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(1);
         expect(pos.column).to.equal(0);
@@ -1091,7 +1091,7 @@ describe("TableEditor", () => {
         textEditor.setCursorPosition(new Point(1, 9));
         const tableEditor = new TableEditor(textEditor);
         const ops = {};
-        tableEditor.align(Alignment.RIGHT, options(ops));
+        tableEditor.alignColumn(Alignment.RIGHT, options(ops));
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(1);
         expect(pos.column).to.equal(13);
@@ -1117,7 +1117,7 @@ describe("TableEditor", () => {
       textEditor.setCursorPosition(new Point(0, 0));
       const tableEditor = new TableEditor(textEditor);
       const ops = {};
-      tableEditor.align(Alignment.RIGHT, options(ops));
+      tableEditor.alignColumn(Alignment.RIGHT, options(ops));
       const pos = textEditor.getCursorPosition();
       expect(pos.row).to.equal(0);
       expect(pos.column).to.equal(0);
