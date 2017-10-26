@@ -21,16 +21,16 @@ import {
 /**
  * @test {_delimiterText}
  */
-describe("_delimiterText(width, alignment)", () => {
+describe("_delimiterText(alignment, width)", () => {
   it("should return a delimiter text for the specified alignment", () => {
-    expect(_delimiterText(5, Alignment.DEFAULT)).to.equal(" ----- ");
-    expect(_delimiterText(5, Alignment.LEFT)).to.equal(":----- ");
-    expect(_delimiterText(5, Alignment.RIGHT)).to.equal(" -----:");
-    expect(_delimiterText(5, Alignment.CENTER)).to.equal(":-----:");
+    expect(_delimiterText(Alignment.DEFAULT, 5)).to.equal(" ----- ");
+    expect(_delimiterText(Alignment.LEFT, 5)).to.equal(":----- ");
+    expect(_delimiterText(Alignment.RIGHT, 5)).to.equal(" -----:");
+    expect(_delimiterText(Alignment.CENTER, 5)).to.equal(":-----:");
   });
 
   it("should throw an error if the alignment is unknown", () => {
-    expect(() => { _delimiterText(5, "top"); }).to.throw(Error, /unknown/i);
+    expect(() => { _delimiterText("top", 5); }).to.throw(Error, /unknown/i);
   });
 });
 
