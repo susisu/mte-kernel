@@ -893,57 +893,6 @@ describe("TableEditor", () => {
         ]);
       }
     });
-
-    it("should do nothing if there is no table", () => {
-      {
-        const textEditor = new TextEditor([
-          "foo",
-          "| A | B |",
-          " | ----- | --- |",
-          "  | C | D |",
-          "bar"
-        ]);
-        textEditor.setCursorPosition(new Point(0, 0));
-        const tableEditor = new TableEditor(textEditor);
-        const ops = {};
-        tableEditor.format(options(ops));
-        const pos = textEditor.getCursorPosition();
-        expect(pos.row).to.equal(0);
-        expect(pos.column).to.equal(0);
-        expect(textEditor.getSelectionRange()).to.be.null;
-        expect(textEditor.getLines()).to.deep.equal([
-          "foo",
-          "| A | B |",
-          " | ----- | --- |",
-          "  | C | D |",
-          "bar"
-        ]);
-      }
-      {
-        const textEditor = new TextEditor([
-          "foo",
-          "| A | B |",
-          " | ----- | --- |",
-          "  | C | D |",
-          "bar"
-        ]);
-        textEditor.setCursorPosition(new Point(4, 0));
-        const tableEditor = new TableEditor(textEditor);
-        const ops = {};
-        tableEditor.format(options(ops));
-        const pos = textEditor.getCursorPosition();
-        expect(pos.row).to.equal(4);
-        expect(pos.column).to.equal(0);
-        expect(textEditor.getSelectionRange()).to.be.null;
-        expect(textEditor.getLines()).to.deep.equal([
-          "foo",
-          "| A | B |",
-          " | ----- | --- |",
-          "  | C | D |",
-          "bar"
-        ]);
-      }
-    });
   });
 
   /**
@@ -1043,31 +992,6 @@ describe("TableEditor", () => {
           ""
         ]);
       }
-    });
-
-    it("should do nothing if there is no table", () => {
-      const textEditor = new TextEditor([
-        "foo",
-        "| A | B |",
-        " | ----- | --- |",
-        "  | C | D |",
-        "bar"
-      ]);
-      textEditor.setCursorPosition(new Point(0, 0));
-      const tableEditor = new TableEditor(textEditor);
-      const ops = {};
-      tableEditor.escape(options(ops));
-      const pos = textEditor.getCursorPosition();
-      expect(pos.row).to.equal(0);
-      expect(pos.column).to.equal(0);
-      expect(textEditor.getSelectionRange()).to.be.null;
-      expect(textEditor.getLines()).to.deep.equal([
-        "foo",
-        "| A | B |",
-        " | ----- | --- |",
-        "  | C | D |",
-        "bar"
-      ]);
     });
   });
 
@@ -1171,31 +1095,6 @@ describe("TableEditor", () => {
           "bar"
         ]);
       }
-    });
-
-    it("should do nothing if there is no table", () => {
-      const textEditor = new TextEditor([
-        "foo",
-        "| A | B |",
-        " | ----- | --- |",
-        "  | C | D |",
-        "bar"
-      ]);
-      textEditor.setCursorPosition(new Point(0, 0));
-      const tableEditor = new TableEditor(textEditor);
-      const ops = {};
-      tableEditor.alignColumn(Alignment.RIGHT, options(ops));
-      const pos = textEditor.getCursorPosition();
-      expect(pos.row).to.equal(0);
-      expect(pos.column).to.equal(0);
-      expect(textEditor.getSelectionRange()).to.be.null;
-      expect(textEditor.getLines()).to.deep.equal([
-        "foo",
-        "| A | B |",
-        " | ----- | --- |",
-        "  | C | D |",
-        "bar"
-      ]);
     });
   });
 
@@ -1350,31 +1249,6 @@ describe("TableEditor", () => {
           "bar"
         ]);
       }
-    });
-
-    it("should do nothing if there is no table", () => {
-      const textEditor = new TextEditor([
-        "foo",
-        "| A | B |",
-        " | ----- | --- |",
-        "  | C | D |",
-        "bar"
-      ]);
-      textEditor.setCursorPosition(new Point(0, 0));
-      const tableEditor = new TableEditor(textEditor);
-      const ops = {};
-      tableEditor.selectCell(options(ops));
-      const pos = textEditor.getCursorPosition();
-      expect(pos.row).to.equal(0);
-      expect(pos.column).to.equal(0);
-      expect(textEditor.getSelectionRange()).to.be.null;
-      expect(textEditor.getLines()).to.deep.equal([
-        "foo",
-        "| A | B |",
-        " | ----- | --- |",
-        "  | C | D |",
-        "bar"
-      ]);
     });
   });
 
@@ -1970,33 +1844,6 @@ describe("TableEditor", () => {
           "| A   | B   |",
           "| --- | --- |",
           "| C   | D   |",
-          "bar"
-        ]);
-      }
-    });
-
-    it("should do nothing if there is no table", () => {
-      {
-        const textEditor = new TextEditor([
-          "foo",
-          "| A | B |",
-          " | ----- | --- |",
-          "  | C | D |",
-          "bar"
-        ]);
-        textEditor.setCursorPosition(new Point(0, 0));
-        const tableEditor = new TableEditor(textEditor);
-        const ops = {};
-        tableEditor.moveFocus(1, 0, options(ops));
-        const pos = textEditor.getCursorPosition();
-        expect(pos.row).to.equal(0);
-        expect(pos.column).to.equal(0);
-        expect(textEditor.getSelectionRange()).to.be.null;
-        expect(textEditor.getLines()).to.deep.equal([
-          "foo",
-          "| A | B |",
-          " | ----- | --- |",
-          "  | C | D |",
           "bar"
         ]);
       }
