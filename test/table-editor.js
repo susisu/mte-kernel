@@ -275,6 +275,73 @@ describe("TableEditor", () => {
   });
 
   /**
+   * @test {TableEditor#_withTable}
+   */
+  describe("#_withTable(func)", () => {
+    it("should call the function with table information obtained by _findTable() method", () => {
+      const textEditor = new TextEditor([
+        "foo",
+        "| A   | B   |",
+        "| --- | --- |",
+        "| C   | D   |",
+        "bar"
+      ]);
+      const tableEditor = new TableEditor(textEditor);
+      textEditor.setCursorPosition(new Point(1, 2));
+      tableEditor._withTable(info => {
+        expect(info).to.be.an("object");
+        expect(info.range).to.be.an.instanceOf(Range);
+        expect(info.range.start.row).to.equal(1);
+        expect(info.range.start.column).to.equal(0);
+        expect(info.range.end.row).to.equal(3);
+        expect(info.range.end.column).to.equal(13);
+        expect(info.lines).to.deep.equal([
+          "| A   | B   |",
+          "| --- | --- |",
+          "| C   | D   |"
+        ]);
+        expect(info.table).to.be.an.instanceOf(Table);
+        expect(info.table.toLines()).to.deep.equal([
+          "| A   | B   |",
+          "| --- | --- |",
+          "| C   | D   |"
+        ]);
+        expect(info.focus).to.be.an.instanceOf(Focus);
+        expect(info.focus.row).to.equal(0);
+        expect(info.focus.column).to.equal(0);
+        expect(info.focus.offset).to.equal(1);
+      });
+    });
+
+    it("should not call the function if no table is found", () => {
+      const textEditor = new TextEditor([
+        "foo",
+        "| A   | B   |",
+        "| --- | --- |",
+        "| C   | D   |",
+        "bar"
+      ]);
+      const tableEditor = new TableEditor(textEditor);
+      {
+        textEditor.setCursorPosition(new Point(0, 0));
+        let called = false;
+        tableEditor._withTable(info => {
+          called = true;
+        });
+        expect(called).to.be.false;
+      }
+      {
+        textEditor.setCursorPosition(new Point(4, 0));
+        let called = false;
+        tableEditor._withTable(info => {
+          called = true;
+        });
+        expect(called).to.be.false;
+      }
+    });
+  });
+
+  /**
    * @test {TableEditor#_updateLines}
    */
   describe("#_updateLines(startRow, endRow, newLines, oldLines = undefined)", () => {
