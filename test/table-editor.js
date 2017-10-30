@@ -1609,6 +1609,29 @@ describe("TableEditor", () => {
         const textEditor = new TextEditor([
           "foo",
           "| A | B |",
+          "  | C | D |",
+          "bar"
+        ]);
+        textEditor.setCursorPosition(new Point(2, 4));
+        const tableEditor = new TableEditor(textEditor);
+        const ops = {};
+        tableEditor.moveFocus(1, 0, options(ops));
+        const pos = textEditor.getCursorPosition();
+        expect(pos.row).to.equal(3);
+        expect(pos.column).to.equal(2);
+        expect(textEditor.getSelectionRange()).to.be.null;
+        expect(textEditor.getLines()).to.deep.equal([
+          "foo",
+          "| A   | B   |",
+          "| --- | --- |",
+          "| C   | D   |",
+          "bar"
+        ]);
+      }
+      {
+        const textEditor = new TextEditor([
+          "foo",
+          "| A | B |",
           " | ----- | --- |",
           "  | C | D |",
           "bar"
@@ -2130,6 +2153,27 @@ describe("TableEditor", () => {
         expect(tableEditor._scStartFocus.offset).to.equal(0);
         expect(tableEditor._scLastFocus.row).to.equal(0);
         expect(tableEditor._scLastFocus.column).to.equal(0);
+        expect(tableEditor._scLastFocus.offset).to.equal(1);
+      }
+      {
+        const textEditor = new TextEditor([
+          "foo",
+          "| A   | B   |",
+          "| C   | D   |",
+          "bar"
+        ]);
+        textEditor.setCursorPosition(new Point(2, 2));
+        const tableEditor = new TableEditor(textEditor);
+        const ops = { smartCursor: true };
+        tableEditor.nextCell(options(ops));
+        expect(tableEditor._scActive).to.be.true;
+        expect(tableEditor._scTablePos.row).to.equal(1);
+        expect(tableEditor._scTablePos.column).to.equal(0);
+        expect(tableEditor._scStartFocus.row).to.equal(2);
+        expect(tableEditor._scStartFocus.column).to.equal(0);
+        expect(tableEditor._scStartFocus.offset).to.equal(1);
+        expect(tableEditor._scLastFocus.row).to.equal(2);
+        expect(tableEditor._scLastFocus.column).to.equal(1);
         expect(tableEditor._scLastFocus.offset).to.equal(1);
       }
       {
