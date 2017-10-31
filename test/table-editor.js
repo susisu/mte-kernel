@@ -5,8 +5,10 @@ import { Range } from "../lib/range.js";
 import { Focus } from "../lib/focus.js";
 import { Alignment, DefaultAlignment } from "../lib/alignment.js";
 import { Table } from "../lib/table.js";
+import { readTable } from "../lib/parser.js";
+import { completeTable, formatTable } from "../lib/formatter.js";
 import { options } from "../lib/options.js";
-import { _isTableRow, TableEditor } from "../lib/table-editor.js";
+import { _isTableRow, _computeNewOffset, TableEditor } from "../lib/table-editor.js";
 
 import { TextEditor } from "./text-editor-mock.js";
 
@@ -23,6 +25,50 @@ describe("_isTableRow(line)", () => {
     expect(_isTableRow("foo")).to.be.false;
     expect(_isTableRow(" \t")).to.be.false;
     expect(_isTableRow(" \tfoo")).to.be.false;
+  });
+});
+
+/**
+ * @test {_computeNewOffset}
+ */
+describe("_computeNewOffset(focus, completed, formatted, moved)", () => {
+  it("should compute new focus offset from the information of the completed and formatted tables", () => {
+    const table = readTable([
+      " | A | B | ",
+      "| --- | ---:|",
+      "  | C | D |  "
+    ]);
+    const ops = options({});
+    const completed = completeTable(table, ops);
+    const formatted = formatTable(completed.table, ops);
+    expect(_computeNewOffset(new Focus(2, 0, 0), completed, formatted, false)).to.equal(1);
+    expect(_computeNewOffset(new Focus(2, 0, 1), completed, formatted, false)).to.equal(1);
+    expect(_computeNewOffset(new Focus(2, 0, 2), completed, formatted, false)).to.equal(2);
+    expect(_computeNewOffset(new Focus(2, 0, 3), completed, formatted, false)).to.equal(2);
+    expect(_computeNewOffset(new Focus(2, 0, 0), completed, formatted, true)).to.equal(1);
+    expect(_computeNewOffset(new Focus(2, 0, 1), completed, formatted, true)).to.equal(1);
+    expect(_computeNewOffset(new Focus(2, 0, 2), completed, formatted, true)).to.equal(1);
+    expect(_computeNewOffset(new Focus(2, 0, 3), completed, formatted, true)).to.equal(1);
+    expect(_computeNewOffset(new Focus(2, 1, 0), completed, formatted, false)).to.equal(3);
+    expect(_computeNewOffset(new Focus(2, 1, 1), completed, formatted, false)).to.equal(3);
+    expect(_computeNewOffset(new Focus(2, 1, 2), completed, formatted, false)).to.equal(4);
+    expect(_computeNewOffset(new Focus(2, 1, 3), completed, formatted, false)).to.equal(4);
+    expect(_computeNewOffset(new Focus(2, 1, 0), completed, formatted, true)).to.equal(3);
+    expect(_computeNewOffset(new Focus(2, 1, 1), completed, formatted, true)).to.equal(3);
+    expect(_computeNewOffset(new Focus(2, 1, 2), completed, formatted, true)).to.equal(3);
+    expect(_computeNewOffset(new Focus(2, 1, 3), completed, formatted, true)).to.equal(3);
+    expect(_computeNewOffset(new Focus(2, -1, 0), completed, formatted, false)).to.equal(1);
+    expect(_computeNewOffset(new Focus(2, -1, 1), completed, formatted, false)).to.equal(1);
+    expect(_computeNewOffset(new Focus(2, -1, 2), completed, formatted, false)).to.equal(1);
+    expect(_computeNewOffset(new Focus(2, -1, 0), completed, formatted, true)).to.equal(1);
+    expect(_computeNewOffset(new Focus(2, -1, 1), completed, formatted, true)).to.equal(1);
+    expect(_computeNewOffset(new Focus(2, -1, 2), completed, formatted, true)).to.equal(1);
+    expect(_computeNewOffset(new Focus(2, 2, 0), completed, formatted, false)).to.equal(0);
+    expect(_computeNewOffset(new Focus(2, 2, 1), completed, formatted, false)).to.equal(0);
+    expect(_computeNewOffset(new Focus(2, 2, 2), completed, formatted, false)).to.equal(0);
+    expect(_computeNewOffset(new Focus(2, 2, 0), completed, formatted, true)).to.equal(0);
+    expect(_computeNewOffset(new Focus(2, 2, 1), completed, formatted, true)).to.equal(0);
+    expect(_computeNewOffset(new Focus(2, 2, 2), completed, formatted, true)).to.equal(0);
   });
 });
 
