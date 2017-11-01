@@ -1136,7 +1136,7 @@ describe("deleteRow(table, rowIndex)", () => {
         "  | C |  "
       ];
       const expectLines = [
-        "| A | B |",
+        "|||",
         " | --- |:----- |",
         "  | C |  "
       ];
