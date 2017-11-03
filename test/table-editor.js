@@ -3439,12 +3439,12 @@ describe("TableEditor", () => {
         const ops = {};
         tableEditor.deleteRow(options(ops));
         const pos = textEditor.getCursorPosition();
-        expect(pos.row).to.equal(1);
+        expect(pos.row).to.equal(2);
         expect(pos.column).to.equal(2);
         expect(textEditor.getSelectionRange()).to.be.null;
         expect(textEditor.getLines()).to.deep.equal([
           "foo",
-          "|     |     |",
+          "| A   | B   |",
           "| --- | --- |",
           "| C   | D   |",
           "bar"
