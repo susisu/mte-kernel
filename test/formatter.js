@@ -913,12 +913,12 @@ describe("alterAlignment(table, columnIndex, alignment, options)", () => {
       const tableLines = [
         "| A | B |",
         " | --- |:----- |",
-        "  | C |  "
+        "  | C | D |  "
       ];
       const expectLines = [
         "| A | B |",
         " | --- | ---:|",
-        "  | C |  "
+        "  | C | D |  "
       ];
       const table = readTable(tableLines);
       const altered = alterAlignment(table, 1, Alignment.RIGHT, options);
@@ -932,12 +932,12 @@ describe("alterAlignment(table, columnIndex, alignment, options)", () => {
       const tableLines = [
         "| A | B |",
         " | --- |:----- |",
-        "  | C |  "
+        "  | C | D |  "
       ];
       const expectLines = [
         "| A | B |",
         " | --- | -----:|",
-        "  | C |  "
+        "  | C | D |  "
       ];
       const table = readTable(tableLines);
       const altered = alterAlignment(table, 1, Alignment.RIGHT, options);
@@ -953,20 +953,8 @@ describe("alterAlignment(table, columnIndex, alignment, options)", () => {
       };
       const tableLines = [
         "| A | B |",
-        "  | C |  "
-      ];
-      const table = readTable(tableLines);
-      const altered = alterAlignment(table, 1, Alignment.RIGHT, options);
-      expect(altered).to.equal(table);
-    }
-    {
-      const options = {
-        minDelimiterWidth: 3
-      };
-      const tableLines = [
-        "| A | B |",
         " | --- |:----- |",
-        "  | C |  "
+        "  | C | D |  "
       ];
       const table = readTable(tableLines);
       const altered = alterAlignment(table, -1, Alignment.RIGHT, options);
@@ -979,7 +967,7 @@ describe("alterAlignment(table, columnIndex, alignment, options)", () => {
       const tableLines = [
         "| A | B |",
         " | --- |:----- |",
-        "  | C |  "
+        "  | C | D |  "
       ];
       const table = readTable(tableLines);
       const altered = alterAlignment(table, 2, Alignment.RIGHT, options);
@@ -997,13 +985,13 @@ describe("insertRow(table, rowIndex, row)", () => {
       const tableLines = [
         "| A | B |",
         " | --- |:----- |",
-        "  | C |  "
+        "  | C | D |  "
       ];
       const expectLines = [
         "| A | B |",
         " | --- |:----- |",
         "| X | Y |",
-        "  | C |  "
+        "  | C | D |  "
       ];
       const table = readTable(tableLines);
       const altered = insertRow(table, 0, _readRow("| X | Y |"));
@@ -1014,13 +1002,13 @@ describe("insertRow(table, rowIndex, row)", () => {
       const tableLines = [
         "| A | B |",
         " | --- |:----- |",
-        "  | C |  "
+        "  | C | D |  "
       ];
       const expectLines = [
         "| A | B |",
         " | --- |:----- |",
         "| X | Y |",
-        "  | C |  "
+        "  | C | D |  "
       ];
       const table = readTable(tableLines);
       const altered = insertRow(table, 1, _readRow("| X | Y |"));
@@ -1031,13 +1019,13 @@ describe("insertRow(table, rowIndex, row)", () => {
       const tableLines = [
         "| A | B |",
         " | --- |:----- |",
-        "  | C |  "
+        "  | C | D |  "
       ];
       const expectLines = [
         "| A | B |",
         " | --- |:----- |",
         "| X | Y |",
-        "  | C |  "
+        "  | C | D |  "
       ];
       const table = readTable(tableLines);
       const altered = insertRow(table, 2, _readRow("| X | Y |"));
@@ -1048,61 +1036,16 @@ describe("insertRow(table, rowIndex, row)", () => {
       const tableLines = [
         "| A | B |",
         " | --- |:----- |",
-        "  | C |  "
+        "  | C | D |  "
       ];
       const expectLines = [
         "| A | B |",
         " | --- |:----- |",
-        "  | C |  ",
+        "  | C | D |  ",
         "| X | Y |"
       ];
       const table = readTable(tableLines);
       const altered = insertRow(table, 3, _readRow("| X | Y |"));
-      expect(altered).to.be.an.instanceOf(Table);
-      expect(altered.toLines()).to.deep.equal(expectLines);
-    }
-    {
-      const tableLines = [
-        "| A | B |",
-        "  | C |  "
-      ];
-      const expectLines = [
-        "| A | B |",
-        "| X | Y |",
-        "  | C |  "
-      ];
-      const table = readTable(tableLines);
-      const altered = insertRow(table, 0, _readRow("| X | Y |"));
-      expect(altered).to.be.an.instanceOf(Table);
-      expect(altered.toLines()).to.deep.equal(expectLines);
-    }
-    {
-      const tableLines = [
-        "| A | B |",
-        "  | C |  "
-      ];
-      const expectLines = [
-        "| A | B |",
-        "| X | Y |",
-        "  | C |  "
-      ];
-      const table = readTable(tableLines);
-      const altered = insertRow(table, 1, _readRow("| X | Y |"));
-      expect(altered).to.be.an.instanceOf(Table);
-      expect(altered.toLines()).to.deep.equal(expectLines);
-    }
-    {
-      const tableLines = [
-        "| A | B |",
-        "  | C |  "
-      ];
-      const expectLines = [
-        "| A | B |",
-        "  | C |  ",
-        "| X | Y |"
-      ];
-      const table = readTable(tableLines);
-      const altered = insertRow(table, 2, _readRow("| X | Y |"));
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
     }
@@ -1118,12 +1061,12 @@ describe("deleteRow(table, rowIndex)", () => {
       const tableLines = [
         "| A | B |",
         " | --- |:----- |",
-        "  | C |  "
+        "  | C | D |  "
       ];
       const expectLines = [
         "|||",
         " | --- |:----- |",
-        "  | C |  "
+        "  | C | D |  "
       ];
       const table = readTable(tableLines);
       const altered = deleteRow(table, 0);
@@ -1134,12 +1077,12 @@ describe("deleteRow(table, rowIndex)", () => {
       const tableLines = [
         "| A | B |",
         " | --- |:----- |",
-        "  | C |  "
+        "  | C | D |  "
       ];
       const expectLines = [
         "| A | B |",
         " | --- |:----- |",
-        "  | C |  "
+        "  | C | D |  "
       ];
       const table = readTable(tableLines);
       const altered = deleteRow(table, 1);
@@ -1150,7 +1093,7 @@ describe("deleteRow(table, rowIndex)", () => {
       const tableLines = [
         "| A | B |",
         " | --- |:----- |",
-        "  | C |  "
+        "  | C | D |  "
       ];
       const expectLines = [
         "| A | B |",
@@ -1158,33 +1101,6 @@ describe("deleteRow(table, rowIndex)", () => {
       ];
       const table = readTable(tableLines);
       const altered = deleteRow(table, 2);
-      expect(altered).to.be.an.instanceOf(Table);
-      expect(altered.toLines()).to.deep.equal(expectLines);
-    }
-    {
-      const tableLines = [
-        "| A | B |",
-        "  | C |  "
-      ];
-      const expectLines = [
-        "|||",
-        "  | C |  "
-      ];
-      const table = readTable(tableLines);
-      const altered = deleteRow(table, 0);
-      expect(altered).to.be.an.instanceOf(Table);
-      expect(altered.toLines()).to.deep.equal(expectLines);
-    }
-    {
-      const tableLines = [
-        "| A | B |",
-        "  | C |  "
-      ];
-      const expectLines = [
-        "| A | B |"
-      ];
-      const table = readTable(tableLines);
-      const altered = deleteRow(table, 1);
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
     }
@@ -1200,12 +1116,12 @@ describe("moveRow(table, rowIndex, offset)", () => {
       const tableLines = [
         "| A | B |",
         " | --- |:----- |",
-        "  | C |  "
+        "  | C | D |  "
       ];
       const expectLines = [
         "| A | B |",
         " | --- |:----- |",
-        "  | C |  "
+        "  | C | D |  "
       ];
       const table = readTable(tableLines);
       const altered = moveRow(table, 0, -1);
@@ -1216,12 +1132,12 @@ describe("moveRow(table, rowIndex, offset)", () => {
       const tableLines = [
         "| A | B |",
         " | --- |:----- |",
-        "  | C |  "
+        "  | C | D |  "
       ];
       const expectLines = [
         "| A | B |",
         " | --- |:----- |",
-        "  | C |  "
+        "  | C | D |  "
       ];
       const table = readTable(tableLines);
       const altered = moveRow(table, 0, 1);
@@ -1232,12 +1148,12 @@ describe("moveRow(table, rowIndex, offset)", () => {
       const tableLines = [
         "| A | B |",
         " | --- |:----- |",
-        "  | C |  "
+        "  | C | D |  "
       ];
       const expectLines = [
         "| A | B |",
         " | --- |:----- |",
-        "  | C |  "
+        "  | C | D |  "
       ];
       const table = readTable(tableLines);
       const altered = moveRow(table, 1, -1);
@@ -1248,12 +1164,12 @@ describe("moveRow(table, rowIndex, offset)", () => {
       const tableLines = [
         "| A | B |",
         " | --- |:----- |",
-        "  | C |  "
+        "  | C | D |  "
       ];
       const expectLines = [
         "| A | B |",
         " | --- |:----- |",
-        "  | C |  "
+        "  | C | D |  "
       ];
       const table = readTable(tableLines);
       const altered = moveRow(table, 1, 1);
@@ -1264,14 +1180,14 @@ describe("moveRow(table, rowIndex, offset)", () => {
       const tableLines = [
         "| A | B |",
         " | --- |:----- |",
-        "  | C |  ",
-        "  | D |  "
+        "  | C | D |  ",
+        "   | E | F | "
       ];
       const expectLines = [
         "| A | B |",
         " | --- |:----- |",
-        "  | C |  ",
-        "  | D |  "
+        "  | C | D |  ",
+        "   | E | F | "
       ];
       const table = readTable(tableLines);
       const altered = moveRow(table, 2, -1);
@@ -1282,14 +1198,14 @@ describe("moveRow(table, rowIndex, offset)", () => {
       const tableLines = [
         "| A | B |",
         " | --- |:----- |",
-        "  | C |  ",
-        "  | D |  "
+        "  | C | D |  ",
+        "   | E | F | "
       ];
       const expectLines = [
         "| A | B |",
         " | --- |:----- |",
-        "  | D |  ",
-        "  | C |  "
+        "   | E | F | ",
+        "  | C | D |  "
       ];
       const table = readTable(tableLines);
       const altered = moveRow(table, 2, 1);
@@ -1300,14 +1216,14 @@ describe("moveRow(table, rowIndex, offset)", () => {
       const tableLines = [
         "| A | B |",
         " | --- |:----- |",
-        "  | C |  ",
-        "  | D |  "
+        "  | C | D |  ",
+        "   | E | F | "
       ];
       const expectLines = [
         "| A | B |",
         " | --- |:----- |",
-        "  | D |  ",
-        "  | C |  "
+        "   | E | F | ",
+        "  | C | D |  "
       ];
       const table = readTable(tableLines);
       const altered = moveRow(table, 3, -1);
@@ -1318,14 +1234,14 @@ describe("moveRow(table, rowIndex, offset)", () => {
       const tableLines = [
         "| A | B |",
         " | --- |:----- |",
-        "  | C |  ",
-        "  | D |  "
+        "  | C | D |  ",
+        "   | E | F | "
       ];
       const expectLines = [
         "| A | B |",
         " | --- |:----- |",
-        "  | C |  ",
-        "  | D |  "
+        "  | C | D |  ",
+        "   | E | F | "
       ];
       const table = readTable(tableLines);
       const altered = moveRow(table, 3, 1);
@@ -1344,12 +1260,12 @@ describe("insertColumn(table, columnIndex, column, options)", () => {
       const tableLines = [
         "| A | B |",
         " | --- |:----- |",
-        "  | C |  "
+        "  | C | D |  "
       ];
       const expectLines = [
         "| X | A | B |",
         " | --- | --- |:----- |",
-        "  | Y | C |  "
+        "  | Y | C | D |  "
       ];
       const table = readTable(tableLines);
       const opts = { minDelimiterWidth: 3 };
@@ -1361,12 +1277,12 @@ describe("insertColumn(table, columnIndex, column, options)", () => {
       const tableLines = [
         "| A | B |",
         " | --- |:----- |",
-        "  | C |  "
+        "  | C | D |  "
       ];
       const expectLines = [
         "| X | A | B |",
         " | ----- | --- |:----- |",
-        "  | Y | C |  "
+        "  | Y | C | D |  "
       ];
       const table = readTable(tableLines);
       const opts = { minDelimiterWidth: 5 };
@@ -1378,12 +1294,12 @@ describe("insertColumn(table, columnIndex, column, options)", () => {
       const tableLines = [
         "| A | B |",
         " | --- |:----- |",
-        "  | C |  "
+        "  | C | D |  "
       ];
       const expectLines = [
         "| A | X | B |",
         " | --- | --- |:----- |",
-        "  | C | Y |  "
+        "  | C | Y | D |  "
       ];
       const table = readTable(tableLines);
       const opts = { minDelimiterWidth: 3 };
@@ -1394,49 +1310,17 @@ describe("insertColumn(table, columnIndex, column, options)", () => {
     {
       const tableLines = [
         "| A | B |",
-        " | --- |",
-        "  | C |  "
+        " | --- | ----- |",
+        "  | C | D |  "
       ];
       const expectLines = [
         "| A | B | X |",
-        " | --- | --- | --- |",
-        "  | C || Y |  "
+        " | --- | ----- | --- |",
+        "  | C | D | Y |  "
       ];
       const table = readTable(tableLines);
       const opts = { minDelimiterWidth: 3 };
       const altered = insertColumn(table, 2, [new TableCell(" X "), new TableCell(" Y ")], opts);
-      expect(altered).to.be.an.instanceOf(Table);
-      expect(altered.toLines()).to.deep.equal(expectLines);
-    }
-    {
-      const tableLines = [
-        "| A | B |",
-        " | --- |:----- |",
-        "  | C |  "
-      ];
-      const expectLines = [
-        "| X | A | B |",
-        " | --- | --- |:----- |",
-        "  || C |  "
-      ];
-      const table = readTable(tableLines);
-      const opts = { minDelimiterWidth: 3 };
-      const altered = insertColumn(table, 0, [new TableCell(" X ")], opts);
-      expect(altered).to.be.an.instanceOf(Table);
-      expect(altered.toLines()).to.deep.equal(expectLines);
-    }
-    {
-      const tableLines = [
-        "| A | B |",
-        "  | C |  "
-      ];
-      const expectLines = [
-        "| X | A | B |",
-        "  | Y | C |  "
-      ];
-      const table = readTable(tableLines);
-      const opts = { minDelimiterWidth: 3 };
-      const altered = insertColumn(table, 0, [new TableCell(" X "), new TableCell(" Y ")], opts);
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
     }
@@ -1475,40 +1359,6 @@ describe("deleteColumn(table, columnIndex)", () => {
         "| A |",
         " | --- |",
         "  | C | "
-      ];
-      const table = readTable(tableLines);
-      const opts = { minDelimiterWidth: 3 };
-      const altered = deleteColumn(table, 1, opts);
-      expect(altered).to.be.an.instanceOf(Table);
-      expect(altered.toLines()).to.deep.equal(expectLines);
-    }
-    {
-      const tableLines = [
-        "| A | B |",
-        " | --- |:----- |",
-        "  | C |  "
-      ];
-      const expectLines = [
-        "| B |",
-        " |:----- |",
-        "  ||  "
-      ];
-      const table = readTable(tableLines);
-      const opts = { minDelimiterWidth: 3 };
-      const altered = deleteColumn(table, 0, opts);
-      expect(altered).to.be.an.instanceOf(Table);
-      expect(altered.toLines()).to.deep.equal(expectLines);
-    }
-    {
-      const tableLines = [
-        "| A | B |",
-        " | --- |:----- |",
-        "  | C |  "
-      ];
-      const expectLines = [
-        "| A |",
-        " | --- |",
-        "  | C |  "
       ];
       const table = readTable(tableLines);
       const opts = { minDelimiterWidth: 3 };
