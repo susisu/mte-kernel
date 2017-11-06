@@ -21,7 +21,8 @@ import {
   deleteRow,
   moveRow,
   insertColumn,
-  deleteColumn
+  deleteColumn,
+  moveColumn
 } from "../lib/formatter.js";
 
 /**
@@ -1397,6 +1398,78 @@ describe("deleteColumn(table, columnIndex)", () => {
       const table = readTable(tableLines);
       const opts = { minDelimiterWidth: 5 };
       const altered = deleteColumn(table, 0, opts);
+      expect(altered).to.be.an.instanceOf(Table);
+      expect(altered.toLines()).to.deep.equal(expectLines);
+    }
+  });
+});
+
+/**
+ * @test {moveColumn}
+ */
+describe("moveColumn(table, columnIndex, offset)", () => {
+  it("should move a column at the index by the specified offset", () => {
+    {
+      const tableLines = [
+        "| A | B |",
+        " | --- |:----- |",
+        "  | C | D | "
+      ];
+      const expectLines = [
+        "| A | B |",
+        " | --- |:----- |",
+        "  | C | D | "
+      ];
+      const table = readTable(tableLines);
+      const altered = moveColumn(table, 0, -1);
+      expect(altered).to.be.an.instanceOf(Table);
+      expect(altered.toLines()).to.deep.equal(expectLines);
+    }
+    {
+      const tableLines = [
+        "| A | B |",
+        " | --- |:----- |",
+        "  | C | D | "
+      ];
+      const expectLines = [
+        "| B | A |",
+        " |:----- | --- |",
+        "  | D | C | "
+      ];
+      const table = readTable(tableLines);
+      const altered = moveColumn(table, 0, 1);
+      expect(altered).to.be.an.instanceOf(Table);
+      expect(altered.toLines()).to.deep.equal(expectLines);
+    }
+    {
+      const tableLines = [
+        "| A | B |",
+        " | --- |:----- |",
+        "  | C | D | "
+      ];
+      const expectLines = [
+        "| B | A |",
+        " |:----- | --- |",
+        "  | D | C | "
+      ];
+      const table = readTable(tableLines);
+      const altered = moveColumn(table, 1, -1);
+      expect(altered).to.be.an.instanceOf(Table);
+      expect(altered.toLines()).to.deep.equal(expectLines);
+    }
+    {
+      const tableLines = [
+        "| A | B |",
+        " | --- |:----- |",
+        "  | C | D | "
+      ];
+      const expectLines = [
+        "| A | B |",
+        " | --- |:----- |",
+        "  | C | D | "
+      ];
+      const table = readTable(tableLines);
+      const altered = moveColumn(table, 1, 1);
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
     }
