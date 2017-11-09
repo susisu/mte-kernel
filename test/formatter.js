@@ -1111,8 +1111,8 @@ describe("deleteRow(table, rowIndex)", () => {
 /**
  * @test {moveRow}
  */
-describe("moveRow(table, rowIndex, offset)", () => {
-  it("should move a row at the index by the specified offset", () => {
+describe("moveRow(table, rowIndex, destIndex)", () => {
+  it("should move a row at the index to the specified destination", () => {
     {
       const tableLines = [
         "| A | B |",
@@ -1125,7 +1125,7 @@ describe("moveRow(table, rowIndex, offset)", () => {
         "  | C | D |  "
       ];
       const table = readTable(tableLines);
-      const altered = moveRow(table, 0, -1);
+      const altered = moveRow(table, 0, 0);
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
     }
@@ -1157,7 +1157,7 @@ describe("moveRow(table, rowIndex, offset)", () => {
         "  | C | D |  "
       ];
       const table = readTable(tableLines);
-      const altered = moveRow(table, 1, -1);
+      const altered = moveRow(table, 0, 2);
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
     }
@@ -1173,7 +1173,23 @@ describe("moveRow(table, rowIndex, offset)", () => {
         "  | C | D |  "
       ];
       const table = readTable(tableLines);
-      const altered = moveRow(table, 1, 1);
+      const altered = moveRow(table, 1, 0);
+      expect(altered).to.be.an.instanceOf(Table);
+      expect(altered.toLines()).to.deep.equal(expectLines);
+    }
+    {
+      const tableLines = [
+        "| A | B |",
+        " | --- |:----- |",
+        "  | C | D |  "
+      ];
+      const expectLines = [
+        "| A | B |",
+        " | --- |:----- |",
+        "  | C | D |  "
+      ];
+      const table = readTable(tableLines);
+      const altered = moveRow(table, 1, 2);
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
     }
@@ -1191,7 +1207,25 @@ describe("moveRow(table, rowIndex, offset)", () => {
         "   | E | F | "
       ];
       const table = readTable(tableLines);
-      const altered = moveRow(table, 2, -1);
+      const altered = moveRow(table, 2, 0);
+      expect(altered).to.be.an.instanceOf(Table);
+      expect(altered.toLines()).to.deep.equal(expectLines);
+    }
+    {
+      const tableLines = [
+        "| A | B |",
+        " | --- |:----- |",
+        "  | C | D |  ",
+        "   | E | F | "
+      ];
+      const expectLines = [
+        "| A | B |",
+        " | --- |:----- |",
+        "  | C | D |  ",
+        "   | E | F | "
+      ];
+      const table = readTable(tableLines);
+      const altered = moveRow(table, 2, 2);
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
     }
@@ -1209,7 +1243,7 @@ describe("moveRow(table, rowIndex, offset)", () => {
         "  | C | D |  "
       ];
       const table = readTable(tableLines);
-      const altered = moveRow(table, 2, 1);
+      const altered = moveRow(table, 2, 3);
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
     }
@@ -1227,25 +1261,7 @@ describe("moveRow(table, rowIndex, offset)", () => {
         "  | C | D |  "
       ];
       const table = readTable(tableLines);
-      const altered = moveRow(table, 3, -1);
-      expect(altered).to.be.an.instanceOf(Table);
-      expect(altered.toLines()).to.deep.equal(expectLines);
-    }
-    {
-      const tableLines = [
-        "| A | B |",
-        " | --- |:----- |",
-        "  | C | D |  ",
-        "   | E | F | "
-      ];
-      const expectLines = [
-        "| A | B |",
-        " | --- |:----- |",
-        "  | C | D |  ",
-        "   | E | F | "
-      ];
-      const table = readTable(tableLines);
-      const altered = moveRow(table, 3, 1);
+      const altered = moveRow(table, 3, 2);
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
     }
@@ -1407,8 +1423,8 @@ describe("deleteColumn(table, columnIndex)", () => {
 /**
  * @test {moveColumn}
  */
-describe("moveColumn(table, columnIndex, offset)", () => {
-  it("should move a column at the index by the specified offset", () => {
+describe("moveColumn(table, columnIndex, destIndex)", () => {
+  it("should move a column at the index to the specified destination", () => {
     {
       const tableLines = [
         "| A | B |",
@@ -1421,7 +1437,7 @@ describe("moveColumn(table, columnIndex, offset)", () => {
         "  | C | D | "
       ];
       const table = readTable(tableLines);
-      const altered = moveColumn(table, 0, -1);
+      const altered = moveColumn(table, 0, 0);
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
     }
@@ -1453,7 +1469,7 @@ describe("moveColumn(table, columnIndex, offset)", () => {
         "  | D | C | "
       ];
       const table = readTable(tableLines);
-      const altered = moveColumn(table, 1, -1);
+      const altered = moveColumn(table, 1, 0);
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
     }
