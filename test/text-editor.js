@@ -54,6 +54,16 @@ describe("ITextEditor", () => {
   });
 
   /**
+   * @test {ITextEditor#acceptsTableEdit}
+   */
+  describe("#acceptsTableEdit()", () => {
+    it("should be not implemented, throw an error", () => {
+      const textEditor = new ITextEditor();
+      expect(() => { textEditor.acceptsTableEdit(0); }).to.throw(Error, /not implemented/i);
+    });
+  });
+
+  /**
    * @test {ITextEditor#getLine}
    */
   describe("#getLine()", () => {

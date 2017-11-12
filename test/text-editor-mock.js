@@ -32,6 +32,10 @@ export class TextEditor extends ITextEditor {
     return this._lines.length - 1;
   }
 
+  acceptsTableEdit(row) {
+    return true;
+  }
+
   getLine(row) {
     return this._lines[row];
   }
