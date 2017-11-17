@@ -30,7 +30,7 @@ import {
  */
 describe("_delimiterText(alignment, width)", () => {
   it("should return a delimiter text for the specified alignment", () => {
-    expect(_delimiterText(Alignment.DEFAULT, 5)).to.equal(" ----- ");
+    expect(_delimiterText(Alignment.NONE, 5)).to.equal(" ----- ");
     expect(_delimiterText(Alignment.LEFT, 5)).to.equal(":----- ");
     expect(_delimiterText(Alignment.RIGHT, 5)).to.equal(" -----:");
     expect(_delimiterText(Alignment.CENTER, 5)).to.equal(":-----:");
@@ -316,7 +316,7 @@ describe("_alignText(text, width, alignment, options)", () => {
       narrowChars    : new Set(),
       ambiguousAsWide: false
     };
-    expect(() => { _alignText("foo", 5, Alignment.DEFAULT, options); }).to.throw(Error, /unexpected/i);
+    expect(() => { _alignText("foo", 5, Alignment.NONE, options); }).to.throw(Error, /unexpected/i);
   });
 });
 

@@ -176,7 +176,7 @@ describe("TableCell", () => {
     it("should return the alignment that the cell represents", () => {
       {
         const cell = new TableCell("  ---  ");
-        expect(cell.getAlignment()).to.equal(Alignment.DEFAULT);
+        expect(cell.getAlignment()).to.equal(Alignment.NONE);
       }
       {
         const cell = new TableCell(" :---  ");
