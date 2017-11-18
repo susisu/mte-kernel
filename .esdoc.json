@@ -5,6 +5,7 @@
     {
       "name": "esdoc-standard-plugin",
       "option": {
+        "manual": {},
         "brand": {
           "title": "mte-kernel",
           "site": "https://github.com/susisu/mte-kernel",
