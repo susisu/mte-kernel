@@ -5,7 +5,11 @@
     {
       "name": "esdoc-standard-plugin",
       "option": {
-        "manual": {},
+        "manual": {
+          "globalIndex": true,
+          "index": "README.md",
+          "files": []
+        },
         "brand": {
           "title": "mte-kernel",
           "site": "https://github.com/susisu/mte-kernel",
