@@ -4010,16 +4010,15 @@ describe("TableEditor", () => {
         const tableEditor = new TableEditor(textEditor);
         const ops = {};
         tableEditor.deleteColumn(options(ops));
-        const range = textEditor.getSelectionRange();
-        expect(range.start.row).to.equal(1);
-        expect(range.start.column).to.equal(2);
-        expect(range.end.row).to.equal(1);
-        expect(range.end.column).to.equal(3);
+        const pos = textEditor.getCursorPosition();
+        expect(pos.row).to.equal(1);
+        expect(pos.column).to.equal(0);
+        expect(textEditor.getSelectionRange()).to.be.null;
         expect(textEditor.getLines()).to.deep.equal([
           "foo",
-          "| B   |",
-          "| --- |",
-          "| D   |",
+          "| A   | B   |",
+          "| --- | --- |",
+          "| C   | D   |",
           "bar"
         ]);
       }
@@ -4085,16 +4084,15 @@ describe("TableEditor", () => {
         const tableEditor = new TableEditor(textEditor);
         const ops = {};
         tableEditor.deleteColumn(options(ops));
-        const range = textEditor.getSelectionRange();
-        expect(range.start.row).to.equal(1);
-        expect(range.start.column).to.equal(2);
-        expect(range.end.row).to.equal(1);
-        expect(range.end.column).to.equal(3);
+        const pos = textEditor.getCursorPosition();
+        expect(pos.row).to.equal(1);
+        expect(pos.column).to.equal(13);
+        expect(textEditor.getSelectionRange()).to.be.null;
         expect(textEditor.getLines()).to.deep.equal([
           "foo",
-          "| A   |",
-          "| --- |",
-          "| C   |",
+          "| A   | B   |",
+          "| --- | --- |",
+          "| C   | D   |",
           "bar"
         ]);
       }
