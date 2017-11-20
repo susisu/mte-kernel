@@ -8,7 +8,7 @@
         "manual": {
           "globalIndex": true,
           "index": "README.md",
-          "files": []
+          "files": ["CHANGELOG.md"]
         },
         "brand": {
           "title": "mte-kernel",

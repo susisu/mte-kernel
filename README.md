@@ -33,10 +33,10 @@ const tableEditor = new TableEditor(textEditor);
 tableEditor.formatAll(options({}));
 ```
 
-See the [API documentation][doc] for more information.
+See the [API reference][doc-API] for more information.
 It is also good to look into [atom-markdown-table-editor][atom-mte-repo] as a reference implementation.
 
-[doc]: https://doc.esdoc.org/github.com/susisu/mte-kernel/
+[doc-API]: https://doc.esdoc.org/github.com/susisu/mte-kernel/identifiers.html
 [doc-ITextEditor]:  https://doc.esdoc.org/github.com/susisu/mte-kernel/class/lib/text-editor.js~ITextEditor.html
 [doc-TableEditor]:  https://doc.esdoc.org/github.com/susisu/mte-kernel/class/lib/table-editor.js~TableEditor.html
 [atom-mte]: https://atom.io/packages/markdown-table-editor
