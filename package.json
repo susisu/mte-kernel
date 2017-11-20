@@ -1,7 +1,15 @@
 {
   "name": "@susisu/mte-kernel",
-  "version": "0.0.0",
-  "description": "",
+  "version": "1.0.0",
+  "description": "The text editor independent part of markdown-table-editor",
+  "keywords": [
+    "markdown",
+    "table",
+    "text",
+    "editor",
+    "format",
+    "formatter"
+  ],
   "files": [
     "lib",
     "dist"
