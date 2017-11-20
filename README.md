@@ -42,7 +42,7 @@ It is also good to look into [atom-markdown-table-editor][atom-mte-repo] as a re
 [doc-ITextEditor]:  https://doc.esdoc.org/github.com/susisu/mte-kernel/class/lib/text-editor.js~ITextEditor.html
 [doc-TableEditor]:  https://doc.esdoc.org/github.com/susisu/mte-kernel/class/lib/table-editor.js~TableEditor.html
 [atom-mte]: https://atom.io/packages/markdown-table-editor
-[atom-mte-repo]: https://github.com/susisu/markdown-table-editor
+[atom-mte-repo]: https://github.com/susisu/atom-markdown-table-editor
 
 ## License
 [MIT License](http://opensource.org/licenses/mit-license.php)
