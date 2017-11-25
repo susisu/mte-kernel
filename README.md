@@ -3,6 +3,8 @@ The text editor independent part of [atom-markdown-table-editor][atom-mte].
 
 ![demo](https://github.com/susisu/markdown-table-editor/wiki/images/demo.gif)
 
+[You can try it on your browser!](https://susisu.github.io/mte-demo/)
+
 ## Installation
 ``` shell
 npm i -S @susisu/mte-kernel
