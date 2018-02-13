@@ -12,7 +12,6 @@
         },
         "brand": {
           "title": "mte-kernel",
-          "logo": "dummy.png",
           "site": "https://github.com/susisu/mte-kernel",
           "repository": "https://github.com/susisu/mte-kernel.git"
         },
