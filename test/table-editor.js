@@ -8,7 +8,7 @@ import { Table } from "../lib/table.js";
 import { readTable } from "../lib/parser.js";
 import { completeTable, formatTable } from "../lib/formatter.js";
 import { options } from "../lib/options.js";
-import { _createIsTableRowRegex, _isTableRow, _computeNewOffset, TableEditor } from "../lib/table-editor.js";
+import { _createIsTableRowRegex, _computeNewOffset, TableEditor } from "../lib/table-editor.js";
 
 import { TextEditor } from "./text-editor-mock.js";
 
