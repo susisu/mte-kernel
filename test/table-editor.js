@@ -245,7 +245,7 @@ describe("TableEditor", () => {
   /**
    * @test {TableEditor#_findTable}
    */
-  describe("#_findTable()", () => {
+  describe("#_findTable(options)", () => {
     it("should find a table under the current cursor position and return an object that describes the table", () => {
       const textEditor = new TextEditor([
         "foo",
@@ -253,16 +253,18 @@ describe("TableEditor", () => {
         "| A   | B   |",
         "| --- | --- |",
         "| C   | D   |",
+        " * | E   | F   |",
         "| ?   | ?   |", // not included in table for some reason
         "bar"
       ]);
       textEditor.acceptsTableEdit = function (row) {
-        return row !== 1 && row !== 5;
+        return row !== 1 && row !== 6;
       };
       const tableEditor = new TableEditor(textEditor);
       textEditor.setCursorPosition(new Point(2, 0));
       {
-        const info = tableEditor._findTable();
+        const ops = options({});
+        const info = tableEditor._findTable(ops);
         expect(info).to.be.an("object");
         expect(info.range).to.be.an.instanceOf(Range);
         expect(info.range.start.row).to.equal(2);
@@ -287,7 +289,8 @@ describe("TableEditor", () => {
       }
       textEditor.setCursorPosition(new Point(2, 2));
       {
-        const info = tableEditor._findTable();
+        const ops = options({});
+        const info = tableEditor._findTable(ops);
         expect(info).to.be.an("object");
         expect(info.range).to.be.an.instanceOf(Range);
         expect(info.range.start.row).to.equal(2);
@@ -312,7 +315,8 @@ describe("TableEditor", () => {
       }
       textEditor.setCursorPosition(new Point(2, 9));
       {
-        const info = tableEditor._findTable();
+        const ops = options({});
+        const info = tableEditor._findTable(ops);
         expect(info).to.be.an("object");
         expect(info.range).to.be.an.instanceOf(Range);
         expect(info.range.start.row).to.equal(2);
@@ -337,7 +341,8 @@ describe("TableEditor", () => {
       }
       textEditor.setCursorPosition(new Point(2, 13));
       {
-        const info = tableEditor._findTable();
+        const ops = options({});
+        const info = tableEditor._findTable(ops);
         expect(info).to.be.an("object");
         expect(info.range).to.be.an.instanceOf(Range);
         expect(info.range.start.row).to.equal(2);
@@ -362,7 +367,8 @@ describe("TableEditor", () => {
       }
       textEditor.setCursorPosition(new Point(3, 2));
       {
-        const info = tableEditor._findTable();
+        const ops = options({});
+        const info = tableEditor._findTable(ops);
         expect(info).to.be.an("object");
         expect(info.range).to.be.an.instanceOf(Range);
         expect(info.range.start.row).to.equal(2);
@@ -387,7 +393,8 @@ describe("TableEditor", () => {
       }
       textEditor.setCursorPosition(new Point(4, 2));
       {
-        const info = tableEditor._findTable();
+        const ops = options({});
+        const info = tableEditor._findTable(ops);
         expect(info).to.be.an("object");
         expect(info.range).to.be.an.instanceOf(Range);
         expect(info.range.start.row).to.equal(2);
@@ -410,6 +417,96 @@ describe("TableEditor", () => {
         expect(info.focus.column).to.equal(0);
         expect(info.focus.offset).to.equal(1);
       }
+      textEditor.setCursorPosition(new Point(2, 0));
+      {
+        const ops = options({
+          leftMarginChars: new Set("*")
+        });
+        const info = tableEditor._findTable(ops);
+        expect(info).to.be.an("object");
+        expect(info.range).to.be.an.instanceOf(Range);
+        expect(info.range.start.row).to.equal(2);
+        expect(info.range.start.column).to.equal(0);
+        expect(info.range.end.row).to.equal(5);
+        expect(info.range.end.column).to.equal(16);
+        expect(info.lines).to.deep.equal([
+          "| A   | B   |",
+          "| --- | --- |",
+          "| C   | D   |",
+          " * | E   | F   |"
+        ]);
+        expect(info.table).to.be.an.instanceOf(Table);
+        expect(info.table.toLines()).to.deep.equal([
+          "| A   | B   |",
+          "| --- | --- |",
+          "| C   | D   |",
+          " * | E   | F   |"
+        ]);
+        expect(info.focus).to.be.an.instanceOf(Focus);
+        expect(info.focus.row).to.equal(0);
+        expect(info.focus.column).to.equal(-1);
+        expect(info.focus.offset).to.equal(0);
+      }
+      textEditor.setCursorPosition(new Point(5, 0));
+      {
+        const ops = options({
+          leftMarginChars: new Set("*")
+        });
+        const info = tableEditor._findTable(ops);
+        expect(info).to.be.an("object");
+        expect(info.range).to.be.an.instanceOf(Range);
+        expect(info.range.start.row).to.equal(2);
+        expect(info.range.start.column).to.equal(0);
+        expect(info.range.end.row).to.equal(5);
+        expect(info.range.end.column).to.equal(16);
+        expect(info.lines).to.deep.equal([
+          "| A   | B   |",
+          "| --- | --- |",
+          "| C   | D   |",
+          " * | E   | F   |"
+        ]);
+        expect(info.table).to.be.an.instanceOf(Table);
+        expect(info.table.toLines()).to.deep.equal([
+          "| A   | B   |",
+          "| --- | --- |",
+          "| C   | D   |",
+          " * | E   | F   |"
+        ]);
+        expect(info.focus).to.be.an.instanceOf(Focus);
+        expect(info.focus.row).to.equal(3);
+        expect(info.focus.column).to.equal(-1);
+        expect(info.focus.offset).to.equal(0);
+      }
+      textEditor.setCursorPosition(new Point(5, 5));
+      {
+        const ops = options({
+          leftMarginChars: new Set("*")
+        });
+        const info = tableEditor._findTable(ops);
+        expect(info).to.be.an("object");
+        expect(info.range).to.be.an.instanceOf(Range);
+        expect(info.range.start.row).to.equal(2);
+        expect(info.range.start.column).to.equal(0);
+        expect(info.range.end.row).to.equal(5);
+        expect(info.range.end.column).to.equal(16);
+        expect(info.lines).to.deep.equal([
+          "| A   | B   |",
+          "| --- | --- |",
+          "| C   | D   |",
+          " * | E   | F   |"
+        ]);
+        expect(info.table).to.be.an.instanceOf(Table);
+        expect(info.table.toLines()).to.deep.equal([
+          "| A   | B   |",
+          "| --- | --- |",
+          "| C   | D   |",
+          " * | E   | F   |"
+        ]);
+        expect(info.focus).to.be.an.instanceOf(Focus);
+        expect(info.focus.row).to.equal(3);
+        expect(info.focus.column).to.equal(0);
+        expect(info.focus.offset).to.equal(1);
+      }
     });
 
     it("should return undefined if there is no table at the cursor position", () => {
@@ -419,29 +516,58 @@ describe("TableEditor", () => {
         "| A   | B   |",
         "| --- | --- |",
         "| C   | D   |",
+        " * | E   | F   |",
         "| ?   | ?   |", // not included in table for some reason
         "bar"
       ]);
       textEditor.acceptsTableEdit = function (row) {
-        return row !== 1 && row !== 5;
+        return row !== 1 && row !== 6;
       };
       const tableEditor = new TableEditor(textEditor);
-      textEditor.setCursorPosition(new Point(0, 0));
-      expect(tableEditor._findTable()).to.be.undefined;
-      textEditor.setCursorPosition(new Point(0, 3));
-      expect(tableEditor._findTable()).to.be.undefined;
-      textEditor.setCursorPosition(new Point(1, 0));
-      expect(tableEditor._findTable()).to.be.undefined;
-      textEditor.setCursorPosition(new Point(1, 13));
-      expect(tableEditor._findTable()).to.be.undefined;
-      textEditor.setCursorPosition(new Point(5, 0));
-      expect(tableEditor._findTable()).to.be.undefined;
-      textEditor.setCursorPosition(new Point(5, 13));
-      expect(tableEditor._findTable()).to.be.undefined;
-      textEditor.setCursorPosition(new Point(6, 0));
-      expect(tableEditor._findTable()).to.be.undefined;
-      textEditor.setCursorPosition(new Point(6, 3));
-      expect(tableEditor._findTable()).to.be.undefined;
+      {
+        const ops = options({});
+        textEditor.setCursorPosition(new Point(0, 0));
+        expect(tableEditor._findTable(ops)).to.be.undefined;
+        textEditor.setCursorPosition(new Point(0, 3));
+        expect(tableEditor._findTable(ops)).to.be.undefined;
+        textEditor.setCursorPosition(new Point(1, 0));
+        expect(tableEditor._findTable(ops)).to.be.undefined;
+        textEditor.setCursorPosition(new Point(1, 13));
+        expect(tableEditor._findTable(ops)).to.be.undefined;
+        textEditor.setCursorPosition(new Point(5, 0));
+        expect(tableEditor._findTable(ops)).to.be.undefined;
+        textEditor.setCursorPosition(new Point(5, 16));
+        expect(tableEditor._findTable(ops)).to.be.undefined;
+        textEditor.setCursorPosition(new Point(6, 0));
+        expect(tableEditor._findTable(ops)).to.be.undefined;
+        textEditor.setCursorPosition(new Point(6, 13));
+        expect(tableEditor._findTable(ops)).to.be.undefined;
+        textEditor.setCursorPosition(new Point(7, 0));
+        expect(tableEditor._findTable(ops)).to.be.undefined;
+        textEditor.setCursorPosition(new Point(7, 3));
+        expect(tableEditor._findTable(ops)).to.be.undefined;
+      }
+      {
+        const ops = options({
+          leftMarginChars: new Set("*")
+        });
+        textEditor.setCursorPosition(new Point(0, 0));
+        expect(tableEditor._findTable(ops)).to.be.undefined;
+        textEditor.setCursorPosition(new Point(0, 3));
+        expect(tableEditor._findTable(ops)).to.be.undefined;
+        textEditor.setCursorPosition(new Point(1, 0));
+        expect(tableEditor._findTable(ops)).to.be.undefined;
+        textEditor.setCursorPosition(new Point(1, 13));
+        expect(tableEditor._findTable(ops)).to.be.undefined;
+        textEditor.setCursorPosition(new Point(6, 0));
+        expect(tableEditor._findTable(ops)).to.be.undefined;
+        textEditor.setCursorPosition(new Point(6, 13));
+        expect(tableEditor._findTable(ops)).to.be.undefined;
+        textEditor.setCursorPosition(new Point(7, 0));
+        expect(tableEditor._findTable(ops)).to.be.undefined;
+        textEditor.setCursorPosition(new Point(7, 3));
+        expect(tableEditor._findTable(ops)).to.be.undefined;
+      }
     });
   });
 
