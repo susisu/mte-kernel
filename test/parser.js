@@ -114,7 +114,7 @@ describe("_marginRegex(chars)", () => {
       expect(re.test(" ABC ")).to.be.false;
     }
     {
-      const re = _marginRegex(new Set(["*", "-"]));
+      const re = _marginRegex(new Set("*-"));
       expect(re.test("")).to.be.true;
       expect(re.test(" \t")).to.be.true;
       expect(re.test(" ABC ")).to.be.false;
@@ -124,7 +124,7 @@ describe("_marginRegex(chars)", () => {
       expect(re.test(" A * B - C ")).to.be.false;
     }
     {
-      const re = _marginRegex(new Set(["\u{1F363}"]));
+      const re = _marginRegex(new Set("\u{1F363}"));
       expect(re.test("")).to.be.true;
       expect(re.test(" \t")).to.be.true;
       expect(re.test(" ABC ")).to.be.false;
@@ -134,7 +134,7 @@ describe("_marginRegex(chars)", () => {
   });
 
   it("should ignore a pipe and a backquote in the argument", () => {
-    const re = _marginRegex(new Set(["|", "`", "*"]));
+    const re = _marginRegex(new Set("*|`"));
     expect(re.test("")).to.be.true;
     expect(re.test(" \t")).to.be.true;
     expect(re.test(" ABC ")).to.be.false;
