@@ -5017,9 +5017,9 @@ describe("TableEditor", () => {
           "  | C | D |",
           "| ? | ? |", // not included in table for some reason
           "bar",
-          "| E | F |",
-          " | ----- | --- |",
-          "  | G | H |",
+          " * | E | F |",
+          " *  | ----- | --- |",
+          " *   | G | H |",
           "baz"
         ]);
         textEditor.acceptsTableEdit = function (row) {
@@ -5027,7 +5027,9 @@ describe("TableEditor", () => {
         };
         textEditor.setCursorPosition(new Point(1, 2));
         const tableEditor = new TableEditor(textEditor);
-        const ops = {};
+        const ops = {
+          leftMarginChars: new Set("*")
+        };
         tableEditor.formatAll(options(ops));
         const pos = textEditor.getCursorPosition();
         expect(pos.row).to.equal(1);
@@ -5041,9 +5043,9 @@ describe("TableEditor", () => {
           "| C   | D   |",
           "| ? | ? |",
           "bar",
-          "| E   | F   |",
-          "| --- | --- |",
-          "| G   | H   |",
+          " * | E   | F   |",
+          " * | --- | --- |",
+          " * | G   | H   |",
           "baz"
         ]);
       }
