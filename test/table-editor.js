@@ -8,9 +8,41 @@ import { Table } from "../lib/table.js";
 import { readTable } from "../lib/parser.js";
 import { completeTable, formatTable } from "../lib/formatter.js";
 import { options } from "../lib/options.js";
-import { _isTableRow, _computeNewOffset, TableEditor } from "../lib/table-editor.js";
+import { _createIsTableRowRegex, _isTableRow, _computeNewOffset, TableEditor } from "../lib/table-editor.js";
 
 import { TextEditor } from "./text-editor-mock.js";
+
+/**
+ * @test {_createIsTableRowRegex}
+ */
+describe("_createIsTableRowRegex(leftMarginChars)", () => {
+  it("should return a regular expression object that matches a table row", () => {
+    {
+      const re = _createIsTableRowRegex(new Set());
+      expect(re.test("|")).to.be.true;
+      expect(re.test("|foo")).to.be.true;
+      expect(re.test(" \t|")).to.be.true;
+      expect(re.test(" \t|foo")).to.be.true;
+      expect(re.test("")).to.be.false;
+      expect(re.test("foo")).to.be.false;
+      expect(re.test(" \t")).to.be.false;
+      expect(re.test(" \tfoo")).to.be.false;
+      expect(re.test(" * |foo")).to.be.false;
+    }
+    {
+      const re = _createIsTableRowRegex(new Set("*"));
+      expect(re.test("|")).to.be.true;
+      expect(re.test("|foo")).to.be.true;
+      expect(re.test(" \t|")).to.be.true;
+      expect(re.test(" \t|foo")).to.be.true;
+      expect(re.test("")).to.be.false;
+      expect(re.test("foo")).to.be.false;
+      expect(re.test(" \t")).to.be.false;
+      expect(re.test(" \tfoo")).to.be.false;
+      expect(re.test(" * |foo")).to.be.true;
+    }
+  });
+});
 
 /**
  * @test {_isTableRow}
