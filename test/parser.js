@@ -2,7 +2,7 @@ import { expect } from "chai";
 
 import { TableRow } from "../lib/table-row.js";
 import { Table } from "../lib/table.js";
-import { _splitCells, _readRow, _marginRegex, readTable } from "../lib/parser.js";
+import { _splitCells, _readRow, marginRegexSrc, _marginRegex, readTable } from "../lib/parser.js";
 
 /**
  * @test {_splitCells}
@@ -122,6 +122,31 @@ describe("_readRow(text, leftMarginRegex = /^\\s*$/)", () => {
       expect(cells[1].rawContent).to.equal(" B ");
       expect(cells[2].rawContent).to.equal(" C ");
     }
+  });
+});
+
+/**
+ * @test {marginRegexSrc}
+ */
+describe("marginRegexSrc(chars)", () => {
+  it("should create a regex source string of margin character class", () => {
+    {
+      const s = marginRegexSrc(new Set());
+      expect(s).to.equal("[\\s]*");
+    }
+    {
+      const s = marginRegexSrc(new Set("*"));
+      expect(s).to.equal("[\\s\\u{2a}]*");
+    }
+    {
+      const s = marginRegexSrc(new Set("\u{1F363}"));
+      expect(s).to.equal("[\\s\\u{1f363}]*");
+    }
+  });
+
+  it("should ignore a pipe and a backquote in the argument", () => {
+    const s = marginRegexSrc(new Set("*|`"));
+    expect(s).to.equal("[\\s\\u{2a}]*");
   });
 });
 
