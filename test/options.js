@@ -61,6 +61,7 @@ describe("options(obj)", () => {
     {
       const obj = {};
       expect(options(obj)).to.deep.equal({
+        leftMarginChars  : new Set(),
         formatType       : FormatType.NORMAL,
         minDelimiterWidth: 3,
         defaultAlignment : DefaultAlignment.LEFT,
@@ -76,10 +77,12 @@ describe("options(obj)", () => {
     }
     {
       const obj = {
+        leftMarginChars  : new Set("*"),
         formatType       : FormatType.WEAK,
         minDelimiterWidth: 5
       };
       expect(options(obj)).to.deep.equal({
+        leftMarginChars  : new Set("*"),
         formatType       : FormatType.WEAK,
         minDelimiterWidth: 5,
         defaultAlignment : DefaultAlignment.LEFT,
@@ -98,6 +101,7 @@ describe("options(obj)", () => {
         textWidthOptions: {}
       };
       expect(options(obj)).to.deep.equal({
+        leftMarginChars  : new Set(),
         formatType       : FormatType.NORMAL,
         minDelimiterWidth: 3,
         defaultAlignment : DefaultAlignment.LEFT,
@@ -119,6 +123,7 @@ describe("options(obj)", () => {
         }
       };
       expect(options(obj)).to.deep.equal({
+        leftMarginChars  : new Set(),
         formatType       : FormatType.NORMAL,
         minDelimiterWidth: 3,
         defaultAlignment : DefaultAlignment.LEFT,
@@ -134,6 +139,7 @@ describe("options(obj)", () => {
     }
     {
       const obj = {
+        leftMarginChars  : new Set("*"),
         formatType       : FormatType.WEAK,
         minDelimiterWidth: 5,
         defaultAlignment : DefaultAlignment.CENTER,
@@ -147,6 +153,7 @@ describe("options(obj)", () => {
         }
       };
       expect(options(obj)).to.deep.equal({
+        leftMarginChars  : new Set("*"),
         formatType       : FormatType.WEAK,
         minDelimiterWidth: 5,
         defaultAlignment : DefaultAlignment.CENTER,
