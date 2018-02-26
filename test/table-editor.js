@@ -137,49 +137,108 @@ describe("TableEditor", () => {
   /**
    * @test {TableEditor#cursorIsInTable}
    */
-  describe("#cursorIsInTable()", () => {
+  describe("#cursorIsInTable(options)", () => {
     it("should return true if the cursor of the text editor is in a table", () => {
-      const textEditor = new TextEditor([
-        "foo",
-        "| ?   | ?   |", // not included in table for some reason
-        "| A   | B   |",
-        "| --- | --- |",
-        "| C   | D   |",
-        "| ?   | ?   |", // not included in table for some reason
-        "bar"
-      ]);
-      textEditor.acceptsTableEdit = function (row) {
-        return row !== 1 && row !== 5;
-      };
-      const tableEditor = new TableEditor(textEditor);
-      textEditor.setCursorPosition(new Point(0, 0));
-      expect(tableEditor.cursorIsInTable()).to.be.false;
-      textEditor.setCursorPosition(new Point(0, 3));
-      expect(tableEditor.cursorIsInTable()).to.be.false;
-      textEditor.setCursorPosition(new Point(1, 0));
-      expect(tableEditor.cursorIsInTable()).to.be.false;
-      textEditor.setCursorPosition(new Point(1, 13));
-      expect(tableEditor.cursorIsInTable()).to.be.false;
-      textEditor.setCursorPosition(new Point(2, 0));
-      expect(tableEditor.cursorIsInTable()).to.be.true;
-      textEditor.setCursorPosition(new Point(2, 13));
-      expect(tableEditor.cursorIsInTable()).to.be.true;
-      textEditor.setCursorPosition(new Point(3, 0));
-      expect(tableEditor.cursorIsInTable()).to.be.true;
-      textEditor.setCursorPosition(new Point(3, 13));
-      expect(tableEditor.cursorIsInTable()).to.be.true;
-      textEditor.setCursorPosition(new Point(4, 0));
-      expect(tableEditor.cursorIsInTable()).to.be.true;
-      textEditor.setCursorPosition(new Point(4, 13));
-      expect(tableEditor.cursorIsInTable()).to.be.true;
-      textEditor.setCursorPosition(new Point(5, 0));
-      expect(tableEditor.cursorIsInTable()).to.be.false;
-      textEditor.setCursorPosition(new Point(5, 13));
-      expect(tableEditor.cursorIsInTable()).to.be.false;
-      textEditor.setCursorPosition(new Point(6, 0));
-      expect(tableEditor.cursorIsInTable()).to.be.false;
-      textEditor.setCursorPosition(new Point(6, 3));
-      expect(tableEditor.cursorIsInTable()).to.be.false;
+      {
+        const textEditor = new TextEditor([
+          "foo",
+          "| ?   | ?   |", // not included in table for some reason
+          "| A   | B   |",
+          "| --- | --- |",
+          "| C   | D   |",
+          " * | E   | F   |",
+          "| ?   | ?   |", // not included in table for some reason
+          "bar"
+        ]);
+        textEditor.acceptsTableEdit = function (row) {
+          return row !== 1 && row !== 6;
+        };
+        const ops = options({});
+        const tableEditor = new TableEditor(textEditor);
+        textEditor.setCursorPosition(new Point(0, 0));
+        expect(tableEditor.cursorIsInTable(ops)).to.be.false;
+        textEditor.setCursorPosition(new Point(0, 3));
+        expect(tableEditor.cursorIsInTable(ops)).to.be.false;
+        textEditor.setCursorPosition(new Point(1, 0));
+        expect(tableEditor.cursorIsInTable(ops)).to.be.false;
+        textEditor.setCursorPosition(new Point(1, 13));
+        expect(tableEditor.cursorIsInTable(ops)).to.be.false;
+        textEditor.setCursorPosition(new Point(2, 0));
+        expect(tableEditor.cursorIsInTable(ops)).to.be.true;
+        textEditor.setCursorPosition(new Point(2, 13));
+        expect(tableEditor.cursorIsInTable(ops)).to.be.true;
+        textEditor.setCursorPosition(new Point(3, 0));
+        expect(tableEditor.cursorIsInTable(ops)).to.be.true;
+        textEditor.setCursorPosition(new Point(3, 13));
+        expect(tableEditor.cursorIsInTable(ops)).to.be.true;
+        textEditor.setCursorPosition(new Point(4, 0));
+        expect(tableEditor.cursorIsInTable(ops)).to.be.true;
+        textEditor.setCursorPosition(new Point(4, 13));
+        expect(tableEditor.cursorIsInTable(ops)).to.be.true;
+        textEditor.setCursorPosition(new Point(5, 0));
+        expect(tableEditor.cursorIsInTable(ops)).to.be.false;
+        textEditor.setCursorPosition(new Point(5, 16));
+        expect(tableEditor.cursorIsInTable(ops)).to.be.false;
+        textEditor.setCursorPosition(new Point(6, 0));
+        expect(tableEditor.cursorIsInTable(ops)).to.be.false;
+        textEditor.setCursorPosition(new Point(6, 13));
+        expect(tableEditor.cursorIsInTable(ops)).to.be.false;
+        textEditor.setCursorPosition(new Point(7, 0));
+        expect(tableEditor.cursorIsInTable(ops)).to.be.false;
+        textEditor.setCursorPosition(new Point(7, 3));
+        expect(tableEditor.cursorIsInTable(ops)).to.be.false;
+      }
+      {
+        const textEditor = new TextEditor([
+          "foo",
+          "| ?   | ?   |", // not included in table for some reason
+          "| A   | B   |",
+          "| --- | --- |",
+          "| C   | D   |",
+          " * | E   | F   |",
+          "| ?   | ?   |", // not included in table for some reason
+          "bar"
+        ]);
+        textEditor.acceptsTableEdit = function (row) {
+          return row !== 1 && row !== 6;
+        };
+        const ops = options({
+          leftMarginChars: new Set("*")
+        });
+        const tableEditor = new TableEditor(textEditor);
+        textEditor.setCursorPosition(new Point(0, 0));
+        expect(tableEditor.cursorIsInTable(ops)).to.be.false;
+        textEditor.setCursorPosition(new Point(0, 3));
+        expect(tableEditor.cursorIsInTable(ops)).to.be.false;
+        textEditor.setCursorPosition(new Point(1, 0));
+        expect(tableEditor.cursorIsInTable(ops)).to.be.false;
+        textEditor.setCursorPosition(new Point(1, 13));
+        expect(tableEditor.cursorIsInTable(ops)).to.be.false;
+        textEditor.setCursorPosition(new Point(2, 0));
+        expect(tableEditor.cursorIsInTable(ops)).to.be.true;
+        textEditor.setCursorPosition(new Point(2, 13));
+        expect(tableEditor.cursorIsInTable(ops)).to.be.true;
+        textEditor.setCursorPosition(new Point(3, 0));
+        expect(tableEditor.cursorIsInTable(ops)).to.be.true;
+        textEditor.setCursorPosition(new Point(3, 13));
+        expect(tableEditor.cursorIsInTable(ops)).to.be.true;
+        textEditor.setCursorPosition(new Point(4, 0));
+        expect(tableEditor.cursorIsInTable(ops)).to.be.true;
+        textEditor.setCursorPosition(new Point(4, 13));
+        expect(tableEditor.cursorIsInTable(ops)).to.be.true;
+        textEditor.setCursorPosition(new Point(5, 0));
+        expect(tableEditor.cursorIsInTable(ops)).to.be.true;
+        textEditor.setCursorPosition(new Point(5, 16));
+        expect(tableEditor.cursorIsInTable(ops)).to.be.true;
+        textEditor.setCursorPosition(new Point(6, 0));
+        expect(tableEditor.cursorIsInTable(ops)).to.be.false;
+        textEditor.setCursorPosition(new Point(6, 13));
+        expect(tableEditor.cursorIsInTable(ops)).to.be.false;
+        textEditor.setCursorPosition(new Point(7, 0));
+        expect(tableEditor.cursorIsInTable(ops)).to.be.false;
+        textEditor.setCursorPosition(new Point(7, 3));
+        expect(tableEditor.cursorIsInTable(ops)).to.be.false;
+      }
     });
   });
 
