@@ -25,6 +25,10 @@ import {
   moveColumn
 } from "../lib/formatter.js";
 
+const parserOptions = {
+  leftMarginChars: new Set()
+};
+
 /**
  * @test {_delimiterText}
  */
@@ -68,7 +72,7 @@ describe("completeTable(table, options)", () => {
         "| --- |:----- |",
         "  | C | D |  "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const completed = completeTable(table, { minDelimiterWidth: 3 });
       expect(completed).to.be.an("object");
       expect(completed.table).to.be.an.instanceOf(Table);
@@ -86,7 +90,7 @@ describe("completeTable(table, options)", () => {
         "| --- |:----- | --- |",
         "  | B | C | D |  "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const completed = completeTable(table, { minDelimiterWidth: 3 });
       expect(completed).to.be.an("object");
       expect(completed.table).to.be.an.instanceOf(Table);
@@ -104,7 +108,7 @@ describe("completeTable(table, options)", () => {
         "| --- | ---- | --- |",
         "  | D | E | F |  "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const completed = completeTable(table, { minDelimiterWidth: 3 });
       expect(completed).to.be.an("object");
       expect(completed.table).to.be.an.instanceOf(Table);
@@ -121,7 +125,7 @@ describe("completeTable(table, options)", () => {
         "| --- | --- |",
         "  | C | D |  "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const completed = completeTable(table, { minDelimiterWidth: 3 });
       expect(completed).to.be.an("object");
       expect(completed.table).to.be.an.instanceOf(Table);
@@ -139,7 +143,7 @@ describe("completeTable(table, options)", () => {
         "| --- |:----- | --- |",
         "  | D | ||"
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const completed = completeTable(table, { minDelimiterWidth: 3 });
       expect(completed).to.be.an("object");
       expect(completed.table).to.be.an.instanceOf(Table);
@@ -158,7 +162,7 @@ describe("completeTable(table, options)", () => {
         "||",
         " |  |"
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const completed = completeTable(table, { minDelimiterWidth: 3 });
       expect(completed).to.be.an("object");
       expect(completed.table).to.be.an.instanceOf(Table);
@@ -410,7 +414,7 @@ describe("_formatTable(table, options)", () => {
           "| --- |:--- |",
           "| C   |"
         ];
-        const table = readTable(tableLines);
+        const table = readTable(tableLines, parserOptions);
         const formatted = _formatTable(table, options);
         expect(formatted.table).to.be.an.instanceOf(Table);
         expect(formatted.table.toLines()).to.deep.equal(expectLines);
@@ -427,7 +431,7 @@ describe("_formatTable(table, options)", () => {
           " | --- |:--- |",
           " | C   |"
         ];
-        const table = readTable(tableLines);
+        const table = readTable(tableLines, parserOptions);
         const formatted = _formatTable(table, options);
         expect(formatted.table).to.be.an.instanceOf(Table);
         expect(formatted.table.toLines()).to.deep.equal(expectLines);
@@ -451,7 +455,7 @@ describe("_formatTable(table, options)", () => {
         "| ----- |:----- |",
         "| C     |"
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const formatted = _formatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
       expect(formatted.table.toLines()).to.deep.equal(expectLines);
@@ -474,7 +478,7 @@ describe("_formatTable(table, options)", () => {
         "| --- |:--- |",
         "|  C  |"
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const formatted = _formatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
       expect(formatted.table.toLines()).to.deep.equal(expectLines);
@@ -497,7 +501,7 @@ describe("_formatTable(table, options)", () => {
         "| --- |:--- |",
         "| C   |"
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const formatted = _formatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
       expect(formatted.table.toLines()).to.deep.equal(expectLines);
@@ -518,7 +522,7 @@ describe("_formatTable(table, options)", () => {
         "| A   | B |",
         "| CDE |"
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const formatted = _formatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
       expect(formatted.table.toLines()).to.deep.equal(expectLines);
@@ -541,7 +545,7 @@ describe("_formatTable(table, options)", () => {
         "| ---:|",
         "| CDE | FG |"
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const formatted = _formatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
       expect(formatted.table.toLines()).to.deep.equal(expectLines);
@@ -564,7 +568,7 @@ describe("_formatTable(table, options)", () => {
         "|  |",
         "|  |"
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const formatted = _formatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
       expect(formatted.table.toLines()).to.deep.equal(expectLines);
@@ -654,7 +658,7 @@ describe("_weakFormatTable(table, options)", () => {
           "| --- |:--- |",
           "| C |"
         ];
-        const table = readTable(tableLines);
+        const table = readTable(tableLines, parserOptions);
         const formatted = _weakFormatTable(table, options);
         expect(formatted.table).to.be.an.instanceOf(Table);
         expect(formatted.table.toLines()).to.deep.equal(expectLines);
@@ -671,7 +675,7 @@ describe("_weakFormatTable(table, options)", () => {
           " | --- |:--- |",
           " | C |"
         ];
-        const table = readTable(tableLines);
+        const table = readTable(tableLines, parserOptions);
         const formatted = _weakFormatTable(table, options);
         expect(formatted.table).to.be.an.instanceOf(Table);
         expect(formatted.table.toLines()).to.deep.equal(expectLines);
@@ -695,7 +699,7 @@ describe("_weakFormatTable(table, options)", () => {
         "| ----- |:----- |",
         "| C |"
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const formatted = _weakFormatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
       expect(formatted.table.toLines()).to.deep.equal(expectLines);
@@ -718,7 +722,7 @@ describe("_weakFormatTable(table, options)", () => {
         "| --- |:--- |",
         "| C |"
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const formatted = _weakFormatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
       expect(formatted.table.toLines()).to.deep.equal(expectLines);
@@ -741,7 +745,7 @@ describe("_weakFormatTable(table, options)", () => {
         "| --- |:--- |",
         "| C |"
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const formatted = _weakFormatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
       expect(formatted.table.toLines()).to.deep.equal(expectLines);
@@ -762,7 +766,7 @@ describe("_weakFormatTable(table, options)", () => {
         "| A | B |",
         "| CDE |"
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const formatted = _weakFormatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
       expect(formatted.table.toLines()).to.deep.equal(expectLines);
@@ -785,7 +789,7 @@ describe("_weakFormatTable(table, options)", () => {
         "| ---:|",
         "| CDE | FG |"
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const formatted = _weakFormatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
       expect(formatted.table.toLines()).to.deep.equal(expectLines);
@@ -808,7 +812,7 @@ describe("_weakFormatTable(table, options)", () => {
         "|  |",
         "|  |"
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const formatted = _weakFormatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
       expect(formatted.table.toLines()).to.deep.equal(expectLines);
@@ -846,7 +850,7 @@ describe("formatTable(table, options)", () => {
         "| --- |:--- |",
         "| C   |"
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const formatted = formatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
       expect(formatted.table.toLines()).to.deep.equal(expectLines);
@@ -870,7 +874,7 @@ describe("formatTable(table, options)", () => {
         "| --- |:--- |",
         "| C |"
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const formatted = formatTable(table, options);
       expect(formatted.table).to.be.an.instanceOf(Table);
       expect(formatted.table.toLines()).to.deep.equal(expectLines);
@@ -897,7 +901,7 @@ describe("formatTable(table, options)", () => {
       "| --- |:----- |",
       "  | C |  "
     ];
-    const table = readTable(tableLines);
+    const table = readTable(tableLines, parserOptions);
     expect(() => { formatTable(table, options); }).to.throw(Error, /unknown/i);
   });
 });
@@ -921,7 +925,7 @@ describe("alterAlignment(table, columnIndex, alignment, options)", () => {
         " | --- | ---:|",
         "  | C | D |  "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const altered = alterAlignment(table, 1, Alignment.RIGHT, options);
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
@@ -940,7 +944,7 @@ describe("alterAlignment(table, columnIndex, alignment, options)", () => {
         " | --- | -----:|",
         "  | C | D |  "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const altered = alterAlignment(table, 1, Alignment.RIGHT, options);
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
@@ -957,7 +961,7 @@ describe("alterAlignment(table, columnIndex, alignment, options)", () => {
         " | --- |:----- |",
         "  | C | D |  "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const altered = alterAlignment(table, -1, Alignment.RIGHT, options);
       expect(altered).to.equal(table);
     }
@@ -970,7 +974,7 @@ describe("alterAlignment(table, columnIndex, alignment, options)", () => {
         " | --- |:----- |",
         "  | C | D |  "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const altered = alterAlignment(table, 2, Alignment.RIGHT, options);
       expect(altered).to.equal(table);
     }
@@ -994,7 +998,7 @@ describe("insertRow(table, rowIndex, row)", () => {
         "| X | Y |",
         "  | C | D |  "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const altered = insertRow(table, 0, _readRow("| X | Y |"));
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
@@ -1011,7 +1015,7 @@ describe("insertRow(table, rowIndex, row)", () => {
         "| X | Y |",
         "  | C | D |  "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const altered = insertRow(table, 1, _readRow("| X | Y |"));
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
@@ -1028,7 +1032,7 @@ describe("insertRow(table, rowIndex, row)", () => {
         "| X | Y |",
         "  | C | D |  "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const altered = insertRow(table, 2, _readRow("| X | Y |"));
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
@@ -1045,7 +1049,7 @@ describe("insertRow(table, rowIndex, row)", () => {
         "  | C | D |  ",
         "| X | Y |"
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const altered = insertRow(table, 3, _readRow("| X | Y |"));
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
@@ -1069,7 +1073,7 @@ describe("deleteRow(table, rowIndex)", () => {
         " | --- |:----- |",
         "  | C | D |  "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const altered = deleteRow(table, 0);
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
@@ -1085,7 +1089,7 @@ describe("deleteRow(table, rowIndex)", () => {
         " | --- |:----- |",
         "  | C | D |  "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const altered = deleteRow(table, 1);
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
@@ -1100,7 +1104,7 @@ describe("deleteRow(table, rowIndex)", () => {
         "| A | B |",
         " | --- |:----- |"
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const altered = deleteRow(table, 2);
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
@@ -1124,7 +1128,7 @@ describe("moveRow(table, rowIndex, destIndex)", () => {
         " | --- |:----- |",
         "  | C | D |  "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const altered = moveRow(table, 0, 0);
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
@@ -1140,7 +1144,7 @@ describe("moveRow(table, rowIndex, destIndex)", () => {
         " | --- |:----- |",
         "  | C | D |  "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const altered = moveRow(table, 0, 1);
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
@@ -1156,7 +1160,7 @@ describe("moveRow(table, rowIndex, destIndex)", () => {
         " | --- |:----- |",
         "  | C | D |  "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const altered = moveRow(table, 0, 2);
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
@@ -1172,7 +1176,7 @@ describe("moveRow(table, rowIndex, destIndex)", () => {
         " | --- |:----- |",
         "  | C | D |  "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const altered = moveRow(table, 1, 0);
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
@@ -1188,7 +1192,7 @@ describe("moveRow(table, rowIndex, destIndex)", () => {
         " | --- |:----- |",
         "  | C | D |  "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const altered = moveRow(table, 1, 2);
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
@@ -1206,7 +1210,7 @@ describe("moveRow(table, rowIndex, destIndex)", () => {
         "  | C | D |  ",
         "   | E | F | "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const altered = moveRow(table, 2, 0);
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
@@ -1224,7 +1228,7 @@ describe("moveRow(table, rowIndex, destIndex)", () => {
         "  | C | D |  ",
         "   | E | F | "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const altered = moveRow(table, 2, 2);
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
@@ -1242,7 +1246,7 @@ describe("moveRow(table, rowIndex, destIndex)", () => {
         "   | E | F | ",
         "  | C | D |  "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const altered = moveRow(table, 2, 3);
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
@@ -1260,7 +1264,7 @@ describe("moveRow(table, rowIndex, destIndex)", () => {
         "   | E | F | ",
         "  | C | D |  "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const altered = moveRow(table, 3, 2);
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
@@ -1284,7 +1288,7 @@ describe("insertColumn(table, columnIndex, column, options)", () => {
         " | --- | --- |:----- |",
         "  | Y | C | D |  "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const opts = { minDelimiterWidth: 3 };
       const altered = insertColumn(table, 0, [new TableCell(" X "), new TableCell(" Y ")], opts);
       expect(altered).to.be.an.instanceOf(Table);
@@ -1301,7 +1305,7 @@ describe("insertColumn(table, columnIndex, column, options)", () => {
         " | ----- | --- |:----- |",
         "  | Y | C | D |  "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const opts = { minDelimiterWidth: 5 };
       const altered = insertColumn(table, 0, [new TableCell(" X "), new TableCell(" Y ")], opts);
       expect(altered).to.be.an.instanceOf(Table);
@@ -1318,7 +1322,7 @@ describe("insertColumn(table, columnIndex, column, options)", () => {
         " | --- | --- |:----- |",
         "  | C | Y | D |  "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const opts = { minDelimiterWidth: 3 };
       const altered = insertColumn(table, 1, [new TableCell(" X "), new TableCell(" Y ")], opts);
       expect(altered).to.be.an.instanceOf(Table);
@@ -1335,7 +1339,7 @@ describe("insertColumn(table, columnIndex, column, options)", () => {
         " | --- | ----- | --- |",
         "  | C | D | Y |  "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const opts = { minDelimiterWidth: 3 };
       const altered = insertColumn(table, 2, [new TableCell(" X "), new TableCell(" Y ")], opts);
       expect(altered).to.be.an.instanceOf(Table);
@@ -1360,7 +1364,7 @@ describe("deleteColumn(table, columnIndex)", () => {
         " |:----- |",
         "  | D | "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const opts = { minDelimiterWidth: 3 };
       const altered = deleteColumn(table, 0, opts);
       expect(altered).to.be.an.instanceOf(Table);
@@ -1377,7 +1381,7 @@ describe("deleteColumn(table, columnIndex)", () => {
         " | --- |",
         "  | C | "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const opts = { minDelimiterWidth: 3 };
       const altered = deleteColumn(table, 1, opts);
       expect(altered).to.be.an.instanceOf(Table);
@@ -1394,7 +1398,7 @@ describe("deleteColumn(table, columnIndex)", () => {
         " | --- |",
         "  || "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const opts = { minDelimiterWidth: 3 };
       const altered = deleteColumn(table, 0, opts);
       expect(altered).to.be.an.instanceOf(Table);
@@ -1411,7 +1415,7 @@ describe("deleteColumn(table, columnIndex)", () => {
         " | ----- |",
         "  || "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const opts = { minDelimiterWidth: 5 };
       const altered = deleteColumn(table, 0, opts);
       expect(altered).to.be.an.instanceOf(Table);
@@ -1436,7 +1440,7 @@ describe("moveColumn(table, columnIndex, destIndex)", () => {
         " | --- |:----- |",
         "  | C | D | "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const altered = moveColumn(table, 0, 0);
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
@@ -1452,7 +1456,7 @@ describe("moveColumn(table, columnIndex, destIndex)", () => {
         " |:----- | --- |",
         "  | D | C | "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const altered = moveColumn(table, 0, 1);
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
@@ -1468,7 +1472,7 @@ describe("moveColumn(table, columnIndex, destIndex)", () => {
         " |:----- | --- |",
         "  | D | C | "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const altered = moveColumn(table, 1, 0);
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);
@@ -1484,7 +1488,7 @@ describe("moveColumn(table, columnIndex, destIndex)", () => {
         " | --- |:----- |",
         "  | C | D | "
       ];
-      const table = readTable(tableLines);
+      const table = readTable(tableLines, parserOptions);
       const altered = moveColumn(table, 1, 1);
       expect(altered).to.be.an.instanceOf(Table);
       expect(altered.toLines()).to.deep.equal(expectLines);

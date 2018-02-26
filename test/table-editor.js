@@ -33,11 +33,14 @@ describe("_isTableRow(line)", () => {
  */
 describe("_computeNewOffset(focus, completed, formatted, moved)", () => {
   it("should compute new focus offset from the information of the completed and formatted tables", () => {
-    const table = readTable([
-      " | A | B | ",
-      "| --- | ---:|",
-      "  | C | D |  "
-    ]);
+    const table = readTable(
+      [
+        " | A | B | ",
+        "| --- | ---:|",
+        "  | C | D |  "
+      ],
+      { leftMarginChars: new Set() }
+    );
     const ops = options({});
     const completed = completeTable(table, ops);
     const formatted = formatTable(completed.table, ops);
