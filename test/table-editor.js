@@ -807,7 +807,8 @@ describe("TableEditor", () => {
       ]);
       textEditor.setCursorPosition(new Point(1, 0));
       const tableEditor = new TableEditor(textEditor);
-      const info = tableEditor._findTable();
+      const ops = options({});
+      const info = tableEditor._findTable(ops);
       {
         const focus = new Focus(0, 1, 2);
         tableEditor._moveToFocus(info.range.start.row, info.table, focus);
@@ -848,7 +849,8 @@ describe("TableEditor", () => {
       ]);
       textEditor.setCursorPosition(new Point(1, 0));
       const tableEditor = new TableEditor(textEditor);
-      const info = tableEditor._findTable();
+      const ops = options({});
+      const info = tableEditor._findTable(ops);
       {
         const focus = new Focus(-1, 0, 0);
         tableEditor._moveToFocus(info.range.start.row, info.table, focus);
@@ -880,7 +882,8 @@ describe("TableEditor", () => {
       ]);
       textEditor.setCursorPosition(new Point(1, 0));
       const tableEditor = new TableEditor(textEditor);
-      const info = tableEditor._findTable();
+      const ops = options({});
+      const info = tableEditor._findTable(ops);
       {
         const focus = new Focus(0, 0, 0);
         tableEditor._selectFocus(info.range.start.row, info.table, focus);
@@ -929,7 +932,8 @@ describe("TableEditor", () => {
       ]);
       textEditor.setCursorPosition(new Point(1, 0));
       const tableEditor = new TableEditor(textEditor);
-      const info = tableEditor._findTable();
+      const ops = options({});
+      const info = tableEditor._findTable(ops);
       {
         const focus = new Focus(2, 1, 0);
         tableEditor._selectFocus(info.range.start.row, info.table, focus);
@@ -966,7 +970,8 @@ describe("TableEditor", () => {
       ]);
       textEditor.setCursorPosition(new Point(1, 0));
       const tableEditor = new TableEditor(textEditor);
-      const info = tableEditor._findTable();
+      const ops = options({});
+      const info = tableEditor._findTable(ops);
       {
         const focus = new Focus(-1, 0, 0);
         tableEditor._selectFocus(info.range.start.row, info.table, focus);
