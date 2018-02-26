@@ -30,7 +30,7 @@ describe("_splitCells(text)", () => {
 /**
  * @test {_readRow}
  */
-describe("_readRow(text)", () => {
+describe("_readRow(text, leftMarginRegex = /^\\s*$/)", () => {
   it("should read a table row", () => {
     {
       const row = _readRow("");
@@ -98,6 +98,29 @@ describe("_readRow(text)", () => {
       const cells = row.getCells();
       expect(cells).to.be.an("array").of.length(1);
       expect(cells[0].rawContent).to.equal(" `\\` \\| B `|` C ");
+    }
+    {
+      const row = _readRow(" * | A | B | C |");
+      expect(row).to.be.an.instanceOf(TableRow);
+      expect(row.marginLeft).to.equal("");
+      expect(row.marginRight).to.equal("");
+      const cells = row.getCells();
+      expect(cells).to.be.an("array").of.length(4);
+      expect(cells[0].rawContent).to.equal(" * ");
+      expect(cells[1].rawContent).to.equal(" A ");
+      expect(cells[2].rawContent).to.equal(" B ");
+      expect(cells[3].rawContent).to.equal(" C ");
+    }
+    {
+      const row = _readRow(" * | A | B | C |", /^[\s*]*$/);
+      expect(row).to.be.an.instanceOf(TableRow);
+      expect(row.marginLeft).to.equal(" * ");
+      expect(row.marginRight).to.equal("");
+      const cells = row.getCells();
+      expect(cells).to.be.an("array").of.length(3);
+      expect(cells[0].rawContent).to.equal(" A ");
+      expect(cells[1].rawContent).to.equal(" B ");
+      expect(cells[2].rawContent).to.equal(" C ");
     }
   });
 });
