@@ -45,22 +45,6 @@ describe("_createIsTableRowRegex(leftMarginChars)", () => {
 });
 
 /**
- * @test {_isTableRow}
- */
-describe("_isTableRow(line)", () => {
-  it("should return true if the line starts with a pipe", () => {
-    expect(_isTableRow("|")).to.be.true;
-    expect(_isTableRow("|foo")).to.be.true;
-    expect(_isTableRow(" \t|")).to.be.true;
-    expect(_isTableRow(" \t|foo")).to.be.true;
-    expect(_isTableRow("")).to.be.false;
-    expect(_isTableRow("foo")).to.be.false;
-    expect(_isTableRow(" \t")).to.be.false;
-    expect(_isTableRow(" \tfoo")).to.be.false;
-  });
-});
-
-/**
  * @test {_computeNewOffset}
  */
 describe("_computeNewOffset(focus, completed, formatted, moved)", () => {
