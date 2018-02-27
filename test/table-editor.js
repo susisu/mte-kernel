@@ -43,8 +43,8 @@ describe("_createIsTableRowRegex(leftMarginChars)", () => {
     }
   });
 
-  it("should ignore a pipe and a backquote", () => {
-    const re = _createIsTableRowRegex(new Set("*|`"));
+  it("should ignore a pipe, a backslash, and a backquote", () => {
+    const re = _createIsTableRowRegex(new Set("*|\\`"));
     expect(re.test("|")).to.be.true;
     expect(re.test("|foo")).to.be.true;
     expect(re.test(" \t|")).to.be.true;
@@ -54,6 +54,7 @@ describe("_createIsTableRowRegex(leftMarginChars)", () => {
     expect(re.test(" \t")).to.be.false;
     expect(re.test(" \tfoo")).to.be.false;
     expect(re.test(" * |foo")).to.be.true;
+    expect(re.test(" \\|foo")).to.be.false;
     expect(re.test(" ` |foo")).to.be.false;
   });
 });

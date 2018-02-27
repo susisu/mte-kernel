@@ -144,8 +144,8 @@ describe("marginRegexSrc(chars)", () => {
     }
   });
 
-  it("should ignore a pipe and a backquote in the argument", () => {
-    const s = marginRegexSrc(new Set("*|`"));
+  it("should ignore a pipe, a backslash, and a backquote in the argument", () => {
+    const s = marginRegexSrc(new Set("*|\\`"));
     expect(s).to.equal("[\\s\\u{2a}]*");
   });
 });
@@ -181,13 +181,14 @@ describe("_marginRegex(chars)", () => {
     }
   });
 
-  it("should ignore a pipe and a backquote in the argument", () => {
-    const re = _marginRegex(new Set("*|`"));
+  it("should ignore a pipe, a backslash, and a backquote in the argument", () => {
+    const re = _marginRegex(new Set("*|\\`"));
     expect(re.test("")).to.be.true;
     expect(re.test(" \t")).to.be.true;
     expect(re.test(" ABC ")).to.be.false;
     expect(re.test(" * ")).to.be.true;
     expect(re.test(" | ")).to.be.false;
+    expect(re.test(" \\ ")).to.be.false;
     expect(re.test(" ` ")).to.be.false;
   });
 });
