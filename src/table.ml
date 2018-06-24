@@ -21,13 +21,13 @@ module Normalized = struct
 
   let create ~header ~body ~alignments =
     match header with
-    | Some header ->
-      let width = Row.width header in
+    | Some header_row ->
+      let width = Row.width header_row in
       assert (width > 0);
       assert (List.for_all (fun row -> Row.width row = width) body);
       assert (List.length alignments = width);
       let height = List.length body in
-      { header = Some header; body; alignments; width; height }
+      { header; body; alignments; width; height }
     | None ->
       (* When there is no header, body must have at least one row *)
       let height = List.length body in
@@ -36,7 +36,7 @@ module Normalized = struct
       assert (width > 0);
       assert (List.for_all (fun row -> Row.width row = width) body);
       assert (List.length alignments = width);
-      { header = None; body; alignments; width; height }
+      { header; body; alignments; width; height }
 
   let header table = table.header
   let body table = table.body
