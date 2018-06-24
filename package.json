@@ -19,5 +19,18 @@
   "bugs": {
     "url": "https://github.com/susisu/mte-kernel/issues"
   },
-  "homepage": "https://github.com/susisu/mte-kernel#readme"
+  "homepage": "https://github.com/susisu/mte-kernel#readme",
+  "scripts": {
+    "clean": "bsb -clean-world",
+    "build": "bsb -make-world",
+    "watch:build": "bsb -make-world -w",
+    "test": "bsb -make-world && jest",
+    "watch:test": "jest --watchAll"
+  },
+  "devDependencies": {
+    "@glennsl/bs-jest": "^0.4.2",
+    "bs-platform": "^3.1.5",
+    "jest": "^22.0.4"
+  },
+  "dependencies": {}
 }

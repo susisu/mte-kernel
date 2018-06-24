@@ -1,0 +1,32 @@
+{
+  "name": "@susisu/mte-kernel",
+  "namespace": "mte-kernel",
+  "version": "3.0.0",
+  "sources": [
+    {
+      "dir": "src",
+      "subdirs": true,
+    },
+    {
+      "dir": "__tests__",
+      "subdirs": true,
+      "type": "dev"
+    }
+  ],
+  "package-specs": {
+    "module": "commonjs",
+    "in-source": true
+  },
+  "suffix": ".bs.js",
+  "bs-dependencies": [
+      "@glennsl/bs-jest"
+  ],
+  "warnings": {
+    "number": "+A-4-9-33-34-40-41-42-43-44",
+    "error" : "+101"
+  },
+  "refmt": 3,
+  "bsc-flags": [
+    "-bs-super-errors"
+  ]
+}
