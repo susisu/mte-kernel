@@ -1,5 +1,11 @@
 "use strict";
 
 module.exports = {
-  collectCoverage: true
+  testMatch: [
+    "**/__tests__/**/*test?(.bs).js"
+  ],
+  collectCoverage: true,
+  collectCoverageFrom: [
+    "src/**/*.js"
+  ]
 };
