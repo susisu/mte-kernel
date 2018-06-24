@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/susisu/mte-kernel#readme",
   "scripts": {
-    "clean": "bsb -clean-world",
+    "clean": "bsb -clean-world && rimraf coverage",
     "build": "bsb -make-world",
     "watch:build": "bsb -make-world -w",
     "test": "bsb -make-world && jest",
@@ -30,7 +30,8 @@
   "devDependencies": {
     "@glennsl/bs-jest": "^0.4.2",
     "bs-platform": "^3.1.5",
-    "jest": "^22.0.4"
+    "jest": "^22.0.4",
+    "rimraf": "^2.6.2"
   },
   "dependencies": {}
 }
