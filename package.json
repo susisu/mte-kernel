@@ -25,7 +25,8 @@
     "build": "bsb -make-world",
     "watch:build": "bsb -make-world -w",
     "test": "bsb -make-world && jest",
-    "watch:test": "jest --watchAll"
+    "watch:test": "jest --watchAll",
+    "watch": "screen -c .screenrc"
   },
   "devDependencies": {
     "@glennsl/bs-jest": "^0.4.2",
