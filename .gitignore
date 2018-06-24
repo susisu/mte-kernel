@@ -105,3 +105,4 @@ setup.log
 ### BuckleScript
 /lib
 .bsb.lock
+*.bs.js
