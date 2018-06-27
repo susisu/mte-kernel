@@ -11,6 +11,6 @@ let () =
 
       test "it should fail if start_line >= end_line" begin fun () ->
         expect (fun () -> Range.create 4 2) |> toThrow
-      end
-    end
+      end;
+    end;
   end

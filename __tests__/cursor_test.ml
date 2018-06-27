@@ -16,5 +16,5 @@ let () =
       test "it should fail if column is negative" begin fun () ->
         expect (fun () -> Cursor.create 2 (-4)) |> toThrow
       end;
-    end
+    end;
   end

@@ -104,7 +104,7 @@ let () =
           let body = [] in
           let alignments = [] in
           expect (fun () -> Table.Normalized.create ~header ~body ~alignments) |> toThrow
-        end
-      end
-    end
+        end;
+      end;
+    end;
   end
