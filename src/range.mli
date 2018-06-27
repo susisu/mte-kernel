@@ -1,5 +1,6 @@
 type t
 
 val create: int -> int -> t
-val start_line: t -> int
-val end_line: t -> int
+
+val start_row: t -> int
+val end_row: t -> int

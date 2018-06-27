@@ -1,12 +1,12 @@
 type t = {
-  start_line: int;
-  end_line: int;
+  start_row: int;
+  end_row: int;
 }
 
-let create start_line end_line =
-  assert (start_line >= 0);
-  assert (end_line > start_line);
-  { start_line; end_line }
+let create start_row end_row =
+  assert (start_row >= 0);
+  assert (end_row > start_row);
+  { start_row; end_row }
 
-let start_line range = range.start_line
-let end_line range = range.end_line
+let start_row range = range.start_row
+let end_row range = range.end_row
