@@ -4,6 +4,7 @@ type t = {
 }
 
 let create start_line end_line =
+  assert (start_line >= 0);
   assert (end_line > start_line);
   { start_line; end_line }
 

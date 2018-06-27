@@ -12,5 +12,9 @@ let () =
       test "it should fail if start_line >= end_line" begin fun () ->
         expect (fun () -> Range.create 4 2) |> toThrow
       end;
+
+      test "it should fail if start_line is negative" begin fun () ->
+        expect (fun () -> Range.create (-2) 4) |> toThrow
+      end;
     end;
   end
