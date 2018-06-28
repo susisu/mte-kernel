@@ -14,11 +14,13 @@ let () =
       end;
 
       test "it should fail if start_row >= end_row" begin fun () ->
-        expect (fun () -> create 1 0) |> toThrow
+        expect (fun () -> create 1 0)
+        |> toThrowMessageRe (Js.Re.fromStringWithFlags "assert" ~flags:"i")
       end;
 
       test "it should fail if start_row is negative" begin fun () ->
-        expect (fun () -> create (-1) 0) |> toThrow
+        expect (fun () -> create (-1) 0)
+        |> toThrowMessageRe (Js.Re.fromStringWithFlags "assert" ~flags:"i")
       end;
     end;
   end

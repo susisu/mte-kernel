@@ -29,7 +29,8 @@ let () =
           let header = Some [] in
           let body = [[]; []; []] in
           let alignments = [] in
-          expect (fun () -> create ~header ~body ~alignments) |> toThrow
+          expect (fun () -> create ~header ~body ~alignments)
+          |> toThrowMessageRe (Js.Re.fromStringWithFlags "assert" ~flags:"i")
         end;
 
         test "it should fail if there exists a column of diffrent width" begin fun () ->
@@ -40,7 +41,8 @@ let () =
             ["lime"; "green"];
           ] in
           let alignments = [Alignment.Default; Alignment.Left] in
-          expect (fun () -> create ~header ~body ~alignments) |> toThrow
+          expect (fun () -> create ~header ~body ~alignments)
+          |> toThrowMessageRe (Js.Re.fromStringWithFlags "assert" ~flags:"i")
         end;
 
         test "it should fail if there exists a column without alignment" begin fun () ->
@@ -51,7 +53,8 @@ let () =
             ["lime"; "green"];
           ] in
           let alignments = [Alignment.Default] in
-          expect (fun () -> create ~header ~body ~alignments) |> toThrow
+          expect (fun () -> create ~header ~body ~alignments)
+          |> toThrowMessageRe (Js.Re.fromStringWithFlags "assert" ~flags:"i")
         end;
 
         test "it should be able to create a normalized headless table" begin fun () ->
@@ -76,7 +79,8 @@ let () =
           let header = None in
           let body = [[]; []; []] in
           let alignments = [] in
-          expect (fun () -> create ~header ~body ~alignments) |> toThrow
+          expect (fun () -> create ~header ~body ~alignments)
+          |> toThrowMessageRe (Js.Re.fromStringWithFlags "assert" ~flags:"i")
         end;
 
         test "it should fail if there is no header and exists a column of diffrent width" begin fun () ->
@@ -87,7 +91,8 @@ let () =
             ["lime"; "green"];
           ] in
           let alignments = [Alignment.Default; Alignment.Left] in
-          expect (fun () -> create ~header ~body ~alignments) |> toThrow
+          expect (fun () -> create ~header ~body ~alignments)
+          |> toThrowMessageRe (Js.Re.fromStringWithFlags "assert" ~flags:"i")
         end;
 
         test "it should fail if there is no header and exists a column without alignment" begin fun () ->
@@ -98,14 +103,16 @@ let () =
             ["lime"; "green"];
           ] in
           let alignments = [Alignment.Default] in
-          expect (fun () -> create ~header ~body ~alignments) |> toThrow
+          expect (fun () -> create ~header ~body ~alignments)
+          |> toThrowMessageRe (Js.Re.fromStringWithFlags "assert" ~flags:"i")
         end;
 
         test "it should fail if there is no header and no body" begin fun () ->
           let header = None in
           let body = [] in
           let alignments = [] in
-          expect (fun () -> create ~header ~body ~alignments) |> toThrow
+          expect (fun () -> create ~header ~body ~alignments)
+          |> toThrowMessageRe (Js.Re.fromStringWithFlags "assert" ~flags:"i")
         end;
       end;
     end;

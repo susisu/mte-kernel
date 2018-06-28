@@ -16,11 +16,13 @@ let () =
       end;
 
       test "it should fail if row is negative" begin fun () ->
-        expect (fun () -> create (-1) 0) |> toThrow
+        expect (fun () -> create (-1) 0)
+        |> toThrowMessageRe (Js.Re.fromStringWithFlags "assert" ~flags:"i")
       end;
 
       test "it should fail if column is negative" begin fun () ->
-        expect (fun () -> create 0 (-1)) |> toThrow
+        expect (fun () -> create 0 (-1))
+        |> toThrowMessageRe (Js.Re.fromStringWithFlags "assert" ~flags:"i")
       end;
     end;
   end
