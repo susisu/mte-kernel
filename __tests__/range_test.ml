@@ -5,17 +5,20 @@ let () =
   describe "Range" begin fun () ->
     let open Range in
     describe "create" begin fun () ->
-      test "it should create a range" begin fun () ->
-        let r = create 2 4 in
-        expect (start_row r, end_row r) |> toEqual (2, 4)
+      testAll "it should create a range" [
+        (0, 1);
+        (1, 2);
+      ] begin fun (r, c) ->
+        let range = create r c in
+        expect (start_row range, end_row range) |> toEqual (r, c)
       end;
 
       test "it should fail if start_row >= end_row" begin fun () ->
-        expect (fun () -> create 4 2) |> toThrow
+        expect (fun () -> create 1 0) |> toThrow
       end;
 
       test "it should fail if start_row is negative" begin fun () ->
-        expect (fun () -> create (-2) 4) |> toThrow
+        expect (fun () -> create (-1) 0) |> toThrow
       end;
     end;
   end
