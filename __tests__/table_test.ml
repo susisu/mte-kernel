@@ -3,9 +3,11 @@ open Expect
 
 let () =
   describe "Table" begin fun () ->
+    let open Table in
     describe "Normalized" begin fun () ->
+      let open Normalized in
       describe "create" begin fun () ->
-        test "it should be able to create normalized table" begin fun () ->
+        test "it should be able to create a normalized table" begin fun () ->
           let header = Some ["name"; "color"] in
           let body = [
             ["apple"; "red"];
@@ -13,13 +15,13 @@ let () =
             ["lime"; "green"];
           ] in
           let alignments = [Alignment.Default; Alignment.Left] in
-          let table = Table.Normalized.create ~header ~body ~alignments in
+          let table = create ~header ~body ~alignments in
           expect (
-            Table.Normalized.header table,
-            Table.Normalized.body table,
-            Table.Normalized.alignments table,
-            Table.Normalized.width table,
-            Table.Normalized.height table
+            Normalized.header table,
+            Normalized.body table,
+            Normalized.alignments table,
+            Normalized.width table,
+            Normalized.height table
           ) |> toEqual (header, body, alignments, 2, 3)
         end;
 
@@ -27,7 +29,7 @@ let () =
           let header = Some [] in
           let body = [[]; []; []] in
           let alignments = [] in
-          expect (fun () -> Table.Normalized.create ~header ~body ~alignments) |> toThrow
+          expect (fun () -> create ~header ~body ~alignments) |> toThrow
         end;
 
         test "it should fail if there exists a column of diffrent width" begin fun () ->
@@ -38,7 +40,7 @@ let () =
             ["lime"; "green"];
           ] in
           let alignments = [Alignment.Default; Alignment.Left] in
-          expect (fun () -> Table.Normalized.create ~header ~body ~alignments) |> toThrow
+          expect (fun () -> create ~header ~body ~alignments) |> toThrow
         end;
 
         test "it should fail if there exists a column without alignment" begin fun () ->
@@ -49,10 +51,10 @@ let () =
             ["lime"; "green"];
           ] in
           let alignments = [Alignment.Default] in
-          expect (fun () -> Table.Normalized.create ~header ~body ~alignments) |> toThrow
+          expect (fun () -> create ~header ~body ~alignments) |> toThrow
         end;
 
-        test "it should be able to create normalized headless table" begin fun () ->
+        test "it should be able to create a normalized headless table" begin fun () ->
           let header = None in
           let body = [
             ["apple"; "red"];
@@ -60,13 +62,13 @@ let () =
             ["lime"; "green"];
           ] in
           let alignments = [Alignment.Default; Alignment.Left] in
-          let table = Table.Normalized.create ~header ~body ~alignments in
+          let table = create ~header ~body ~alignments in
           expect (
-            Table.Normalized.header table,
-            Table.Normalized.body table,
-            Table.Normalized.alignments table,
-            Table.Normalized.width table,
-            Table.Normalized.height table
+            Normalized.header table,
+            Normalized.body table,
+            Normalized.alignments table,
+            Normalized.width table,
+            Normalized.height table
           ) |> toEqual (header, body, alignments, 2, 3)
         end;
 
@@ -74,7 +76,7 @@ let () =
           let header = None in
           let body = [[]; []; []] in
           let alignments = [] in
-          expect (fun () -> Table.Normalized.create ~header ~body ~alignments) |> toThrow
+          expect (fun () -> create ~header ~body ~alignments) |> toThrow
         end;
 
         test "it should fail if there is no header and exists a column of diffrent width" begin fun () ->
@@ -85,7 +87,7 @@ let () =
             ["lime"; "green"];
           ] in
           let alignments = [Alignment.Default; Alignment.Left] in
-          expect (fun () -> Table.Normalized.create ~header ~body ~alignments) |> toThrow
+          expect (fun () -> create ~header ~body ~alignments) |> toThrow
         end;
 
         test "it should fail if there is no header and exists a column without alignment" begin fun () ->
@@ -96,14 +98,14 @@ let () =
             ["lime"; "green"];
           ] in
           let alignments = [Alignment.Default] in
-          expect (fun () -> Table.Normalized.create ~header ~body ~alignments) |> toThrow
+          expect (fun () -> create ~header ~body ~alignments) |> toThrow
         end;
 
         test "it should fail if there is no header and no body" begin fun () ->
           let header = None in
           let body = [] in
           let alignments = [] in
-          expect (fun () -> Table.Normalized.create ~header ~body ~alignments) |> toThrow
+          expect (fun () -> create ~header ~body ~alignments) |> toThrow
         end;
       end;
     end;
