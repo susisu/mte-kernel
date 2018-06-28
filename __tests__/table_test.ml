@@ -1,5 +1,6 @@
 open Jest
 open Expect
+open Test_helper
 
 let () =
   describe "Table" begin fun () ->
@@ -30,7 +31,7 @@ let () =
           let body = [[]; []; []] in
           let alignments = [] in
           expect (fun () -> create ~header ~body ~alignments)
-          |> toThrowMessageRe (Js.Re.fromStringWithFlags "assert" ~flags:"i")
+          |> toThrowAssertionFailure
         end;
 
         test "it should fail if there exists a column of diffrent width" begin fun () ->
@@ -42,7 +43,7 @@ let () =
           ] in
           let alignments = [Alignment.Default; Alignment.Left] in
           expect (fun () -> create ~header ~body ~alignments)
-          |> toThrowMessageRe (Js.Re.fromStringWithFlags "assert" ~flags:"i")
+          |> toThrowAssertionFailure
         end;
 
         test "it should fail if there exists a column without alignment" begin fun () ->
@@ -54,7 +55,7 @@ let () =
           ] in
           let alignments = [Alignment.Default] in
           expect (fun () -> create ~header ~body ~alignments)
-          |> toThrowMessageRe (Js.Re.fromStringWithFlags "assert" ~flags:"i")
+          |> toThrowAssertionFailure
         end;
 
         test "it should be able to create a normalized headless table" begin fun () ->
@@ -80,7 +81,7 @@ let () =
           let body = [[]; []; []] in
           let alignments = [] in
           expect (fun () -> create ~header ~body ~alignments)
-          |> toThrowMessageRe (Js.Re.fromStringWithFlags "assert" ~flags:"i")
+          |> toThrowAssertionFailure
         end;
 
         test "it should fail if there is no header and exists a column of diffrent width" begin fun () ->
@@ -92,7 +93,7 @@ let () =
           ] in
           let alignments = [Alignment.Default; Alignment.Left] in
           expect (fun () -> create ~header ~body ~alignments)
-          |> toThrowMessageRe (Js.Re.fromStringWithFlags "assert" ~flags:"i")
+          |> toThrowAssertionFailure
         end;
 
         test "it should fail if there is no header and exists a column without alignment" begin fun () ->
@@ -104,7 +105,7 @@ let () =
           ] in
           let alignments = [Alignment.Default] in
           expect (fun () -> create ~header ~body ~alignments)
-          |> toThrowMessageRe (Js.Re.fromStringWithFlags "assert" ~flags:"i")
+          |> toThrowAssertionFailure
         end;
 
         test "it should fail if there is no header and no body" begin fun () ->
@@ -112,7 +113,7 @@ let () =
           let body = [] in
           let alignments = [] in
           expect (fun () -> create ~header ~body ~alignments)
-          |> toThrowMessageRe (Js.Re.fromStringWithFlags "assert" ~flags:"i")
+          |> toThrowAssertionFailure
         end;
       end;
     end;

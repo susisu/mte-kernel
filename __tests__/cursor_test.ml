@@ -1,5 +1,6 @@
 open Jest
 open Expect
+open Test_helper
 
 let () =
   describe "Cursor" begin fun () ->
@@ -17,12 +18,12 @@ let () =
 
       test "it should fail if row is negative" begin fun () ->
         expect (fun () -> create (-1) 0)
-        |> toThrowMessageRe (Js.Re.fromStringWithFlags "assert" ~flags:"i")
+        |> toThrowAssertionFailure
       end;
 
       test "it should fail if column is negative" begin fun () ->
         expect (fun () -> create 0 (-1))
-        |> toThrowMessageRe (Js.Re.fromStringWithFlags "assert" ~flags:"i")
+        |> toThrowAssertionFailure
       end;
     end;
   end

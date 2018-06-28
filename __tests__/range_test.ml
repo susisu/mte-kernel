@@ -1,5 +1,6 @@
 open Jest
 open Expect
+open Test_helper
 
 let () =
   describe "Range" begin fun () ->
@@ -15,12 +16,12 @@ let () =
 
       test "it should fail if start_row >= end_row" begin fun () ->
         expect (fun () -> create 1 0)
-        |> toThrowMessageRe (Js.Re.fromStringWithFlags "assert" ~flags:"i")
+        |> toThrowAssertionFailure
       end;
 
       test "it should fail if start_row is negative" begin fun () ->
         expect (fun () -> create (-1) 0)
-        |> toThrowMessageRe (Js.Re.fromStringWithFlags "assert" ~flags:"i")
+        |> toThrowAssertionFailure
       end;
     end;
   end
