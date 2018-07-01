@@ -5,8 +5,10 @@ open Test_helper
 let () =
   describe "Table" begin fun () ->
     let open Table in
+
     describe "Normalized" begin fun () ->
       let open Normalized in
+
       describe "create" begin fun () ->
         test "it should be able to create a normalized table" begin fun () ->
           let header = Some ["name"; "color"] in

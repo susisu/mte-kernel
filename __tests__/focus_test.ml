@@ -5,6 +5,7 @@ open Test_helper
 let () =
   describe "Focus" begin fun () ->
     let open Focus in
+
     describe "create_pointed" begin fun () ->
       let open Pointed in
       testAll "it should create a pointed focus" [

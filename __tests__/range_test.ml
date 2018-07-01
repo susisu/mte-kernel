@@ -5,6 +5,7 @@ open Test_helper
 let () =
   describe "Range" begin fun () ->
     let open Range in
+
     describe "create" begin fun () ->
       testAll "it should create a range" [
         (0, 1);

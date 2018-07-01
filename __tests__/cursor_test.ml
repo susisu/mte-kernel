@@ -5,6 +5,7 @@ open Test_helper
 let () =
   describe "Cursor" begin fun () ->
     let open Cursor in
+
     describe "create" begin fun () ->
       testAll "it should create a cursor" [
         (0, 0);
