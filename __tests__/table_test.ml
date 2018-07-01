@@ -15,7 +15,7 @@ let () =
             ["banana"; "yellow"];
             ["lime"; "green"];
           ] in
-          let alignments = [Alignment.Default; Alignment.Left] in
+          let alignments = [None; Some Alignment.Left] in
           let table = create ~header ~body ~alignments in
           expect (
             Normalized.header table,
@@ -41,7 +41,7 @@ let () =
             ["banana"];
             ["lime"; "green"];
           ] in
-          let alignments = [Alignment.Default; Alignment.Left] in
+          let alignments = [None; Some Alignment.Left] in
           expect (fun () -> create ~header ~body ~alignments)
           |> toThrowAssertionFailure
         end;
@@ -53,7 +53,7 @@ let () =
             ["banana"; "yellow"];
             ["lime"; "green"];
           ] in
-          let alignments = [Alignment.Default] in
+          let alignments = [None] in
           expect (fun () -> create ~header ~body ~alignments)
           |> toThrowAssertionFailure
         end;
@@ -65,7 +65,7 @@ let () =
             ["banana"; "yellow"];
             ["lime"; "green"];
           ] in
-          let alignments = [Alignment.Default; Alignment.Left] in
+          let alignments = [None; Some Alignment.Left] in
           let table = create ~header ~body ~alignments in
           expect (
             Normalized.header table,
@@ -91,7 +91,7 @@ let () =
             ["banana"];
             ["lime"; "green"];
           ] in
-          let alignments = [Alignment.Default; Alignment.Left] in
+          let alignments = [None; Some Alignment.Left] in
           expect (fun () -> create ~header ~body ~alignments)
           |> toThrowAssertionFailure
         end;
@@ -103,7 +103,7 @@ let () =
             ["banana"; "yellow"];
             ["lime"; "green"];
           ] in
-          let alignments = [Alignment.Default] in
+          let alignments = [None] in
           expect (fun () -> create ~header ~body ~alignments)
           |> toThrowAssertionFailure
         end;

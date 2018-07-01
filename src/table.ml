@@ -7,14 +7,14 @@ end
 type t = {
   header: Row.t option;
   body: Row.t list;
-  alignments: Alignment.t list;
+  alignments: Alignment.t option list;
 }
 
 module Normalized = struct
   type t = {
     header: Row.t option;
     body: Row.t list;
-    alignments: Alignment.t list;
+    alignments: Alignment.t option list;
     width: int;
     height: int;
   }
