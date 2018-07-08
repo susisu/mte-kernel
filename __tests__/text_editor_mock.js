@@ -30,7 +30,7 @@ class MockTextEditor extends AbstractTextEditor {
     return this._lines.length - 1;
   }
 
-  accept(row) {
+  accepts(row) {
     return this._lines[row].length > 0 && this._lines[row][0] === '|';
   }
 

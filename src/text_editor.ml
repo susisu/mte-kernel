@@ -5,7 +5,7 @@ module Js_interface = struct
   external setCursor: t -> int * int -> unit = "" [@@bs.send]
   external setSelection: t -> int * int -> int * int -> unit = "" [@@bs.send]
   external getLastRow: t -> int = "" [@@bs.send]
-  external accept: t -> int -> bool = "" [@@bs.send]
+  external accepts: t -> int -> bool = "" [@@bs.send]
   external getLine: t -> int -> string = "" [@@bs.send]
   external insertLine: t -> int -> string -> unit = "" [@@bs.send]
   external deleteLine: t -> int -> unit = "" [@@bs.send]
@@ -25,8 +25,8 @@ let setSelection t start_cursor end_cursor =
   Js_interface.setSelection t s e
 let getLastRow t =
   Js_interface.getLastRow t
-let accept t row =
-  Js_interface.accept t row
+let accepts t row =
+  Js_interface.accepts t row
 let getLine t row =
   Js_interface.getLine t row
 let insertLine t row line =

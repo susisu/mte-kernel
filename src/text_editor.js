@@ -15,7 +15,7 @@ class AbstractTextEditor {
     throw new Error("Not implemented: getLastRow");
   }
 
-  accept(row) {
+  accepts(row) {
     throw new Error("Not implemented: acceptsTableEdit");
   }
 

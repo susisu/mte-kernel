@@ -55,23 +55,23 @@ let () =
       end;
     end;
 
-    describe "accept" begin fun () ->
+    describe "accepts" begin fun () ->
       test "it should return true if the text editor accepts table edit" begin fun () ->
         let mock = Mock.create [|
             "|foo";
             "bar";
           |] in
         let te = Mock.to_text_editor mock in
-        expect (accept te 0) |> toBe true
+        expect (accepts te 0) |> toBe true
       end;
 
-      test "it should return false if the text editor does not accept table edit" begin fun () ->
+      test "it should return false if the text editor does not accepts table edit" begin fun () ->
         let mock = Mock.create [|
             "|foo";
             "bar";
           |] in
         let te = Mock.to_text_editor mock in
-        expect (accept te 1) |> toBe false
+        expect (accepts te 1) |> toBe false
       end;
     end;
 
