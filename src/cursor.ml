@@ -3,7 +3,7 @@ type t = {
   column: int;
 }
 
-let create row column =
+let create ~row ~column =
   assert (row >= 0);
   assert (column >= 0);
   { row; column }

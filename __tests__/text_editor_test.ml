@@ -15,7 +15,7 @@ let () =
           |] in
         let te = Mock.to_text_editor mock in
         Mock.setCursor mock (1, 2);
-        expect (getCursor te) |> toEqual (Cursor.create 1 2)
+        expect (getCursor te) |> toEqual (Cursor.create ~row:1 ~column:2)
       end;
     end;
 
@@ -26,7 +26,7 @@ let () =
             "bar";
           |] in
         let te = Mock.to_text_editor mock in
-        setCursor te (Cursor.create 1 2);
+        setCursor te (Cursor.create ~row:1 ~column:2);
         expect (Mock.getCursor mock) |> toEqual (1, 2)
       end;
     end;
@@ -39,7 +39,7 @@ let () =
             "baz";
           |] in
         let te = Mock.to_text_editor mock in
-        setSelection te (Cursor.create 0 1) (Cursor.create 2 3);
+        setSelection te (Cursor.create ~row:0 ~column:1) (Cursor.create ~row:2 ~column:3);
         expect (Mock.getSelection mock) |> toEqual ((0, 1), (2, 3))
       end;
     end;

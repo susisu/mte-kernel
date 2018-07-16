@@ -14,8 +14,8 @@ module Js_interface = struct
 end
 
 let getCursor t =
-  let (r, c) = Js_interface.getCursor t in
-  Cursor.create r c
+  let (row, column) = Js_interface.getCursor t in
+  Cursor.create ~row ~column
 let setCursor t cursor =
   let c = (Cursor.row cursor, Cursor.column cursor) in
   Js_interface.setCursor t c
