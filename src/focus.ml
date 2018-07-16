@@ -6,7 +6,7 @@ module Pointed = struct
   }
 
   let create row column offset =
-    assert (row >= 0);
+    assert (column >= 0);
     assert (offset >= 0);
     { row; column; offset }
 
@@ -22,7 +22,7 @@ module Selected = struct
   }
 
   let create row column =
-    assert (row >= 0);
+    assert (column >= 0);
     { row; column }
 
   let row focus = focus.row

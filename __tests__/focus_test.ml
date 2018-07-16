@@ -12,6 +12,7 @@ let () =
         (0, 0, 0);
         (0, 1, 2);
         (1, 2, 3);
+        (-1, 0, 0);
       ] begin fun (r, c, o) ->
         let focus = create_pointed r c o in
         match focus with
@@ -19,13 +20,13 @@ let () =
         | Selected _ -> fail "expect Focus.Pointed"
       end;
 
-      test "it should fail if row is negative" begin fun () ->
-        expect (fun () -> create_pointed (-1) 0 1)
+      test "it should fail if column is negative" begin fun () ->
+        expect (fun () -> create_pointed 0 (-1) 0)
         |> toThrowAssertionFailure
       end;
 
       test "it should fail if offset is negative" begin fun () ->
-        expect (fun () -> create_pointed 0 1 (-1))
+        expect (fun () -> create_pointed 0 0 (-1))
         |> toThrowAssertionFailure
       end;
     end;
@@ -37,6 +38,7 @@ let () =
         (0, 1);
         (1, 0);
         (1, 2);
+        (-1, 0);
       ] begin fun (r, c) ->
         let focus = create_selected r c in
         match focus with
@@ -44,8 +46,8 @@ let () =
         | Selected f -> expect (row f, column f) |> toEqual (r, c)
       end;
 
-      test "it should fail if row is negative" begin fun () ->
-        expect (fun () -> create_selected (-1) 0)
+      test "it should fail if column is negative" begin fun () ->
+        expect (fun () -> create_selected 0 (-1))
         |> toThrowAssertionFailure
       end
     end
