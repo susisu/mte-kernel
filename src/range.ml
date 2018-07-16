@@ -3,7 +3,7 @@ type t = {
   end_row: int;
 }
 
-let create start_row end_row =
+let create ~start_row ~end_row =
   assert (start_row >= 0);
   assert (end_row > start_row);
   { start_row; end_row }

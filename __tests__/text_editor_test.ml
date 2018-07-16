@@ -126,7 +126,7 @@ let () =
             "baz";
           |] in
         let te = Mock.to_text_editor mock in
-        replaceLines te (Range.create 1 3) ["nyancat"];
+        replaceLines te (Range.create ~start_row:1 ~end_row:3) ["nyancat"];
         expect (Mock.getLines mock) |> toEqual [|
           "foo";
           "nyancat";
