@@ -1,3 +1,5 @@
+(** *)
+
 (** Cursor.t represents a position in the text editor. *)
 type t
 
@@ -9,5 +11,6 @@ val create: row:int -> column:int -> t
 
 (** Gets row index of the given cursor. *)
 val row: t -> int
+
 (** Gets column index of the given cursor. *)
 val column: t -> int
