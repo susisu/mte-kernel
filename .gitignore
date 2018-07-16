@@ -106,3 +106,6 @@ setup.log
 /lib
 .bsb.lock
 *.bs.js
+
+### OCamldoc
+/doc

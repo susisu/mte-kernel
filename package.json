@@ -21,17 +21,19 @@
   },
   "homepage": "https://github.com/susisu/mte-kernel#readme",
   "scripts": {
-    "clean": "bsb -clean-world && rimraf coverage",
+    "clean": "bsb -clean-world && rimraf coverage doc",
     "build": "bsb -make-world",
     "watch:build": "bsb -make-world -w",
     "test": "bsb -make-world && jest",
     "watch:test": "jest --watchAll",
-    "watch": "screen -c .screenrc"
+    "watch": "screen -c .screenrc",
+    "doc": "mkdirp doc && ocamldoc -html -d doc -I node_modules/bs-platform/lib/ocaml/ -I lib/bs/src src/*.mli"
   },
   "devDependencies": {
     "@glennsl/bs-jest": "^0.4.2",
     "bs-platform": "^3.1.5",
     "jest": "^22.0.4",
+    "mkdirp": "^0.5.1",
     "rimraf": "^2.6.2"
   },
   "dependencies": {}
