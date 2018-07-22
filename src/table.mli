@@ -52,7 +52,4 @@ module Normalized: sig
 
   (** Gets the width (number of the columns) of the given table. *)
   val width: t -> int
-
-  (** Gets the height (number of the rows) of the given table. *)
-  val height: t -> int
 end
