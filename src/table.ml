@@ -4,11 +4,19 @@ module Row = struct
   let width = List.length
 end
 
-type t = {
-  header: Row.t option;
-  body: Row.t list;
-  alignments: Alignment.t option list;
-}
+module Unnormalized = struct
+  type t = {
+    header: Row.t option;
+    body: Row.t list;
+    alignments: Alignment.t option list;
+  }
+
+  let create ~header ~body ~alignments = { header; body; alignments }
+
+  let header table = table.header
+  let body table = table.body
+  let alignments table = table.alignments
+end
 
 module Normalized = struct
   type t = {
@@ -44,3 +52,5 @@ module Normalized = struct
   let width table = table.width
   let height table = table.height
 end
+
+include Unnormalized

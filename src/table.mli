@@ -8,15 +8,25 @@ module Row: sig
   val width: t -> int
 end
 
-(** Table.t represents a table, consists of a header, body rows, and alignment specifications of columns.
-    A table may not have the normalized form i.e. it can be empty, or can have inconsistent number of columns, etc.
-    @see <./Table.Normalized.html> Table.Normalized.t
-*)
-type t = {
-  header: Row.t option;
-  body: Row.t list;
-  alignments: Alignment.t option list;
-}
+module Unnormalized: sig
+  (** Unnormalized.t represents a table, consists of a header, body rows, and alignment specifications of columns.
+      A table may not have the normalized form i.e. it can be empty, or can have inconsistent number of columns, etc.
+      @see <./Table.Normalized.html> Table.Normalized.t
+  *)
+  type t
+
+  (** Creates a table. *)
+  val create: header:Row.t option -> body:Row.t list -> alignments:Alignment.t option list -> t
+
+  (** Gets the header of the given table. *)
+  val header: t -> Row.t option
+
+  (** Gets the body of the given table. *)
+  val body: t -> Row.t list
+
+  (** Gets the alignment specifications of the given table. *)
+  val alignments: t -> Alignment.t option list
+end
 
 module Normalized: sig
   (** Normalized.t represents a table that have the "normalized form" defined as follows:
@@ -45,3 +55,5 @@ module Normalized: sig
   (** Gets the height (number of the rows) of the given table. *)
   val height: t -> int
 end
+
+include (module type of Unnormalized)

@@ -6,115 +6,137 @@ let () =
   describe "Table" begin fun () ->
     let open Table in
 
+    describe "Unnormalized" begin fun () ->
+      let open Unnormalized in
+
+      describe "create" begin fun () ->
+        test "it should create a table" begin fun () ->
+          let h = Some ["name"; "color"] in
+          let b = [
+            ["apple"; "red"];
+            ["banana"; "yellow"];
+            ["lime"];
+          ] in
+          let a = [None] in
+          let table = create ~header:h ~body:b ~alignments:a in
+          expect (
+            header table,
+            body table,
+            alignments table
+          ) |> toEqual (h, b, a)
+        end;
+      end;
+    end;
+
     describe "Normalized" begin fun () ->
       let open Normalized in
 
       describe "create" begin fun () ->
         test "it should be able to create a normalized table" begin fun () ->
-          let header = Some ["name"; "color"] in
-          let body = [
+          let h = Some ["name"; "color"] in
+          let b = [
             ["apple"; "red"];
             ["banana"; "yellow"];
             ["lime"; "green"];
           ] in
-          let alignments = [None; Some Alignment.Left] in
-          let table = create ~header ~body ~alignments in
+          let a = [None; Some Alignment.Left] in
+          let table = create ~header:h ~body:b ~alignments:a in
           expect (
-            Normalized.header table,
-            Normalized.body table,
-            Normalized.alignments table,
-            Normalized.width table,
-            Normalized.height table
-          ) |> toEqual (header, body, alignments, 2, 3)
+            header table,
+            body table,
+            alignments table,
+            width table,
+            height table
+          ) |> toEqual (h, b, a, 2, 3)
         end;
 
         test "it should fail if there are no columns" begin fun () ->
-          let header = Some [] in
-          let body = [[]; []; []] in
-          let alignments = [] in
-          expect (fun () -> create ~header ~body ~alignments)
+          let h = Some [] in
+          let b = [[]; []; []] in
+          let a = [] in
+          expect (fun () -> create ~header:h ~body:b ~alignments:a)
           |> toThrowAssertionFailure
         end;
 
         test "it should fail if there exists a column of diffrent width" begin fun () ->
-          let header = Some ["name"; "color"] in
-          let body = [
+          let h = Some ["name"; "color"] in
+          let b = [
             ["apple"; "red"];
             ["banana"];
             ["lime"; "green"];
           ] in
-          let alignments = [None; Some Alignment.Left] in
-          expect (fun () -> create ~header ~body ~alignments)
+          let a = [None; Some Alignment.Left] in
+          expect (fun () -> create ~header:h ~body:b ~alignments:a)
           |> toThrowAssertionFailure
         end;
 
         test "it should fail if there exists a column without alignment" begin fun () ->
-          let header = Some ["name"; "color"] in
-          let body = [
+          let h = Some ["name"; "color"] in
+          let b = [
             ["apple"; "red"];
             ["banana"; "yellow"];
             ["lime"; "green"];
           ] in
-          let alignments = [None] in
-          expect (fun () -> create ~header ~body ~alignments)
+          let a = [None] in
+          expect (fun () -> create ~header:h ~body:b ~alignments:a)
           |> toThrowAssertionFailure
         end;
 
         test "it should be able to create a normalized headless table" begin fun () ->
-          let header = None in
-          let body = [
+          let h = None in
+          let b = [
             ["apple"; "red"];
             ["banana"; "yellow"];
             ["lime"; "green"];
           ] in
-          let alignments = [None; Some Alignment.Left] in
-          let table = create ~header ~body ~alignments in
+          let a = [None; Some Alignment.Left] in
+          let table = create ~header:h ~body:b ~alignments:a in
           expect (
-            Normalized.header table,
-            Normalized.body table,
-            Normalized.alignments table,
-            Normalized.width table,
-            Normalized.height table
-          ) |> toEqual (header, body, alignments, 2, 3)
+            header table,
+            body table,
+            alignments table,
+            width table,
+            height table
+          ) |> toEqual (h, b, a, 2, 3)
         end;
 
         test "it should fail if there is no header and no columns" begin fun () ->
-          let header = None in
-          let body = [[]; []; []] in
-          let alignments = [] in
-          expect (fun () -> create ~header ~body ~alignments)
+          let h = None in
+          let b = [[]; []; []] in
+          let a = [] in
+          expect (fun () -> create ~header:h ~body:b ~alignments:a)
           |> toThrowAssertionFailure
         end;
 
         test "it should fail if there is no header and exists a column of diffrent width" begin fun () ->
-          let header = None in
-          let body = [
+          let h = None in
+          let b = [
             ["apple"; "red"];
             ["banana"];
             ["lime"; "green"];
           ] in
-          let alignments = [None; Some Alignment.Left] in
-          expect (fun () -> create ~header ~body ~alignments)
+          let a = [None; Some Alignment.Left] in
+          expect (fun () -> create ~header:h ~body:b ~alignments:a)
           |> toThrowAssertionFailure
         end;
 
         test "it should fail if there is no header and exists a column without alignment" begin fun () ->
-          let header = None in
-          let body = [
+          let h = None in
+          let b = [
             ["apple"; "red"];
             ["banana"; "yellow"];
             ["lime"; "green"];
           ] in
-          let alignments = [None] in
-          expect (fun () -> create ~header ~body ~alignments)
+          let a = [None] in
+          expect (fun () -> create ~header:h ~body:b ~alignments:a)
           |> toThrowAssertionFailure
         end;
 
         test "it should fail if there is no header and no body" begin fun () ->
-          let header = None in
-          let body = [] in
-          let alignments = [] in
-          expect (fun () -> create ~header ~body ~alignments)
+          let h = None in
+          let b = [] in
+          let a = [] in
+          expect (fun () -> create ~header:h ~body:b ~alignments:a)
           |> toThrowAssertionFailure
         end;
       end;
