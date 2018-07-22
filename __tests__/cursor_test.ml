@@ -13,17 +13,17 @@ let () =
         (1, 0);
         (1, 2);
       ] begin fun (r, c) ->
-        let cursor = create r c in
+        let cursor = create ~row:r ~column:c in
         expect (row cursor, column cursor) |> toEqual (r, c)
       end;
 
       test "it should fail if row is negative" begin fun () ->
-        expect (fun () -> create (-1) 0)
+        expect (fun () -> create ~row:(-1) ~column:0)
         |> toThrowAssertionFailure
       end;
 
       test "it should fail if column is negative" begin fun () ->
-        expect (fun () -> create 0 (-1))
+        expect (fun () -> create ~row:0 ~column:(-1))
         |> toThrowAssertionFailure
       end;
     end;

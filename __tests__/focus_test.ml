@@ -14,19 +14,19 @@ let () =
         (1, 2, 3);
         (-1, 0, 0);
       ] begin fun (r, c, o) ->
-        let focus = create_pointed r c o in
+        let focus = create_pointed ~row:r ~column:c ~offset:o in
         match focus with
         | Pointed f -> expect (row f, column f, offset f) |> toEqual (r, c, o)
         | Selected _ -> fail "expect Focus.Pointed"
       end;
 
       test "it should fail if column is negative" begin fun () ->
-        expect (fun () -> create_pointed 0 (-1) 0)
+        expect (fun () -> create_pointed ~row:0 ~column:(-1) ~offset:0)
         |> toThrowAssertionFailure
       end;
 
       test "it should fail if offset is negative" begin fun () ->
-        expect (fun () -> create_pointed 0 0 (-1))
+        expect (fun () -> create_pointed ~row:0 ~column:0 ~offset:(-1))
         |> toThrowAssertionFailure
       end;
     end;
@@ -40,14 +40,14 @@ let () =
         (1, 2);
         (-1, 0);
       ] begin fun (r, c) ->
-        let focus = create_selected r c in
+        let focus = create_selected ~row:r ~column:c in
         match focus with
         | Pointed _ -> fail "expect Focus.selected"
         | Selected f -> expect (row f, column f) |> toEqual (r, c)
       end;
 
       test "it should fail if column is negative" begin fun () ->
-        expect (fun () -> create_selected 0 (-1))
+        expect (fun () -> create_selected ~row:0 ~column:(-1))
         |> toThrowAssertionFailure
       end
     end
