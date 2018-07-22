@@ -6,25 +6,21 @@ let () =
   describe "Table" begin fun () ->
     let open Table in
 
-    describe "Unnormalized" begin fun () ->
-      let open Unnormalized in
-
-      describe "create" begin fun () ->
-        test "it should create a table" begin fun () ->
-          let h = Some ["name"; "color"] in
-          let b = [
-            ["apple"; "red"];
-            ["banana"; "yellow"];
-            ["lime"];
-          ] in
-          let a = [None] in
-          let table = create ~header:h ~body:b ~alignments:a in
-          expect (
-            header table,
-            body table,
-            alignments table
-          ) |> toEqual (h, b, a)
-        end;
+    describe "create" begin fun () ->
+      test "it should create a table" begin fun () ->
+        let h = Some ["name"; "color"] in
+        let b = [
+          ["apple"; "red"];
+          ["banana"; "yellow"];
+          ["lime"];
+        ] in
+        let a = [None] in
+        let table = create ~header:h ~body:b ~alignments:a in
+        expect (
+          header table,
+          body table,
+          alignments table
+        ) |> toEqual (h, b, a)
       end;
     end;
 
