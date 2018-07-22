@@ -35,10 +35,10 @@ type t =
     @param column Column index. Must be >= 0.
     @param offset Offset in the focused cell. Must be >= 0.
 *)
-val create_pointed: int -> int -> int -> t
+val create_pointed: row:int -> column:int -> offset:int -> t
 
 (** Creates a new selected focus.
     @param row Row index. Negative index means the focus is in the table header.
     @param column Column index. Must be >= 0.
 *)
-val create_selected: int -> int -> t
+val create_selected: row:int -> column:int -> t

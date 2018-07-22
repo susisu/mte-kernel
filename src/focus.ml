@@ -33,5 +33,5 @@ type t =
   | Pointed of Pointed.t
   | Selected of Selected.t
 
-let create_pointed row column offset = Pointed (Pointed.create row column offset)
-let create_selected row column = Selected (Selected.create row column)
+let create_pointed ~row ~column ~offset = Pointed (Pointed.create row column offset)
+let create_selected ~row ~column = Selected (Selected.create row column)
