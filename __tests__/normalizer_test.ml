@@ -178,7 +178,8 @@ let () =
           )
         end;
 
-        test "it should insert an header with one empty cell if there are no rows" begin fun () ->
+        test "it should insert a row with one empty cell to body if there are no rows\
+             " begin fun () ->
           let table = Table.create
               ~header:None
               ~body:[]
@@ -191,8 +192,10 @@ let () =
             alignments normalized,
             width normalized
           ) |> toEqual (
-            Some [""],
-            [],
+            None,
+            [
+              [""]
+            ],
             [None],
             1
           )

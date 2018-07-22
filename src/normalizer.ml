@@ -41,8 +41,8 @@ let normalize table =
   | None ->
     if List.length body = 0 then
       Table.Normalized.create
-        ~header:(Some [""])
-        ~body:[]
+        ~header:None
+        ~body:[[""]]
         ~alignments:[None]
     else
       let max_width = maximum (1 :: List.map List.length body) in
