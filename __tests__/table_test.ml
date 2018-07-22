@@ -108,7 +108,8 @@ let () =
           |> toThrowAssertionFailure
         end;
 
-        test "it should fail if there is no header and exists a column of diffrent width" begin fun () ->
+        test "it should fail if there is no header and exists a column of diffrent width\
+             " begin fun () ->
           let h = None in
           let b = [
             ["apple"; "red"];
@@ -120,7 +121,8 @@ let () =
           |> toThrowAssertionFailure
         end;
 
-        test "it should fail if there is no header and exists a column without alignment" begin fun () ->
+        test "it should fail if there is no header and exists a column without alignment\
+             " begin fun () ->
           let h = None in
           let b = [
             ["apple"; "red"];

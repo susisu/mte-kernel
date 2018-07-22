@@ -6,7 +6,8 @@ module Mock_text_editor = struct
 
   external to_text_editor: t -> Text_editor.t = "%identity"
 
-  external create: string array -> t = "MockTextEditor" [@@bs.new] [@@bs.module "./mock_text_editor.js"]
+  external create: string array -> t = "MockTextEditor" [@@bs.new]
+    [@@bs.module "./mock_text_editor.js"]
   external getCursor: t -> int * int = "" [@@bs.send]
   external setCursor: t -> int * int -> unit = "" [@@bs.send]
   external getSelection: t -> (int * int) * (int * int) = "" [@@bs.send]
