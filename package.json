@@ -23,7 +23,7 @@
   "scripts": {
     "clean": "bsb -clean-world && rimraf coverage doc",
     "build": "bsb -make-world",
-    "watch:build": "bsb -make-world -w -build-success 'npm run doc'",
+    "watch:build": "bsb -make-world -w -build-success 'yarn run doc'",
     "test": "bsb -make-world && jest",
     "watch:test": "jest --watchAll",
     "watch": "screen -c .screenrc",

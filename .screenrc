@@ -1,5 +1,5 @@
 sessionname "mte-kernel watch"
-screen -t "bsb -- `C-a C-\` to quit" 0 npm run watch:build
+screen -t "bsb -- `C-a C-\` to quit" 0 yarn run watch:build
 split -v
 focus right
-screen -t "jest -- `C-a C-\` to quit - `C-a Esc` to scroll" 1 npm run watch:test
+screen -t "jest -- `C-a C-\` to quit - `C-a Esc` to scroll" 1 yarn run watch:test
