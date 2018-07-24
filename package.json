@@ -36,5 +36,7 @@
     "mkdirp": "^0.5.1",
     "rimraf": "^2.6.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "meaw": "^2.0.0"
+  }
 }
