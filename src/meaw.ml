@@ -3,7 +3,7 @@ external eaw_string: string -> string option = "getEAW"
 
 type eaw_property = N | Na | W | F | H | A
 
-let eaw_dict = Js.Dict.fromArray [|
+let eaw_property_dict = Js.Dict.fromArray [|
     ("N", N);
     ("Na", Na);
     ("W", W);
@@ -11,9 +11,9 @@ let eaw_dict = Js.Dict.fromArray [|
     ("H", H);
     ("A", A);
   |]
-let eaw_of_string p = Js.Dict.unsafeGet eaw_dict p
+let eaw_property_of_string p = Js.Dict.unsafeGet eaw_property_dict p
 
 let eaw c =
   match eaw_string c with
   | None -> None
-  | Some p -> Some (eaw_of_string p)
+  | Some p -> Some (eaw_property_of_string p)
