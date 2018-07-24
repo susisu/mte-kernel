@@ -1,5 +1,5 @@
 external eaw_string: string -> string option = "getEAW"
-  [@@bs.module "meaw"] [@@bs.return undefined_to_opt]
+[@@bs.module "meaw"] [@@bs.return undefined_to_opt]
 
 type eaw_property = N | Na | W | F | H | A
 
