@@ -2,9 +2,9 @@ open Jest
 open Expect
 
 
-let lt_iter upper = Iterable.create (fun () ->
+let lt_iter upper = Iterable.create (fun [@bs] () ->
     let n = ref 1 in
-    Iterable.Iterator.create (fun () ->
+    Iterable.Iterator.create (fun [@bs] () ->
         let t = !n in
         if t < upper then (n := t + 1; Some t)
         else None
@@ -14,8 +14,8 @@ let lt_iter upper = Iterable.create (fun () ->
 let lt_four_iter = lt_iter 4
 let lt_five_iter = lt_iter 5
 
-let empty_iter = Iterable.create (fun () ->
-    Iterable.Iterator.create (fun () -> None)
+let empty_iter = Iterable.create (fun [@bs] () ->
+    Iterable.Iterator.create (fun [@bs] () -> None)
   )
 
 let () =

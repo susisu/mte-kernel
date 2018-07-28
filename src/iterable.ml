@@ -1,16 +1,16 @@
 module Iterator: sig
   type 'a t
-  val create: (unit -> 'a option) -> 'a t
+  val create: (unit -> 'a option [@bs]) -> 'a t
   val next: 'a t -> 'a option
 end = struct
-  type 'a t = unit -> 'a option
-  let create (f: unit -> 'a option): 'a t = f
-  let next f = f ()
+  type 'a t = unit -> 'a option [@bs]
+  let create (f: unit -> 'a option [@bs]): 'a t = f
+  let next f = f () [@bs]
 end
 
 module T: sig
   type 'a t
-  val create: (unit -> 'a Iterator.t) -> 'a t
+  val create: (unit -> 'a Iterator.t [@bs]) -> 'a t
   val iterator: 'a t -> 'a Iterator.t
   val to_list: 'a t -> 'a list
   val iterate: 'a t -> f:('a -> unit) -> unit
@@ -19,9 +19,9 @@ module T: sig
   val map: 'a t -> f:('a -> 'b) -> 'b t
   val filter: 'a t -> f:('a -> bool) -> 'a t
 end = struct
-  type 'a t = unit -> 'a Iterator.t
-  let create (f: unit -> 'a Iterator.t): 'a t = f
-  let iterator iter = iter ()
+  type 'a t = unit -> 'a Iterator.t [@bs]
+  let create (f: unit -> 'a Iterator.t [@bs]): 'a t = f
+  let iterator iter = iter () [@bs]
 
   let to_rev_list iter =
     let i = iterator iter in
@@ -35,17 +35,19 @@ end = struct
 
   let iterate iter ~f =
     let i =  iterator iter in
+    let f' = fun [@bs] x -> f x in
     let rec loop () =
       match Iterator.next i with
-      | Some x -> f x; loop ()
+      | Some x -> f' x [@bs]; loop ()
       | None -> ()
     in loop ()
 
   let fold_left iter ~init ~f =
     let i = iterator iter in
+    let f' = fun [@bs] acc x -> f acc x in
     let rec loop acc =
       match Iterator.next i with
-      | Some x -> loop (f acc x)
+      | Some x -> loop (f' acc x [@bs])
       | None -> acc
     in loop init
 
@@ -53,21 +55,23 @@ end = struct
     let rev_list = to_rev_list iter in
     List.fold_left f init rev_list
 
-  let map iter ~f = create (fun () ->
+  let map iter ~f = create (fun [@bs] () ->
       let i = iterator iter in
-      Iterator.create (fun () ->
+      let f' = fun [@bs] x -> f x in
+      Iterator.create (fun [@bs] () ->
           match Iterator.next i with
-          | Some x -> Some (f x)
+          | Some x -> Some (f' x [@bs])
           | None -> None
         )
     )
 
-  let filter iter ~f = create (fun () ->
+  let filter iter ~f = create (fun [@bs] () ->
       let i = iterator iter in
-      Iterator.create (fun () ->
+      let f' = fun [@bs] x -> f x in
+      Iterator.create (fun [@bs] () ->
           let rec loop () =
             match Iterator.next i with
-            | Some x -> if f x then Some x else loop ()
+            | Some x -> if f' x [@bs] then Some x else loop ()
             | None -> None
           in loop ()
         )
@@ -88,7 +92,7 @@ end = struct
 
   external next: 'a t -> 'a result = "next" [@@bs.send]
 
-  let to_iterator (i: 'a t): 'a Iterator.t = Iterator.create (fun () ->
+  let to_iterator (i: 'a t): 'a Iterator.t = Iterator.create (fun [@bs] () ->
       let r = next i in
       if done_Get r then None
       else Some (valueGet r)
@@ -109,7 +113,7 @@ end = struct
 
   external iterator: 'a t -> 'a Js_iterator.t = "genericGetJsIterator" [@@bs.val]
 
-  let to_iterable x = create (fun () ->
+  let to_iterable x = create (fun [@bs] () ->
       iterator x |> Js_iterator.to_iterator
     )
 end

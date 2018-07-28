@@ -5,7 +5,7 @@ module Iterator: sig
   type 'a t
 
   (** Creates a new iterator. *)
-  val create: (unit -> 'a option) -> 'a t
+  val create: (unit -> 'a option [@bs]) -> 'a t
 
   (** Gets the next value of the iterator.
       It returns None when the iterator is done, and it always return None after that.
@@ -16,7 +16,7 @@ end
 type 'a t
 
 (** Creates a new iterable. *)
-val create: (unit -> 'a Iterator.t) -> 'a t
+val create: (unit -> 'a Iterator.t [@bs]) -> 'a t
 
 (** Creates a new iterator. *)
 val iterator: 'a t -> 'a Iterator.t
