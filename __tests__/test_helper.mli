@@ -11,7 +11,7 @@ module Mock_text_editor: sig
   val get_selection: t -> (int * int) * (int * int)
   val set_selection: t -> int * int -> int * int -> unit
   val get_last_row: t -> int
-  val accept: t -> int -> bool
+  val accepts: t -> int -> bool
   val get_line: t -> int -> string
   val get_lines: t -> string array
   val insert_line: t -> int -> string -> unit
