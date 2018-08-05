@@ -19,7 +19,7 @@ let () =
           Noop;
         ] in
         apply te ~offset:0 script;
-        expect (Mock.getLines mock) |> toEqual [|"A"; "B"; "D"|]
+        expect (Mock.get_lines mock) |> toEqual [|"A"; "B"; "D"|]
       end;
 
       test "should be able to offset row indices in the script" begin fun () ->
@@ -33,7 +33,7 @@ let () =
           Noop;
         ] in
         apply te ~offset:1 script;
-        expect (Mock.getLines mock) |> toEqual [|"A"; "B"; "D"|]
+        expect (Mock.get_lines mock) |> toEqual [|"A"; "B"; "D"|]
       end;
     end;
 
@@ -57,7 +57,7 @@ let () =
         let mock = Mock.create from_lines in
         let te = Mock.to_text_editor mock in
         apply te ~offset:0 ses;
-        expect (List.length ses, Mock.getLines mock) |> toEqual (distance, to_lines)
+        expect (List.length ses, Mock.get_lines mock) |> toEqual (distance, to_lines)
       end;
 
       testAll "should return None if the edit distance of two arrays are greater than the given limit\

@@ -7,31 +7,31 @@ let () =
     let open Text_editor in
     let module Mock = Mock_text_editor in
 
-    describe "getCursor" begin fun () ->
+    describe "get_cursor" begin fun () ->
       test "should get current cursor" begin fun () ->
         let mock = Mock.create [|
             "foo";
             "bar";
           |] in
         let te = Mock.to_text_editor mock in
-        Mock.setCursor mock (1, 2);
-        expect (getCursor te) |> toEqual (Cursor.create ~row:1 ~column:2)
+        Mock.set_cursor mock (1, 2);
+        expect (get_cursor te) |> toEqual (Cursor.create ~row:1 ~column:2)
       end;
     end;
 
-    describe "setCursor" begin fun () ->
+    describe "set_cursor" begin fun () ->
       test "should set cursor" begin fun () ->
         let mock = Mock.create [|
             "foo";
             "bar";
           |] in
         let te = Mock.to_text_editor mock in
-        setCursor te (Cursor.create ~row:1 ~column:2);
-        expect (Mock.getCursor mock) |> toEqual (1, 2)
+        set_cursor te (Cursor.create ~row:1 ~column:2);
+        expect (Mock.get_cursor mock) |> toEqual (1, 2)
       end;
     end;
 
-    describe "setSelection" begin fun () ->
+    describe "set_selection" begin fun () ->
       test "should set selection" begin fun () ->
         let mock = Mock.create [|
             "foo";
@@ -39,19 +39,19 @@ let () =
             "baz";
           |] in
         let te = Mock.to_text_editor mock in
-        setSelection te (Cursor.create ~row:0 ~column:1) (Cursor.create ~row:2 ~column:3);
-        expect (Mock.getSelection mock) |> toEqual ((0, 1), (2, 3))
+        set_selection te (Cursor.create ~row:0 ~column:1) (Cursor.create ~row:2 ~column:3);
+        expect (Mock.get_selection mock) |> toEqual ((0, 1), (2, 3))
       end;
     end;
 
-    describe "getLastRow" begin fun () ->
+    describe "get_last_row" begin fun () ->
       test "should get the last row index of the text editor" begin fun () ->
         let mock = Mock.create [|
             "foo";
             "bar";
           |] in
         let te = Mock.to_text_editor mock in
-        expect (getLastRow te) |> toBe 1
+        expect (get_last_row te) |> toBe 1
       end;
     end;
 
@@ -75,26 +75,26 @@ let () =
       end;
     end;
 
-    describe "getLine" begin fun () ->
+    describe "get_line" begin fun () ->
       test "should get a line at the specified row" begin fun () ->
         let mock = Mock.create [|
             "foo";
             "bar";
           |] in
         let te = Mock.to_text_editor mock in
-        expect (getLine te 0) |> toBe "foo"
+        expect (get_line te 0) |> toBe "foo"
       end;
     end;
 
-    describe "insertLine" begin fun () ->
+    describe "insert_line" begin fun () ->
       test "should insert a line at the specified row" begin fun () ->
         let mock = Mock.create [|
             "foo";
             "bar";
           |] in
         let te = Mock.to_text_editor mock in
-        insertLine te 1 "baz";
-        expect (Mock.getLines mock) |> toEqual [|
+        insert_line te 1 "baz";
+        expect (Mock.get_lines mock) |> toEqual [|
           "foo";
           "baz";
           "bar";
@@ -102,7 +102,7 @@ let () =
       end;
     end;
 
-    describe "deleteLine" begin fun () ->
+    describe "delete_line" begin fun () ->
       test "should delete the line at the specifed row" begin fun () ->
         let mock = Mock.create [|
             "foo";
@@ -110,15 +110,15 @@ let () =
             "baz";
           |] in
         let te = Mock.to_text_editor mock in
-        deleteLine te 1;
-        expect (Mock.getLines mock) |> toEqual [|
+        delete_line te 1;
+        expect (Mock.get_lines mock) |> toEqual [|
           "foo";
           "baz";
         |]
       end;
     end;
 
-    describe "replaceLines" begin fun () ->
+    describe "replace_lines" begin fun () ->
       test "should replace lines in the specifed range" begin fun () ->
         let mock = Mock.create [|
             "foo";
@@ -126,8 +126,8 @@ let () =
             "baz";
           |] in
         let te = Mock.to_text_editor mock in
-        replaceLines te (Range.create ~start_row:1 ~end_row:3) ["nyancat"];
-        expect (Mock.getLines mock) |> toEqual [|
+        replace_lines te (Range.create ~start_row:1 ~end_row:3) ["nyancat"];
+        expect (Mock.get_lines mock) |> toEqual [|
           "foo";
           "nyancat";
         |]
@@ -143,11 +143,11 @@ let () =
           |] in
         let te = Mock.to_text_editor mock in
         transact te (fun () ->
-            deleteLine te 1;
-            deleteLine te 1;
-            insertLine te 1 "nyancat";
+            delete_line te 1;
+            delete_line te 1;
+            insert_line te 1 "nyancat";
           );
-        expect (Mock.getLines mock) |> toEqual [|
+        expect (Mock.get_lines mock) |> toEqual [|
           "foo";
           "nyancat";
         |]

@@ -6,8 +6,8 @@ type command =
 let apply_command te offset command =
   match command with
   | Noop -> ()
-  | Insert (row, line) -> Text_editor.insertLine te (row + offset) line
-  | Delete row -> Text_editor.deleteLine te (row + offset)
+  | Insert (row, line) -> Text_editor.insert_line te (row + offset) line
+  | Delete row -> Text_editor.delete_line te (row + offset)
 
 let apply te ~offset script =
   List.iter (apply_command te offset) script

@@ -1,12 +1,12 @@
 type t
 
-val  getCursor: t -> Cursor.t
-val  setCursor: t -> Cursor.t -> unit
-val  setSelection: t -> Cursor.t -> Cursor.t -> unit
-val  getLastRow: t -> int
+val  get_cursor: t -> Cursor.t
+val  set_cursor: t -> Cursor.t -> unit
+val  set_selection: t -> Cursor.t -> Cursor.t -> unit
+val  get_last_row: t -> int
 val  accepts: t -> int -> bool
-val  getLine: t -> int -> string
-val  insertLine: t -> int -> string -> unit
-val  deleteLine: t -> int -> unit
-val  replaceLines: t -> Range.t -> string list -> unit
+val  get_line: t -> int -> string
+val  insert_line: t -> int -> string -> unit
+val  delete_line: t -> int -> unit
+val  replace_lines: t -> Range.t -> string list -> unit
 val  transact: t -> (unit -> unit) -> unit

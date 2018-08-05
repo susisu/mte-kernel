@@ -6,16 +6,16 @@ module Mock_text_editor: sig
   val to_text_editor: t -> Text_editor.t
 
   val create: string array -> t
-  val getCursor: t -> int * int
-  val setCursor: t -> int * int -> unit
-  val getSelection: t -> (int * int) * (int * int)
-  val setSelection: t -> int * int -> int * int -> unit
-  val getLastRow: t -> int
+  val get_cursor: t -> int * int
+  val set_cursor: t -> int * int -> unit
+  val get_selection: t -> (int * int) * (int * int)
+  val set_selection: t -> int * int -> int * int -> unit
+  val get_last_row: t -> int
   val accept: t -> int -> bool
-  val getLine: t -> int -> string
-  val getLines: t -> string array
-  val insertLine: t -> int -> string -> unit
-  val deleteLine: t -> int -> unit
-  val replaceLines: t -> int * int -> string array -> unit
+  val get_line: t -> int -> string
+  val get_lines: t -> string array
+  val insert_line: t -> int -> string -> unit
+  val delete_line: t -> int -> unit
+  val replace_lines: t -> int * int -> string array -> unit
   val transact: t -> (unit -> unit [@bs]) -> unit
 end
