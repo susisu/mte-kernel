@@ -8,7 +8,7 @@ let () =
     let module Mock = Mock_text_editor in
 
     describe "getCursor" begin fun () ->
-      test "it should get current cursor" begin fun () ->
+      test "should get current cursor" begin fun () ->
         let mock = Mock.create [|
             "foo";
             "bar";
@@ -20,7 +20,7 @@ let () =
     end;
 
     describe "setCursor" begin fun () ->
-      test "it should set cursor" begin fun () ->
+      test "should set cursor" begin fun () ->
         let mock = Mock.create [|
             "foo";
             "bar";
@@ -32,7 +32,7 @@ let () =
     end;
 
     describe "setSelection" begin fun () ->
-      test "it should set selection" begin fun () ->
+      test "should set selection" begin fun () ->
         let mock = Mock.create [|
             "foo";
             "bar";
@@ -45,7 +45,7 @@ let () =
     end;
 
     describe "getLastRow" begin fun () ->
-      test "it should get the last row index of the text editor" begin fun () ->
+      test "should get the last row index of the text editor" begin fun () ->
         let mock = Mock.create [|
             "foo";
             "bar";
@@ -56,7 +56,7 @@ let () =
     end;
 
     describe "accepts" begin fun () ->
-      test "it should return true if the text editor accepts table edit" begin fun () ->
+      test "should return true if the text editor accepts table edit" begin fun () ->
         let mock = Mock.create [|
             "|foo";
             "bar";
@@ -65,7 +65,7 @@ let () =
         expect (accepts te 0) |> toBe true
       end;
 
-      test "it should return false if the text editor does not accepts table edit" begin fun () ->
+      test "should return false if the text editor does not accepts table edit" begin fun () ->
         let mock = Mock.create [|
             "|foo";
             "bar";
@@ -76,7 +76,7 @@ let () =
     end;
 
     describe "getLine" begin fun () ->
-      test "it should get a line at the specified row" begin fun () ->
+      test "should get a line at the specified row" begin fun () ->
         let mock = Mock.create [|
             "foo";
             "bar";
@@ -87,7 +87,7 @@ let () =
     end;
 
     describe "insertLine" begin fun () ->
-      test "it should insert a line at the specified row" begin fun () ->
+      test "should insert a line at the specified row" begin fun () ->
         let mock = Mock.create [|
             "foo";
             "bar";
@@ -103,7 +103,7 @@ let () =
     end;
 
     describe "deleteLine" begin fun () ->
-      test "it should delete the line at the specifed row" begin fun () ->
+      test "should delete the line at the specifed row" begin fun () ->
         let mock = Mock.create [|
             "foo";
             "bar";
@@ -119,7 +119,7 @@ let () =
     end;
 
     describe "replaceLines" begin fun () ->
-      test "it should replace lines in the specifed range" begin fun () ->
+      test "should replace lines in the specifed range" begin fun () ->
         let mock = Mock.create [|
             "foo";
             "bar";
@@ -135,7 +135,7 @@ let () =
     end;
 
     describe "transact" begin fun () ->
-      test "it should batched multiple operations in a single undo step" begin fun () ->
+      test "should batched multiple operations in a single undo step" begin fun () ->
         let mock = Mock.create [|
             "foo";
             "bar";

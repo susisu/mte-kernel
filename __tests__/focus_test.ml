@@ -8,7 +8,7 @@ let () =
 
     describe "create_pointed" begin fun () ->
       let open Pointed in
-      testAll "it should create a pointed focus" [
+      testAll "should create a pointed focus" [
         (0, 0, 0);
         (0, 1, 2);
         (1, 2, 3);
@@ -20,12 +20,12 @@ let () =
         | Selected _ -> fail "expect Focus.Pointed"
       end;
 
-      test "it should fail if column is negative" begin fun () ->
+      test "should fail if column is negative" begin fun () ->
         expect (fun () -> create_pointed ~row:0 ~column:(-1) ~offset:0)
         |> toThrowAssertionFailure
       end;
 
-      test "it should fail if offset is negative" begin fun () ->
+      test "should fail if offset is negative" begin fun () ->
         expect (fun () -> create_pointed ~row:0 ~column:0 ~offset:(-1))
         |> toThrowAssertionFailure
       end;
@@ -33,7 +33,7 @@ let () =
 
     describe "create_selected" begin fun () ->
       let open Selected in
-      testAll "it should create selected focus" [
+      testAll "should create selected focus" [
         (0, 0);
         (0, 1);
         (1, 0);
@@ -46,7 +46,7 @@ let () =
         | Selected f -> expect (row f, column f) |> toEqual (r, c)
       end;
 
-      test "it should fail if column is negative" begin fun () ->
+      test "should fail if column is negative" begin fun () ->
         expect (fun () -> create_selected ~row:0 ~column:(-1))
         |> toThrowAssertionFailure
       end

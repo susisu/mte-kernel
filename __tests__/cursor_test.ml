@@ -7,7 +7,7 @@ let () =
     let open Cursor in
 
     describe "create" begin fun () ->
-      testAll "it should create a cursor" [
+      testAll "should create a cursor" [
         (0, 0);
         (0, 1);
         (1, 0);
@@ -17,12 +17,12 @@ let () =
         expect (row cursor, column cursor) |> toEqual (r, c)
       end;
 
-      test "it should fail if row is negative" begin fun () ->
+      test "should fail if row is negative" begin fun () ->
         expect (fun () -> create ~row:(-1) ~column:0)
         |> toThrowAssertionFailure
       end;
 
-      test "it should fail if column is negative" begin fun () ->
+      test "should fail if column is negative" begin fun () ->
         expect (fun () -> create ~row:0 ~column:(-1))
         |> toThrowAssertionFailure
       end;

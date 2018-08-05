@@ -7,7 +7,7 @@ let () =
     let open Table in
 
     describe "create" begin fun () ->
-      test "it should create a table" begin fun () ->
+      test "should create a table" begin fun () ->
         let h = Some ["name"; "color"] in
         let b = [
           ["apple"; "red"];
@@ -29,7 +29,7 @@ let () =
 
       describe "create" begin fun () ->
         describe "with header" begin fun () ->
-          test "it should be able to create a normalized table" begin fun () ->
+          test "should be able to create a normalized table" begin fun () ->
             let h = Some ["name"; "color"] in
             let b = [
               ["apple"; "red"];
@@ -46,7 +46,7 @@ let () =
             ) |> toEqual (h, b, a, 2)
           end;
 
-          test "it should fail if there are no columns" begin fun () ->
+          test "should fail if there are no columns" begin fun () ->
             let h = Some [] in
             let b = [[]; []; []] in
             let a = [] in
@@ -54,7 +54,7 @@ let () =
             |> toThrowAssertionFailure
           end;
 
-          test "it should fail if there exists a column of diffrent width" begin fun () ->
+          test "should fail if there exists a column of diffrent width" begin fun () ->
             let h = Some ["name"; "color"] in
             let b = [
               ["apple"; "red"];
@@ -66,7 +66,7 @@ let () =
             |> toThrowAssertionFailure
           end;
 
-          test "it should fail if there exists a column without alignment" begin fun () ->
+          test "should fail if there exists a column without alignment" begin fun () ->
             let h = Some ["name"; "color"] in
             let b = [
               ["apple"; "red"];
@@ -80,7 +80,7 @@ let () =
         end;
 
         describe "without header" begin fun () ->
-          test "it should be able to create a normalized table" begin fun () ->
+          test "should be able to create a normalized table" begin fun () ->
             let b = [
               ["apple"; "red"];
               ["banana"; "yellow"];
@@ -96,14 +96,14 @@ let () =
             ) |> toEqual (None, b, a, 2)
           end;
 
-          test "it should fail if there are no columns" begin fun () ->
+          test "should fail if there are no columns" begin fun () ->
             let b = [[]; []; []] in
             let a = [] in
             expect (fun () -> create ~header:None ~body:b ~alignments:a)
             |> toThrowAssertionFailure
           end;
 
-          test "it should fail if there exists a column of diffrent width" begin fun () ->
+          test "should fail if there exists a column of diffrent width" begin fun () ->
             let b = [
               ["apple"; "red"];
               ["banana"];
@@ -114,7 +114,7 @@ let () =
             |> toThrowAssertionFailure
           end;
 
-          test "it should fail if there exists a column without alignment" begin fun () ->
+          test "should fail if there exists a column without alignment" begin fun () ->
             let b = [
               ["apple"; "red"];
               ["banana"; "yellow"];
@@ -125,7 +125,7 @@ let () =
             |> toThrowAssertionFailure
           end;
 
-          test "it should fail if there are no header nor body" begin fun () ->
+          test "should fail if there are no header nor body" begin fun () ->
             let b = [] in
             let a = [] in
             expect (fun () -> create ~header:None ~body:b ~alignments:a)

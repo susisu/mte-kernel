@@ -9,7 +9,7 @@ let () =
       let open Table.Normalized in
 
       describe "with header" begin fun () ->
-        test "it should do nothing if the given table havs the normalized form" begin fun () ->
+        test "should do nothing if the given table havs the normalized form" begin fun () ->
           let table = Table.create
               ~header:(Some ["name"; "color"])
               ~body:[
@@ -37,7 +37,7 @@ let () =
           )
         end;
 
-        test "it should add empty cells if there are no columns" begin fun () ->
+        test "should add empty cells if there are no columns" begin fun () ->
           let table = Table.create
               ~header:(Some [])
               ~body:[
@@ -63,7 +63,7 @@ let () =
           )
         end;
 
-        test "it should insert empty cells to rows that have less cells than the maximum one\
+        test "should insert empty cells to rows that have less cells than the maximum one\
              " begin fun () ->
           let table = Table.create
               ~header:(Some ["name"])
@@ -92,7 +92,7 @@ let () =
           )
         end;
 
-        test "it should add empty alignment specifications if missing" begin fun () ->
+        test "should add empty alignment specifications if missing" begin fun () ->
           let table = Table.create
               ~header:(Some ["name"; "color"])
               ~body:[
@@ -120,7 +120,7 @@ let () =
           )
         end;
 
-        test "it should drop redundant alignment specifications" begin fun () ->
+        test "should drop redundant alignment specifications" begin fun () ->
           let table = Table.create
               ~header:(Some ["name"; "color"])
               ~body:[
@@ -150,7 +150,7 @@ let () =
       end;
 
       describe "without header" begin fun () ->
-        test "it should do nothing if the given table havs the normalized form" begin fun () ->
+        test "should do nothing if the given table havs the normalized form" begin fun () ->
           let table = Table.create
               ~header:None
               ~body:[
@@ -178,8 +178,7 @@ let () =
           )
         end;
 
-        test "it should insert a row with one empty cell to body if there are no rows\
-             " begin fun () ->
+        test "should insert a row with one empty cell to body if there are no rows" begin fun () ->
           let table = Table.create
               ~header:None
               ~body:[]
@@ -201,7 +200,7 @@ let () =
           )
         end;
 
-        test "it should add empty cells if there are no columns" begin fun () ->
+        test "should add empty cells if there are no columns" begin fun () ->
           let table = Table.create
               ~header:None
               ~body:[
@@ -227,7 +226,7 @@ let () =
           )
         end;
 
-        test "it should insert empty cells to rows that have less cells than the maximum one\
+        test "should insert empty cells to rows that have less cells than the maximum one\
              " begin fun () ->
           let table = Table.create
               ~header:None
@@ -256,7 +255,7 @@ let () =
           )
         end;
 
-        test "it should add empty alignment specifications if missing" begin fun () ->
+        test "should add empty alignment specifications if missing" begin fun () ->
           let table = Table.create
               ~header:None
               ~body:[
@@ -284,7 +283,7 @@ let () =
           )
         end;
 
-        test "it should drop redundant alignment specifications" begin fun () ->
+        test "should drop redundant alignment specifications" begin fun () ->
           let table = Table.create
               ~header:None
               ~body:[

@@ -7,7 +7,7 @@ let () =
     let open Range in
 
     describe "create" begin fun () ->
-      testAll "it should create a range" [
+      testAll "should create a range" [
         (0, 1);
         (1, 2);
       ] begin fun (r, c) ->
@@ -15,12 +15,12 @@ let () =
         expect (start_row range, end_row range) |> toEqual (r, c)
       end;
 
-      test "it should fail if start_row >= end_row" begin fun () ->
+      test "should fail if start_row >= end_row" begin fun () ->
         expect (fun () -> create ~start_row:1 ~end_row:0)
         |> toThrowAssertionFailure
       end;
 
-      test "it should fail if start_row is negative" begin fun () ->
+      test "should fail if start_row is negative" begin fun () ->
         expect (fun () -> create ~start_row:(-1) ~end_row:0)
         |> toThrowAssertionFailure
       end;

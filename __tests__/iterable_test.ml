@@ -23,7 +23,7 @@ let () =
     let open Iterable in
 
     describe "iterator" begin fun () ->
-      test "it should create a new iterator" begin fun () ->
+      test "should create a new iterator" begin fun () ->
         let i = iterator lt_four_iter in
         let v1 = Iterator.next i in
         let v2 = Iterator.next i in
@@ -34,7 +34,7 @@ let () =
     end;
 
     describe "to_list" begin fun () ->
-      testAll "it should convert an iterable to a list" [
+      testAll "should convert an iterable to a list" [
         (lt_four_iter, [1; 2; 3]);
         (lt_five_iter, [1; 2; 3; 4]);
         (empty_iter, []);
@@ -44,7 +44,7 @@ let () =
     end;
 
     describe "iterate" begin fun () ->
-      test "it should iterate over the given iterable" begin fun () ->
+      test "should iterate over the given iterable" begin fun () ->
         let ns = ref [] in
         iterate lt_four_iter ~f:(fun n ->
             ns := n :: !ns
@@ -52,7 +52,7 @@ let () =
         expect (!ns) |> toEqual [3; 2; 1]
       end;
 
-      test "it should do nothing if an empty iterable is given" begin fun () ->
+      test "should do nothing if an empty iterable is given" begin fun () ->
         let did = ref false in
         iterate empty_iter ~f:(fun _ ->
             did := true
@@ -62,7 +62,7 @@ let () =
     end;
 
     describe "fold_left" begin fun () ->
-      testAll "it should fold an iterable from left ro right" [
+      testAll "should fold an iterable from left ro right" [
         (lt_four_iter, (((0 - 1) - 2) - 3));
         (lt_five_iter, ((((0 - 1) - 2) - 3) - 4));
         (empty_iter, 0);
@@ -73,7 +73,7 @@ let () =
     end;
 
     describe "fold_right" begin fun () ->
-      testAll "it should fold an iterable from right ro left" [
+      testAll "should fold an iterable from right ro left" [
         (lt_four_iter, (1 - (2 - (3 - 0))));
         (lt_five_iter, (1 - (2 - (3 - (4 - 0)))));
         (empty_iter, 0);
@@ -84,8 +84,7 @@ let () =
     end;
 
     describe "map" begin fun () ->
-      testAll "it should create a new iterable which generates values mapped by the given function\
-              " [
+      testAll "should create a new iterable which generates values mapped by the given function" [
         (lt_four_iter, [2; 4; 6]);
         (empty_iter, []);
       ] begin fun (iter, list) ->
@@ -93,7 +92,7 @@ let () =
         expect (to_list iter') |> toEqual list
       end;
 
-      test "it should not call the mapping function until it is needed" begin fun () ->
+      test "should not call the mapping function until it is needed" begin fun () ->
         let did = ref false in
         ignore @@ map lt_four_iter ~f:(fun n -> did := true; n * 2);
         expect (!did) |> toBe false
@@ -101,8 +100,7 @@ let () =
     end;
 
     describe "filter" begin fun () ->
-      testAll "it should create a new iterable which generates values filtered by the given \
-               function" [
+      testAll "should create a new iterable which generates values filtered by the given function" [
         (lt_four_iter, [1; 3]);
         (empty_iter, []);
       ] begin fun (iter, list) ->
@@ -112,14 +110,14 @@ let () =
     end;
 
     describe "of_string" begin fun () ->
-      test "it should convert a string to an iterable" begin fun () ->
+      test "should convert a string to an iterable" begin fun () ->
         let iter = of_string {js|Aあ🍣|js} in
         expect (to_list iter) |> toEqual ["A"; {js|あ|js}; {js|🍣|js}]
       end;
     end;
 
     describe "of_array" begin fun () ->
-      test "it should convert an array to an iterable" begin fun () ->
+      test "should convert an array to an iterable" begin fun () ->
         let iter = of_array [|1; 2; 3|] in
         expect (to_list iter) |> toEqual [1; 2; 3]
       end;
