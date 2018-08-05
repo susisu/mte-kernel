@@ -1,6 +1,6 @@
 type t
 
-module Js_interface = struct
+module Js_intf = struct
   external get_cursor: t -> int * int = "getCursor" [@@bs.send]
   external set_cursor: t -> int * int -> unit = "setCursor" [@@bs.send]
   external set_selection: t -> int * int -> int * int -> unit = "setSelection" [@@bs.send]
@@ -14,28 +14,28 @@ module Js_interface = struct
 end
 
 let get_cursor t =
-  let (row, column) = Js_interface.get_cursor t in
+  let (row, column) = Js_intf.get_cursor t in
   Cursor.create ~row ~column
 let set_cursor t cursor =
   let c = (Cursor.row cursor, Cursor.column cursor) in
-  Js_interface.set_cursor t c
+  Js_intf.set_cursor t c
 let set_selection t start_cursor end_cursor =
   let s = (Cursor.row start_cursor, Cursor.column start_cursor) in
   let e = (Cursor.row end_cursor, Cursor.column end_cursor) in
-  Js_interface.set_selection t s e
+  Js_intf.set_selection t s e
 let get_last_row t =
-  Js_interface.get_last_row t
+  Js_intf.get_last_row t
 let accepts t row =
-  Js_interface.accepts t row
+  Js_intf.accepts t row
 let get_line t row =
-  Js_interface.get_line t row
+  Js_intf.get_line t row
 let insert_line t row line =
-  Js_interface.insert_line t row line
+  Js_intf.insert_line t row line
 let delete_line t row =
-  Js_interface.delete_line t row
+  Js_intf.delete_line t row
 let replace_lines t range text =
   let r = (Range.start_row range, Range.end_row range) in
   let lines = Array.of_list text in
-  Js_interface.replace_lines t r lines
+  Js_intf.replace_lines t r lines
 let transact t f =
-  Js_interface.transact t (fun [@bs] () -> f ())
+  Js_intf.transact t (fun [@bs] () -> f ())
