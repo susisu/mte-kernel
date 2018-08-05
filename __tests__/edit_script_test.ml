@@ -39,20 +39,22 @@ let () =
 
     describe "shortest_edit_script" begin fun () ->
       testAll "should compute the shortest edit script between two arrays" [
-        ([|"A"; "B"; "C"|], [|"D"; "E"; "F"|], 6);
-        ([|"D"; "E"; "F"|], [|"A"; "B"; "C"|], 6);
-        ([|"A"; "B"; "C"|], [||], 3);
-        ([||], [|"A"; "B"; "C"|], 3);
-        ([|"A"; "B"; "C"|], [|"A"; "B"; "C"; "D"; "E"; "F"|], 3);
-        ([|"A"; "B"; "C"; "D"; "E"; "F"|], [|"A"; "B"; "C"|], 3);
-        ([|"D"; "E"; "F"|], [|"A"; "B"; "C"; "D"; "E"; "F"|], 3);
-        ([|"A"; "B"; "C"; "D"; "E"; "F"|], [|"D"; "E"; "F"|], 3);
-        ([|"A"; "B"; "C"; "D"; "E"|], [|"A"; "X"; "B"; "D"; "Y"|], 4);
-        ([|"A"; "X"; "B"; "D"; "Y"|], [|"A"; "B"; "C"; "D"; "E"|], 4);
-        (Js.String.split "" "kitten", Js.String.split "" "sitting", 5);
-        (Js.String.split "" "sitting", Js.String.split "" "kitten", 5);
-      ] begin fun (from_lines, to_lines, distance) ->
-        let ses = shortest_edit_script ~limit:None ~from_lines ~to_lines
+        ([|"A"; "B"; "C"|], [|"D"; "E"; "F"|], 6, None);
+        ([|"D"; "E"; "F"|], [|"A"; "B"; "C"|], 6, None);
+        ([|"A"; "B"; "C"|], [||], 3, None);
+        ([||], [|"A"; "B"; "C"|], 3, None);
+        ([|"A"; "B"; "C"|], [|"A"; "B"; "C"; "D"; "E"; "F"|], 3, None);
+        ([|"A"; "B"; "C"; "D"; "E"; "F"|], [|"A"; "B"; "C"|], 3, None);
+        ([|"D"; "E"; "F"|], [|"A"; "B"; "C"; "D"; "E"; "F"|], 3, None);
+        ([|"A"; "B"; "C"; "D"; "E"; "F"|], [|"D"; "E"; "F"|], 3, None);
+        ([|"A"; "B"; "C"; "D"; "E"|], [|"A"; "X"; "B"; "D"; "Y"|], 4, None);
+        ([|"A"; "X"; "B"; "D"; "Y"|], [|"A"; "B"; "C"; "D"; "E"|], 4, None);
+        (Js.String.split "" "kitten", Js.String.split "" "sitting", 5, None);
+        (Js.String.split "" "sitting", Js.String.split "" "kitten", 5, None);
+        (Js.String.split "" "kitten", Js.String.split "" "sitting", 5, Some 5);
+        (Js.String.split "" "sitting", Js.String.split "" "kitten", 5, Some 5);
+      ] begin fun (from_lines, to_lines, distance, limit) ->
+        let ses = shortest_edit_script ~limit ~from_lines ~to_lines
                   |> Option.get_exn in
         let mock = Mock.create from_lines in
         let te = Mock.to_text_editor mock in
