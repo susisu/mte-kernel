@@ -113,8 +113,8 @@ end = struct
 
   external iterator: 'a t -> 'a Js_iterator.t = "genericGetJsIterator" [@@bs.val]
 
-  let to_iterable x = create (fun [@bs] () ->
-      iterator x |> Js_iterator.to_iterator
+  let to_iterable (iter: 'a t): 'a T.t = create (fun [@bs] () ->
+      iterator iter |> Js_iterator.to_iterator
     )
 end
 
