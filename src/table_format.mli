@@ -1,4 +1,4 @@
 type t = {
   syntax: Syntax.t;
-  marginLeft: string;
+  margin_left: string;
 }
