@@ -1,37 +1,28 @@
-module Pointed = struct
-  type t = {
-    row: int;
-    column: int;
-    offset: int;
-  }
+module Focus_point = struct
+  type t = Point.t * int
 
-  let create row column offset =
-    assert (column >= 0);
-    assert (offset >= 0);
-    { row; column; offset }
+  let create p o =
+    assert (p.Point.column >= 0);
+    assert (o >= 0);
+    (p, o)
 
-  let row focus = focus.row
-  let column focus = focus.column
-  let offset focus = focus.offset
+  let pos (p, _) = p
+  let offset (_, o) = o
 end
 
-module Selected = struct
-  type t = {
-    row: int;
-    column: int;
-  }
+module Focus_select = struct
+  type t = Point.t
 
-  let create row column =
-    assert (column >= 0);
-    { row; column }
+  let create p =
+    assert (p.Point.column >= 0);
+    p
 
-  let row focus = focus.row
-  let column focus = focus.column
+  let pos s = s
 end
 
 type t =
-  | Pointed of Pointed.t
-  | Selected of Selected.t
+  | Point of Focus_point.t
+  | Select of Focus_select.t
 
-let create_pointed ~row ~column ~offset = Pointed (Pointed.create row column offset)
-let create_selected ~row ~column = Selected (Selected.create row column)
+let create_point ~pos ~offset = Point (Focus_point.create pos offset)
+let create_select ~pos = Select (Focus_select.create pos)

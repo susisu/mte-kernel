@@ -1,44 +1,38 @@
 (** *)
 
-module Pointed: sig
-  (** Pointed.t represents a focus which points a specific position (offset) in a cell. *)
+module Focus_point: sig
+  (** Focus_point.t represents a focus which specifies a cell and offset position in it. *)
   type t
 
-  (** Gets the row index of the given focus. *)
-  val row: t -> int
-
-  (** Gets the column index of the given focus. *)
-  val column: t -> int
+  (** Gets the position of the focused cell. *)
+  val pos: t -> Point.t
 
   (** Gets the offset position in the focused cell. *)
   val offset: t -> int
 end
 
-module Selected: sig
-  (** Selected.t represents a focus which selects whole content of a cell. *)
+module Focus_select: sig
+  (** Focus_select.t represents a focus which specifies a cell and selects its content. *)
   type t
 
-  (** Gets the row index of the given focus. *)
-  val row: t -> int
-
-  (** Gets the column index of the given focus. *)
-  val column: t -> int
+  (** Gets the position of the focused cell. *)
+  val pos: t -> Point.t
 end
 
 (** Focus.t represents a focus on a cell. *)
 type t =
-  | Pointed of Pointed.t   (** Points a specific position (offset) in the cell. *)
-  | Selected of Selected.t (** Selects the whole content of the cell. *)
+  | Point of Focus_point.t   (** Points a specific position (offset) in the focused cell. *)
+  | Select of Focus_select.t (** Selects the whole content of the focused cell. *)
 
-(** Creates a new pointed focus.
-    @param row Row index. Negative index means the focus is in the table header.
-    @param column Column index. Must be >= 0.
+(** Creates a new focus specifying a offset position in the focused cell
+    @param pos Position of the focused cell in the table. Negative row index means the focus is in
+    the table header, and column index must be >= 0.
     @param offset Offset in the focused cell. Must be >= 0.
 *)
-val create_pointed: row:int -> column:int -> offset:int -> t
+val create_point: pos:Point.t -> offset:int -> t
 
-(** Creates a new selected focus.
-    @param row Row index. Negative index means the focus is in the table header.
-    @param column Column index. Must be >= 0.
+(** Creates a new focus selecting the content of the focused cell.
+  @param pos Position of the focused cell in the table. Negative row index means the focus is in
+  the table header, and column index must be >= 0.
 *)
-val create_selected: row:int -> column:int -> t
+val create_select: pos:Point.t -> t
