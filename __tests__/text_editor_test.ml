@@ -95,8 +95,10 @@ let () =
             "baz";
           |] in
         let te = Mock.to_text_editor mock in
-        set_selection te
-          (Cursor.create { row = 0; column = 1 }) (Cursor.create { row = 2; column = 3 });
+        let sel = Selection.create
+            ~start_cursor:(Cursor.create { row = 0; column = 1 })
+            ~end_cursor:(Cursor.create { row = 2; column = 3 }) in
+        set_selection te sel;
         expect (Mock.get_selection mock) |> toEqual ((0, 1), (2, 3))
       end;
     end;

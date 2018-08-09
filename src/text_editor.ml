@@ -46,9 +46,11 @@ let get_cursor t =
 let set_cursor t cursor =
   let c = (Cursor.row cursor, Cursor.column cursor) in
   Js_intf.set_cursor t c
-let set_selection t start_cursor end_cursor =
-  let s = (Cursor.row start_cursor, Cursor.column start_cursor) in
-  let e = (Cursor.row end_cursor, Cursor.column end_cursor) in
+let set_selection t sel =
+  let sc = Selection.start_cursor sel in
+  let ec = Selection.end_cursor sel in
+  let s = (Cursor.row sc, Cursor.column sc) in
+  let e = (Cursor.row ec, Cursor.column ec) in
   Js_intf.set_selection t s e
 let get_last_row t =
   Js_intf.get_last_row t
