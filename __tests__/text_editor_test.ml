@@ -33,6 +33,34 @@ let () =
       end;
     end;
 
+    describe "Selection" begin fun () ->
+      let open Selection in
+      let open Point in
+
+      describe "create" begin fun () ->
+        testAll "should create a selection" [
+          ({ row = 0; column = 0 }, { row = 0; column = 0 });
+          ({ row = 0; column = 0 }, { row = 1; column = 0 });
+          ({ row = 0; column = 0 }, { row = 0; column = 1 });
+        ] begin fun (s, e) ->
+          let sc = Cursor.create s in
+          let ec = Cursor.create e in
+          let sel = create ~start_cursor:sc ~end_cursor:ec in
+          expect (start_cursor sel, end_cursor sel) |> toEqual (sc, ec)
+        end;
+
+        testAll "should fail if the start cursor is greater than the end" [
+          ({ row = 1; column = 0 }, { row = 0; column = 0 });
+          ({ row = 0; column = 1 }, { row = 0; column = 0 });
+        ] begin fun (s, e) ->
+          let sc = Cursor.create s in
+          let ec = Cursor.create e in
+          expect (fun () -> create ~start_cursor:sc ~end_cursor:ec)
+          |> toThrowAssertionFailure
+        end;
+      end;
+    end;
+
     let module Mock = Mock_text_editor in
 
     describe "get_cursor" begin fun () ->

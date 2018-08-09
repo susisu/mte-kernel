@@ -7,6 +7,15 @@ module Cursor: sig
   val column: t -> int
 end
 
+module Selection: sig
+  type t
+
+  val create: start_cursor:Cursor.t -> end_cursor:Cursor.t -> t
+
+  val start_cursor: t -> Cursor.t
+  val end_cursor: t -> Cursor.t
+end
+
 type t
 
 val  get_cursor: t -> Cursor.t

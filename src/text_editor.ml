@@ -11,6 +11,20 @@ module Cursor = struct
   let column cursor = cursor.Point.column
 end
 
+module Selection = struct
+  type t = {
+    start_cursor: Cursor.t;
+    end_cursor: Cursor.t;
+  }
+
+  let create ~start_cursor ~end_cursor =
+    assert (Point.compare start_cursor end_cursor <= 0);
+    { start_cursor; end_cursor }
+
+  let start_cursor sel = sel.start_cursor
+  let end_cursor sel = sel.end_cursor
+end
+
 type t
 
 module Js_intf = struct
