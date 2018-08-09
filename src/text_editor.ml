@@ -1,3 +1,16 @@
+module Cursor = struct
+  type t = Point.t
+
+  let create point =
+    let open Point in
+    assert (point.row >= 0);
+    assert (point.column >= 0);
+    point
+
+  let row cursor = cursor.Point.row
+  let column cursor = cursor.Point.column
+end
+
 type t
 
 module Js_intf = struct
@@ -15,7 +28,7 @@ end
 
 let get_cursor t =
   let (row, column) = Js_intf.get_cursor t in
-  Cursor.create ~row ~column
+  Cursor.create { row; column }
 let set_cursor t cursor =
   let c = (Cursor.row cursor, Cursor.column cursor) in
   Js_intf.set_cursor t c

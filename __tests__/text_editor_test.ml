@@ -5,6 +5,34 @@ open Test_helper
 let () =
   describe "Text_editor" begin fun () ->
     let open Text_editor in
+
+    describe "Cursor" begin fun () ->
+      let open Cursor in
+      let open Point in
+
+      describe "create" begin fun () ->
+        testAll "should create a cursor" [
+          { row = 0; column = 0 };
+          { row = 0; column = 1 };
+          { row = 1; column = 0 };
+          { row = 1; column = 2 };
+        ] begin fun p ->
+          let cursor = create p in
+          expect (row cursor, column cursor) |> toEqual (p.row, p.column)
+        end;
+
+        test "should fail if row is negative" begin fun () ->
+          expect (fun () -> create { row = -1; column = 0 })
+          |> toThrowAssertionFailure
+        end;
+
+        test "should fail if column is negative" begin fun () ->
+          expect (fun () -> create { row = 0; column = -1 })
+          |> toThrowAssertionFailure
+        end;
+      end;
+    end;
+
     let module Mock = Mock_text_editor in
 
     describe "get_cursor" begin fun () ->
@@ -15,7 +43,7 @@ let () =
           |] in
         let te = Mock.to_text_editor mock in
         Mock.set_cursor mock (1, 2);
-        expect (get_cursor te) |> toEqual (Cursor.create ~row:1 ~column:2)
+        expect (get_cursor te) |> toEqual (Cursor.create { row = 1; column = 2 })
       end;
     end;
 
@@ -26,7 +54,7 @@ let () =
             "bar";
           |] in
         let te = Mock.to_text_editor mock in
-        set_cursor te (Cursor.create ~row:1 ~column:2);
+        set_cursor te (Cursor.create { row = 1; column = 2 });
         expect (Mock.get_cursor mock) |> toEqual (1, 2)
       end;
     end;
@@ -39,7 +67,8 @@ let () =
             "baz";
           |] in
         let te = Mock.to_text_editor mock in
-        set_selection te (Cursor.create ~row:0 ~column:1) (Cursor.create ~row:2 ~column:3);
+        set_selection te
+          (Cursor.create { row = 0; column = 1 }) (Cursor.create { row = 2; column = 3 });
         expect (Mock.get_selection mock) |> toEqual ((0, 1), (2, 3))
       end;
     end;

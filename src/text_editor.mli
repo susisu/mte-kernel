@@ -1,3 +1,12 @@
+module Cursor: sig
+  type t
+
+  val create: Point.t -> t
+
+  val row: t -> int
+  val column: t -> int
+end
+
 type t
 
 val  get_cursor: t -> Cursor.t
