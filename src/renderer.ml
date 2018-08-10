@@ -34,14 +34,13 @@ let space size = Js.String.repeat size " "
 
 let pad_align (al: Alignment.t) tw_opts width text =
   let space_size = width - compute_text_width tw_opts text in
-  let aligned_text =
-    if space_size < 0 then text
-    else match al with
-      | Left -> text ^ space space_size
-      | Right -> space space_size ^ text
-      | Center ->
-        let left = space_size / 2 in
-        let right = space_size - left in
-        space left ^ text ^ space right
+  assert (space_size > 0);
+  let aligned_text = match al with
+    | Left -> text ^ space space_size
+    | Right -> space space_size ^ text
+    | Center ->
+      let left = space_size / 2 in
+      let right = space_size - left in
+      space left ^ text ^ space right
   in
   " " ^ aligned_text ^ " "

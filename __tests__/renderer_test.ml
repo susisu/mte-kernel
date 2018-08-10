@@ -1,5 +1,6 @@
 open Jest
 open Expect
+open Test_helper
 
 let () =
   describe "Renderer" begin fun () ->
@@ -81,18 +82,15 @@ let () =
         expect (pad_align al tw_opts 5 "ABC") |> toBe res
       end;
 
-      testAll "should only pad if the given text has wider than the specified width" [
-        (Alignment.Left, " ABCDEF ");
-        (Alignment.Right, " ABCDEF ");
-        (Alignment.Center, " ABCDEF ");
-      ] begin fun (al, res) ->
+      test "should fail if the specified width is smaller than the text width" begin fun () ->
         let tw_opts = {
           normalize = false;
           wide_chars = Js_set.make ();
           narrow_chars = Js_set.make ();
           ambiguous_as_wide = false;
         } in
-        expect (pad_align al tw_opts 5 "ABCDEF") |> toBe res
+        expect (fun () -> pad_align Alignment.Left tw_opts 5 "ABCDEF")
+        |> toThrowAssertionFailure
       end;
     end;
   end
