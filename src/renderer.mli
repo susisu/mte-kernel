@@ -6,3 +6,4 @@ type text_width_options = {
 }
 
 val compute_text_width: text_width_options -> string -> int
+val pad_align: Alignment.t -> text_width_options -> int -> string -> string

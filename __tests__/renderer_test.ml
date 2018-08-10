@@ -65,4 +65,34 @@ let () =
         expect (compute_text_width opts {js|ℵAあＡｱ∀|js}) |> toBe 9
       end;
     end;
+
+    describe "pad_align" begin fun () ->
+      testAll "should align and pad text to have the given width excluding the padding" [
+        (Alignment.Left, " ABC   ");
+        (Alignment.Right, "   ABC ");
+        (Alignment.Center, "  ABC  ");
+      ] begin fun (al, res) ->
+        let tw_opts = {
+          normalize = false;
+          wide_chars = Js_set.make ();
+          narrow_chars = Js_set.make ();
+          ambiguous_as_wide = false;
+        } in
+        expect (pad_align al tw_opts 5 "ABC") |> toBe res
+      end;
+
+      testAll "should only pad if the given text has wider than the specified width" [
+        (Alignment.Left, " ABCDEF ");
+        (Alignment.Right, " ABCDEF ");
+        (Alignment.Center, " ABCDEF ");
+      ] begin fun (al, res) ->
+        let tw_opts = {
+          normalize = false;
+          wide_chars = Js_set.make ();
+          narrow_chars = Js_set.make ();
+          ambiguous_as_wide = false;
+        } in
+        expect (pad_align al tw_opts 5 "ABCDEF") |> toBe res
+      end;
+    end;
   end
