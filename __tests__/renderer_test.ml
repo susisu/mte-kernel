@@ -85,7 +85,7 @@ let () =
           narrow_chars = Js_set.make ();
           ambiguous_as_wide = false;
         } in
-        expect (align al tw_opts 5 "ABC") |> toBe res
+        expect (align tw_opts al 5 "ABC") |> toBe res
       end;
 
       test "should fail if the specified width is smaller than the text width" begin fun () ->
@@ -95,7 +95,7 @@ let () =
           narrow_chars = Js_set.make ();
           ambiguous_as_wide = false;
         } in
-        expect (fun () -> align Alignment.Left tw_opts 5 "ABCDEF")
+        expect (fun () -> align tw_opts Alignment.Left 5 "ABCDEF")
         |> toThrowAssertionFailure
       end;
     end;

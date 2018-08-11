@@ -34,7 +34,7 @@ let pad text = " " ^ text ^ " "
 
 let space size = Js.String.repeat size " "
 
-let align (al: Alignment.t) tw_opts width text =
+let align tw_opts (al: Alignment.t) width text =
   let space_size = width - compute_text_width tw_opts text in
   assert (space_size > 0);
   match al with
