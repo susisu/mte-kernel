@@ -99,4 +99,35 @@ let () =
         |> toThrowAssertionFailure
       end;
     end;
+
+    describe "delimiter_text" begin fun () ->
+      let open Alignment in
+
+      testAll "should create delimiter text with given width" [
+        (Outside, None, " ----- ");
+        (Outside, Some Left, ":----- ");
+        (Outside, Some Right, " -----:");
+        (Outside, Some Center, ":-----:");
+        (Inside, None, " ----- ");
+        (Inside, Some Left, " :---- ");
+        (Inside, Some Right, " ----: ");
+        (Inside, Some Center, " :---: ");
+      ] begin fun (al_pos, al, res) ->
+        expect (delimiter_text al_pos al 5) |> toBe res
+      end;
+
+      testAll "should fail if the given width is not enough" [
+        (Outside, None, 0);
+        (Outside, Some Left, 0);
+        (Outside, Some Right, 0);
+        (Outside, Some Center, 0);
+        (Inside, None, 0);
+        (Inside, Some Left, 1);
+        (Inside, Some Right, 1);
+        (Inside, Some Center, 2);
+      ] begin fun (al_pos, al, width) ->
+        expect (fun () -> delimiter_text al_pos al width)
+        |> toThrowAssertionFailure
+      end;
+    end;
   end

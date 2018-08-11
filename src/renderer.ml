@@ -44,3 +44,23 @@ let align (al: Alignment.t) tw_opts width text =
     let left = space_size / 2 in
     let right = space_size - left in
     space left ^ text ^ space right
+
+type delimiter_alignment_position =
+  | Outside
+  | Inside
+
+let delimiter_text al_pos (al: Alignment.t option) width =
+  let (left, right) = match (al_pos, al) with
+    | (Outside, None) -> (" ", " ")
+    | (Outside, Some Left) -> (":", " ")
+    | (Outside, Some Right) -> (" ", ":")
+    | (Outside, Some Center) -> (":", ":")
+    | (Inside, None) -> (" ", " ")
+    | (Inside, Some Left) -> (" :", " ")
+    | (Inside, Some Right) -> (" ", ": ")
+    | (Inside, Some Center) -> (" :", ": ")
+  in
+  let bar_width = width + 2 - Js.String.length left - Js.String.length right in
+  assert (bar_width > 0);
+  let bar = Js.String.repeat bar_width "-" in
+  left ^ bar ^ right
