@@ -30,17 +30,17 @@ let compute_text_width tw_opts text =
       width + w
     )
 
+let pad text = " " ^ text ^ " "
+
 let space size = Js.String.repeat size " "
 
-let pad_align (al: Alignment.t) tw_opts width text =
+let align (al: Alignment.t) tw_opts width text =
   let space_size = width - compute_text_width tw_opts text in
   assert (space_size > 0);
-  let aligned_text = match al with
-    | Left -> text ^ space space_size
-    | Right -> space space_size ^ text
-    | Center ->
-      let left = space_size / 2 in
-      let right = space_size - left in
-      space left ^ text ^ space right
-  in
-  " " ^ aligned_text ^ " "
+  match al with
+  | Left -> text ^ space space_size
+  | Right -> space space_size ^ text
+  | Center ->
+    let left = space_size / 2 in
+    let right = space_size - left in
+    space left ^ text ^ space right

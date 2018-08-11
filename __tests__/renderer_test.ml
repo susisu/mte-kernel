@@ -67,11 +67,17 @@ let () =
       end;
     end;
 
-    describe "pad_align" begin fun () ->
-      testAll "should align and pad text to have the given width excluding the padding" [
-        (Alignment.Left, " ABC   ");
-        (Alignment.Right, "   ABC ");
-        (Alignment.Center, "  ABC  ");
+    describe "pad" begin fun () ->
+      test "should add whitespace characters on each side of the text" begin fun () ->
+        expect (pad "ABC") |> toBe " ABC "
+      end;
+    end;
+
+    describe "align" begin fun () ->
+      testAll "should align text to have the given width excluding the padding" [
+        (Alignment.Left, "ABC  ");
+        (Alignment.Right, "  ABC");
+        (Alignment.Center, " ABC ");
       ] begin fun (al, res) ->
         let tw_opts = {
           normalize = false;
@@ -79,7 +85,7 @@ let () =
           narrow_chars = Js_set.make ();
           ambiguous_as_wide = false;
         } in
-        expect (pad_align al tw_opts 5 "ABC") |> toBe res
+        expect (align al tw_opts 5 "ABC") |> toBe res
       end;
 
       test "should fail if the specified width is smaller than the text width" begin fun () ->
@@ -89,7 +95,7 @@ let () =
           narrow_chars = Js_set.make ();
           ambiguous_as_wide = false;
         } in
-        expect (fun () -> pad_align Alignment.Left tw_opts 5 "ABCDEF")
+        expect (fun () -> align Alignment.Left tw_opts 5 "ABCDEF")
         |> toThrowAssertionFailure
       end;
     end;
