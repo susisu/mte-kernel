@@ -30,9 +30,9 @@
     "doc": "mkdirp doc && ocamldoc -html -d doc -I node_modules/bs-platform/lib/ocaml/ -I lib/bs/src src/*.mli"
   },
   "devDependencies": {
-    "@glennsl/bs-jest": "^0.4.2",
-    "bs-platform": "^4.0.0",
-    "jest": "^22.0.4",
+    "@glennsl/bs-jest": "^0.4.3",
+    "bs-platform": "^4.0.5",
+    "jest": "^23.5.0",
     "mkdirp": "^0.5.1",
     "rimraf": "^2.6.2"
   },
