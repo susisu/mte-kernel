@@ -8,13 +8,13 @@ const bsModules = [
 
 module.exports = {
   testMatch: [
-    "**/__tests__/**/*test?(.bs).js"
+    "**/__tests__/**/*test?(.bs).js",
   ],
   collectCoverage: true,
   collectCoverageFrom: [
-    "src/**/*.js"
+    "src/**/*.js",
   ],
   transformIgnorePatterns: [
-    `node_modules/(?!(${bsModules.join("|")})/)`
+    `node_modules/(?!(${bsModules.join("|")})/)`,
   ],
 };
