@@ -1,4 +1,4 @@
-class AbstractTextEditor {
+export class AbstractTextEditor {
   getCursor() {
     throw new Error("Not implemented: getCursorPosition");
   }
@@ -39,7 +39,3 @@ class AbstractTextEditor {
     throw new Error("Not implemented: transact");
   }
 }
-
-module.exports = {
-  AbstractTextEditor,
-};
