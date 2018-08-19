@@ -5,7 +5,7 @@
   "sources": [
     {
       "dir": "src",
-      "subdirs": true,
+      "subdirs": true
     },
     {
       "dir": "__tests__",
