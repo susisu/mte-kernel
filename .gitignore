@@ -109,3 +109,6 @@ setup.log
 
 ### OCamldoc
 /doc
+
+### Output
+/dist
