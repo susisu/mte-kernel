@@ -31,6 +31,7 @@
   },
   "devDependencies": {
     "@glennsl/bs-jest": "^0.4.3",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "bs-platform": "^4.0.5",
     "jest": "^23.5.0",
     "mkdirp": "^0.5.1",
