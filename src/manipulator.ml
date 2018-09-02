@@ -22,6 +22,14 @@ module Prim = struct
       loop 0 xs [] |> List.rev
   end
 
+  module Option = struct
+    include Option
+
+    let map f = function
+      | None -> None
+      | Some x -> Some (f x)
+  end
+
   let insert_empty_row row table =
     let (header, body, alignments, width) =
       let open Table.Normalized in
@@ -34,4 +42,16 @@ module Prim = struct
       | None -> Table.Normalized.create ~header:(Some empty_row) ~body ~alignments
     else
       Table.Normalized.create ~header ~body:(List.insert row empty_row body) ~alignments
+
+  let insert_empty_column column table =
+    let (header, body, alignments) =
+      let open Table.Normalized in
+      (header table, body table, alignments table)
+    in
+    let column = max column 0 in
+    let insert_f = List.insert column "" in
+    Table.Normalized.create
+      ~header:(Option.map insert_f header)
+      ~body:(List.map insert_f body)
+      ~alignments:(List.insert column None alignments)
 end
