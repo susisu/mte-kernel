@@ -22,14 +22,6 @@ module Prim = struct
       loop 0 xs [] |> List.rev
   end
 
-  module Option = struct
-    include Option
-
-    let map f = function
-      | None -> None
-      | Some x -> Some (f x)
-  end
-
   let insert_empty_row row table =
     let (header, body, alignments, width) =
       let open Table.Normalized in
