@@ -28,12 +28,8 @@ module Prim = struct
       (header table, body table, alignments table, width table)
     in
     let empty_row = List.relicate width "" in
-    if row < 0 then
-      match header with
-      | Some header -> Table.Normalized.create ~header:(Some empty_row) ~body:(header :: body) ~alignments
-      | None -> Table.Normalized.create ~header:(Some empty_row) ~body ~alignments
-    else
-      Table.Normalized.create ~header ~body:(List.insert row empty_row body) ~alignments
+    let row = max row 0 in
+    Table.Normalized.create ~header ~body:(List.insert row empty_row body) ~alignments
 
   let insert_empty_column column table =
     let (header, body, alignments) =

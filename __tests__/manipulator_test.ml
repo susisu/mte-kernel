@@ -22,8 +22,9 @@ let () =
             ),
             -1,
             (
-              Some [""; ""],
+              None,
               [
+                [""; ""];
                 ["apple"; "red"];
                 ["banana"; "yellow"];
                 ["lime"; "green"];
@@ -43,9 +44,9 @@ let () =
             ),
             -1,
             (
-              Some [""; ""],
+              Some ["name"; "color"],
               [
-                ["name"; "color"];
+                [""; ""];
                 ["apple"; "red"];
                 ["banana"; "yellow"];
                 ["lime"; "green"];
