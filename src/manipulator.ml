@@ -37,9 +37,9 @@ module Prim = struct
       (header table, body table, alignments table)
     in
     let column = max column 0 in
-    let insert_f = List.insert column "" in
+    let insert = List.insert column "" in
     Table.Normalized.create
-      ~header:(Option.map insert_f header)
-      ~body:(List.map insert_f body)
+      ~header:(Option.map insert header)
+      ~body:(List.map insert body)
       ~alignments:(List.insert column None alignments)
 end
