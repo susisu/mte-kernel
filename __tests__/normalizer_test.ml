@@ -17,7 +17,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ]
-              ~alignments:[None; Some Alignment.Left]
+              ~alignments:[None; Some Table.Alignment.Left]
           in
           let normalized = normalize table in
           expect (
@@ -32,7 +32,7 @@ let () =
               ["banana"; "yellow"];
               ["lime"; "green"];
             ],
-            [None; Some Alignment.Left],
+            [None; Some Table.Alignment.Left],
             2
           )
         end;
@@ -72,7 +72,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"];
               ]
-              ~alignments:[None; Some Alignment.Left]
+              ~alignments:[None; Some Table.Alignment.Left]
           in
           let normalized = normalize table in
           expect (
@@ -87,7 +87,7 @@ let () =
               ["banana"; "yellow"];
               ["lime"; ""];
             ],
-            [None; Some Alignment.Left],
+            [None; Some Table.Alignment.Left],
             2
           )
         end;
@@ -128,7 +128,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ]
-              ~alignments:[None; Some Alignment.Left; Some Alignment.Right]
+              ~alignments:[None; Some Table.Alignment.Left; Some Table.Alignment.Right]
           in
           let normalized = normalize table in
           expect (
@@ -143,7 +143,7 @@ let () =
               ["banana"; "yellow"];
               ["lime"; "green"];
             ],
-            [None; Some Alignment.Left],
+            [None; Some Table.Alignment.Left],
             2
           )
         end;
@@ -158,7 +158,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ]
-              ~alignments:[None; Some Alignment.Left]
+              ~alignments:[None; Some Table.Alignment.Left]
           in
           let normalized = normalize table in
           expect (
@@ -173,7 +173,7 @@ let () =
               ["banana"; "yellow"];
               ["lime"; "green"];
             ],
-            [None; Some Alignment.Left],
+            [None; Some Table.Alignment.Left],
             2
           )
         end;
@@ -235,7 +235,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"];
               ]
-              ~alignments:[None; Some Alignment.Left]
+              ~alignments:[None; Some Table.Alignment.Left]
           in
           let normalized = normalize table in
           expect (
@@ -250,7 +250,7 @@ let () =
               ["banana"; "yellow"];
               ["lime"; ""];
             ],
-            [None; Some Alignment.Left],
+            [None; Some Table.Alignment.Left],
             2
           )
         end;
@@ -291,7 +291,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ]
-              ~alignments:[None; Some Alignment.Left; Some Alignment.Right]
+              ~alignments:[None; Some Table.Alignment.Left; Some Table.Alignment.Right]
           in
           let normalized = normalize table in
           expect (
@@ -306,7 +306,7 @@ let () =
               ["banana"; "yellow"];
               ["lime"; "green"];
             ],
-            [None; Some Alignment.Left],
+            [None; Some Table.Alignment.Left],
             2
           )
         end;

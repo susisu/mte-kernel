@@ -1,3 +1,10 @@
+module Alignment = struct
+  type t =
+    | Left
+    | Right
+    | Center
+end
+
 module Unnormalized = struct
   type t = {
     header: string list option;

@@ -7,10 +7,10 @@ type text_width_options = {
 
 val compute_text_width: text_width_options -> string -> int
 val pad: string -> string
-val align: text_width_options -> Alignment.t -> int -> string -> string
+val align: text_width_options -> Table.Alignment.t -> int -> string -> string
 
 type delimiter_alignment_position =
   | Outside
   | Inside
 
-val delimiter_text: delimiter_alignment_position -> Alignment.t option -> int -> string
+val delimiter_text: delimiter_alignment_position -> Table.Alignment.t option -> int -> string

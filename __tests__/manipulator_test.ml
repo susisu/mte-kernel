@@ -18,7 +18,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Alignment.Left; Some Alignment.Right]
+              [Some Table.Alignment.Left; Some Table.Alignment.Right]
             ),
             -1,
             (
@@ -29,7 +29,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Alignment.Left; Some Alignment.Right]
+              [Some Table.Alignment.Left; Some Table.Alignment.Right]
             )
           );
           (
@@ -40,7 +40,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Alignment.Left; Some Alignment.Right]
+              [Some Table.Alignment.Left; Some Table.Alignment.Right]
             ),
             -1,
             (
@@ -51,7 +51,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Alignment.Left; Some Alignment.Right]
+              [Some Table.Alignment.Left; Some Table.Alignment.Right]
             )
           );
           (
@@ -62,7 +62,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Alignment.Left; Some Alignment.Right]
+              [Some Table.Alignment.Left; Some Table.Alignment.Right]
             ),
             0,
             (
@@ -73,7 +73,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Alignment.Left; Some Alignment.Right]
+              [Some Table.Alignment.Left; Some Table.Alignment.Right]
             )
           );
           (
@@ -84,7 +84,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Alignment.Left; Some Alignment.Right]
+              [Some Table.Alignment.Left; Some Table.Alignment.Right]
             ),
             1,
             (
@@ -95,7 +95,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Alignment.Left; Some Alignment.Right]
+              [Some Table.Alignment.Left; Some Table.Alignment.Right]
             )
           );
           (
@@ -106,7 +106,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Alignment.Left; Some Alignment.Right]
+              [Some Table.Alignment.Left; Some Table.Alignment.Right]
             ),
             3,
             (
@@ -117,7 +117,7 @@ let () =
                 ["lime"; "green"];
                 [""; ""];
               ],
-              [Some Alignment.Left; Some Alignment.Right]
+              [Some Table.Alignment.Left; Some Table.Alignment.Right]
             )
           );
         ] begin fun ((h, b, a), i, e) ->
@@ -138,7 +138,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Alignment.Left; Some Alignment.Right]
+              [Some Table.Alignment.Left; Some Table.Alignment.Right]
             ),
             0,
             (
@@ -148,7 +148,7 @@ let () =
                 [""; "banana"; "yellow"];
                 [""; "lime"; "green"];
               ],
-              [None; Some Alignment.Left; Some Alignment.Right]
+              [None; Some Table.Alignment.Left; Some Table.Alignment.Right]
             )
           );
           (
@@ -159,7 +159,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Alignment.Left; Some Alignment.Right]
+              [Some Table.Alignment.Left; Some Table.Alignment.Right]
             ),
             -1,
             (
@@ -169,7 +169,7 @@ let () =
                 [""; "banana"; "yellow"];
                 [""; "lime"; "green"];
               ],
-              [None; Some Alignment.Left; Some Alignment.Right]
+              [None; Some Table.Alignment.Left; Some Table.Alignment.Right]
             )
           );
           (
@@ -180,7 +180,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Alignment.Left; Some Alignment.Right]
+              [Some Table.Alignment.Left; Some Table.Alignment.Right]
             ),
             0,
             (
@@ -190,7 +190,7 @@ let () =
                 [""; "banana"; "yellow"];
                 [""; "lime"; "green"];
               ],
-              [None; Some Alignment.Left; Some Alignment.Right]
+              [None; Some Table.Alignment.Left; Some Table.Alignment.Right]
             )
           );
           (
@@ -201,7 +201,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Alignment.Left; Some Alignment.Right]
+              [Some Table.Alignment.Left; Some Table.Alignment.Right]
             ),
             1,
             (
@@ -211,7 +211,7 @@ let () =
                 ["banana"; ""; "yellow"];
                 ["lime"; ""; "green"];
               ],
-              [Some Alignment.Left; None; Some Alignment.Right]
+              [Some Table.Alignment.Left; None; Some Table.Alignment.Right]
             )
           );
           (
@@ -222,7 +222,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Alignment.Left; Some Alignment.Right]
+              [Some Table.Alignment.Left; Some Table.Alignment.Right]
             ),
             2,
             (
@@ -232,7 +232,7 @@ let () =
                 ["banana"; "yellow"; ""];
                 ["lime"; "green"; ""];
               ],
-              [Some Alignment.Left; Some Alignment.Right; None]
+              [Some Table.Alignment.Left; Some Table.Alignment.Right; None]
             )
           );
         ] begin fun ((h, b, a), i, e) ->
@@ -253,7 +253,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Alignment.Left; Some Alignment.Right]
+              [Some Table.Alignment.Left; Some Table.Alignment.Right]
             ),
             (0, 1),
             (
@@ -263,7 +263,7 @@ let () =
                 ["apple"; "red"];
                 ["lime"; "green"];
               ],
-              [Some Alignment.Left; Some Alignment.Right]
+              [Some Table.Alignment.Left; Some Table.Alignment.Right]
             )
           );
           (
@@ -274,7 +274,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Alignment.Left; Some Alignment.Right]
+              [Some Table.Alignment.Left; Some Table.Alignment.Right]
             ),
             (0, 1),
             (
@@ -284,7 +284,7 @@ let () =
                 ["apple"; "red"];
                 ["lime"; "green"];
               ],
-              [Some Alignment.Left; Some Alignment.Right]
+              [Some Table.Alignment.Left; Some Table.Alignment.Right]
             )
           );
           (
@@ -295,7 +295,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Alignment.Left; Some Alignment.Right]
+              [Some Table.Alignment.Left; Some Table.Alignment.Right]
             ),
             (0, 2),
             (
@@ -305,7 +305,7 @@ let () =
                 ["banana"; "yellow"];
                 ["apple"; "red"];
               ],
-              [Some Alignment.Left; Some Alignment.Right]
+              [Some Table.Alignment.Left; Some Table.Alignment.Right]
             )
           );
           (
@@ -316,7 +316,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Alignment.Left; Some Alignment.Right]
+              [Some Table.Alignment.Left; Some Table.Alignment.Right]
             ),
             (1, 2),
             (
@@ -326,7 +326,7 @@ let () =
                 ["lime"; "green"];
                 ["banana"; "yellow"];
               ],
-              [Some Alignment.Left; Some Alignment.Right]
+              [Some Table.Alignment.Left; Some Table.Alignment.Right]
             )
           );
         ] begin fun ((h, b, a), (i, j), e) ->
@@ -347,7 +347,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Alignment.Left; Some Alignment.Right]
+              [Some Table.Alignment.Left; Some Table.Alignment.Right]
             ),
             (0, 1),
             (
@@ -357,7 +357,7 @@ let () =
                 ["yellow"; "banana"];
                 ["green"; "lime"];
               ],
-              [Some Alignment.Right; Some Alignment.Left]
+              [Some Table.Alignment.Right; Some Table.Alignment.Left]
             )
           );
           (
@@ -368,7 +368,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Alignment.Left; Some Alignment.Right]
+              [Some Table.Alignment.Left; Some Table.Alignment.Right]
             ),
             (0, 1),
             (
@@ -378,7 +378,7 @@ let () =
                 ["yellow"; "banana"];
                 ["green"; "lime"];
               ],
-              [Some Alignment.Right; Some Alignment.Left]
+              [Some Table.Alignment.Right; Some Table.Alignment.Left]
             )
           );
         ] begin fun ((h, b, a), (i, j), e) ->

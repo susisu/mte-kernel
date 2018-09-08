@@ -75,9 +75,9 @@ let () =
 
     describe "align" begin fun () ->
       testAll "should align text to have the given width excluding the padding" [
-        (Alignment.Left, "ABC  ");
-        (Alignment.Right, "  ABC");
-        (Alignment.Center, " ABC ");
+        (Table.Alignment.Left, "ABC  ");
+        (Table.Alignment.Right, "  ABC");
+        (Table.Alignment.Center, " ABC ");
       ] begin fun (al, res) ->
         let tw_opts = {
           normalize = false;
@@ -95,13 +95,13 @@ let () =
           narrow_chars = Js_set.make ();
           ambiguous_as_wide = false;
         } in
-        expect (fun () -> align tw_opts Alignment.Left 5 "ABCDEF")
+        expect (fun () -> align tw_opts Table.Alignment.Left 5 "ABCDEF")
         |> toThrowAssertionFailure
       end;
     end;
 
     describe "delimiter_text" begin fun () ->
-      let open Alignment in
+      let open Table.Alignment in
 
       testAll "should create delimiter text with given width" [
         (Outside, None, " ----- ");

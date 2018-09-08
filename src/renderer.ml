@@ -34,7 +34,7 @@ let pad text = " " ^ text ^ " "
 
 let space size = Js.String.repeat size " "
 
-let align tw_opts (al: Alignment.t) width text =
+let align tw_opts (al: Table.Alignment.t) width text =
   let space_size = width - compute_text_width tw_opts text in
   assert (space_size > 0);
   match al with
@@ -49,7 +49,7 @@ type delimiter_alignment_position =
   | Outside
   | Inside
 
-let delimiter_text al_pos (al: Alignment.t option) width =
+let delimiter_text al_pos (al: Table.Alignment.t option) width =
   let (left, right) = match (al_pos, al) with
     | (Outside, None) -> (" ", " ")
     | (Outside, Some Left) -> (":", " ")

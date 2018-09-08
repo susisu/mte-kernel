@@ -1,5 +1,13 @@
 (** *)
 
+module Alignment: sig
+  (** Alignment.t represents column alignment. *)
+  type t =
+    | Left
+    | Right
+    | Center
+end
+
 (** Table.t represents a table, consists of a header, body rows, and alignment
     specifications of columns. A table may not have the normalized form i.e. it can be empty, or
     can have inconsistent number of columns, etc.
