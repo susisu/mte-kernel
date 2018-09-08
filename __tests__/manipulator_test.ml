@@ -336,5 +336,57 @@ let () =
           expect (header table', body table', alignments table') |> toEqual e
         end;
       end;
+
+      describe "swap_columns" begin fun () ->
+        testAll "should swap two columns in the table" [
+          (
+            (
+              None,
+              [
+                ["apple"; "red"];
+                ["banana"; "yellow"];
+                ["lime"; "green"];
+              ],
+              [Some Alignment.Left; Some Alignment.Right]
+            ),
+            (0, 1),
+            (
+              None,
+              [
+                ["red"; "apple"];
+                ["yellow"; "banana"];
+                ["green"; "lime"];
+              ],
+              [Some Alignment.Right; Some Alignment.Left]
+            )
+          );
+          (
+            (
+              Some ["name"; "color"],
+              [
+                ["apple"; "red"];
+                ["banana"; "yellow"];
+                ["lime"; "green"];
+              ],
+              [Some Alignment.Left; Some Alignment.Right]
+            ),
+            (0, 1),
+            (
+              Some ["color"; "name"],
+              [
+                ["red"; "apple"];
+                ["yellow"; "banana"];
+                ["green"; "lime"];
+              ],
+              [Some Alignment.Right; Some Alignment.Left]
+            )
+          );
+        ] begin fun ((h, b, a), (i, j), e) ->
+          let open Table.Normalized in
+          let table = create ~header:h ~body:b ~alignments:a in
+          let table' = swap_columns i j table in
+          expect (header table', body table', alignments table') |> toEqual e
+        end;
+      end;
     end;
   end

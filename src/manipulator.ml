@@ -65,4 +65,15 @@ module Prim = struct
       (header table, body table, alignments table)
     in
     Table.Normalized.create ~header ~body:(List.swap row_i row_j body) ~alignments
+
+  let swap_columns column_i column_j table =
+    let (header, body, alignments) =
+      let open Table.Normalized in
+      (header table, body table, alignments table)
+    in
+    let swap xs = List.swap column_i column_j xs in
+    Table.Normalized.create
+      ~header:(Option.map swap header)
+      ~body:(List.map swap body)
+      ~alignments:(swap alignments)
 end
