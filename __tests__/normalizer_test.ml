@@ -9,6 +9,8 @@ let () =
       let open Table.Normalized in
 
       describe "with header" begin fun () ->
+        let open Table.Alignment in
+
         test "should do nothing if the given table havs the normalized form" begin fun () ->
           let table = Table.create
               ~header:(Some ["name"; "color"])
@@ -17,7 +19,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ]
-              ~alignments:[None; Some Table.Alignment.Left]
+              ~alignments:[None; Some Left]
           in
           let normalized = normalize table in
           expect (
@@ -32,7 +34,7 @@ let () =
               ["banana"; "yellow"];
               ["lime"; "green"];
             ],
-            [None; Some Table.Alignment.Left],
+            [None; Some Left],
             2
           )
         end;
@@ -72,7 +74,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"];
               ]
-              ~alignments:[None; Some Table.Alignment.Left]
+              ~alignments:[None; Some Left]
           in
           let normalized = normalize table in
           expect (
@@ -87,7 +89,7 @@ let () =
               ["banana"; "yellow"];
               ["lime"; ""];
             ],
-            [None; Some Table.Alignment.Left],
+            [None; Some Left],
             2
           )
         end;
@@ -128,7 +130,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ]
-              ~alignments:[None; Some Table.Alignment.Left; Some Table.Alignment.Right]
+              ~alignments:[None; Some Left; Some Right]
           in
           let normalized = normalize table in
           expect (
@@ -143,13 +145,15 @@ let () =
               ["banana"; "yellow"];
               ["lime"; "green"];
             ],
-            [None; Some Table.Alignment.Left],
+            [None; Some Left],
             2
           )
         end;
       end;
 
       describe "without header" begin fun () ->
+        let open Table.Alignment in
+
         test "should do nothing if the given table havs the normalized form" begin fun () ->
           let table = Table.create
               ~header:None
@@ -158,7 +162,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ]
-              ~alignments:[None; Some Table.Alignment.Left]
+              ~alignments:[None; Some Left]
           in
           let normalized = normalize table in
           expect (
@@ -173,7 +177,7 @@ let () =
               ["banana"; "yellow"];
               ["lime"; "green"];
             ],
-            [None; Some Table.Alignment.Left],
+            [None; Some Left],
             2
           )
         end;
@@ -235,7 +239,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"];
               ]
-              ~alignments:[None; Some Table.Alignment.Left]
+              ~alignments:[None; Some Left]
           in
           let normalized = normalize table in
           expect (
@@ -250,7 +254,7 @@ let () =
               ["banana"; "yellow"];
               ["lime"; ""];
             ],
-            [None; Some Table.Alignment.Left],
+            [None; Some Left],
             2
           )
         end;
@@ -291,7 +295,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ]
-              ~alignments:[None; Some Table.Alignment.Left; Some Table.Alignment.Right]
+              ~alignments:[None; Some Left; Some Right]
           in
           let normalized = normalize table in
           expect (
@@ -306,7 +310,7 @@ let () =
               ["banana"; "yellow"];
               ["lime"; "green"];
             ],
-            [None; Some Table.Alignment.Left],
+            [None; Some Left],
             2
           )
         end;

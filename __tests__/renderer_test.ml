@@ -74,10 +74,12 @@ let () =
     end;
 
     describe "align" begin fun () ->
+      let open Table.Alignment in
+
       testAll "should align text to have the given width excluding the padding" [
-        (Table.Alignment.Left, "ABC  ");
-        (Table.Alignment.Right, "  ABC");
-        (Table.Alignment.Center, " ABC ");
+        (Left, "ABC  ");
+        (Right, "  ABC");
+        (Center, " ABC ");
       ] begin fun (al, res) ->
         let tw_opts = {
           normalize = false;
@@ -95,7 +97,7 @@ let () =
           narrow_chars = Js_set.make ();
           ambiguous_as_wide = false;
         } in
-        expect (fun () -> align tw_opts Table.Alignment.Left 5 "ABCDEF")
+        expect (fun () -> align tw_opts Left 5 "ABCDEF")
         |> toThrowAssertionFailure
       end;
     end;

@@ -9,6 +9,8 @@ let () =
       let open Prim in
 
       describe "insert_empty_row" begin fun () ->
+        let open Table.Alignment in
+
         testAll "should insert an empty row to a table" [
           (
             (
@@ -18,7 +20,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Table.Alignment.Left; Some Table.Alignment.Right]
+              [Some Left; Some Right]
             ),
             -1,
             (
@@ -29,7 +31,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Table.Alignment.Left; Some Table.Alignment.Right]
+              [Some Left; Some Right]
             )
           );
           (
@@ -40,7 +42,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Table.Alignment.Left; Some Table.Alignment.Right]
+              [Some Left; Some Right]
             ),
             -1,
             (
@@ -51,7 +53,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Table.Alignment.Left; Some Table.Alignment.Right]
+              [Some Left; Some Right]
             )
           );
           (
@@ -62,7 +64,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Table.Alignment.Left; Some Table.Alignment.Right]
+              [Some Left; Some Right]
             ),
             0,
             (
@@ -73,7 +75,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Table.Alignment.Left; Some Table.Alignment.Right]
+              [Some Left; Some Right]
             )
           );
           (
@@ -84,7 +86,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Table.Alignment.Left; Some Table.Alignment.Right]
+              [Some Left; Some Right]
             ),
             1,
             (
@@ -95,7 +97,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Table.Alignment.Left; Some Table.Alignment.Right]
+              [Some Left; Some Right]
             )
           );
           (
@@ -106,7 +108,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Table.Alignment.Left; Some Table.Alignment.Right]
+              [Some Left; Some Right]
             ),
             3,
             (
@@ -117,7 +119,7 @@ let () =
                 ["lime"; "green"];
                 [""; ""];
               ],
-              [Some Table.Alignment.Left; Some Table.Alignment.Right]
+              [Some Left; Some Right]
             )
           );
         ] begin fun ((h, b, a), i, e) ->
@@ -129,6 +131,8 @@ let () =
       end;
 
       describe "insert_empty_column" begin fun () ->
+        let open Table.Alignment in
+
         testAll "should insert an empty column to a table" [
           (
             (
@@ -138,7 +142,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Table.Alignment.Left; Some Table.Alignment.Right]
+              [Some Left; Some Right]
             ),
             0,
             (
@@ -148,7 +152,7 @@ let () =
                 [""; "banana"; "yellow"];
                 [""; "lime"; "green"];
               ],
-              [None; Some Table.Alignment.Left; Some Table.Alignment.Right]
+              [None; Some Left; Some Right]
             )
           );
           (
@@ -159,7 +163,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Table.Alignment.Left; Some Table.Alignment.Right]
+              [Some Left; Some Right]
             ),
             -1,
             (
@@ -169,7 +173,7 @@ let () =
                 [""; "banana"; "yellow"];
                 [""; "lime"; "green"];
               ],
-              [None; Some Table.Alignment.Left; Some Table.Alignment.Right]
+              [None; Some Left; Some Right]
             )
           );
           (
@@ -180,7 +184,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Table.Alignment.Left; Some Table.Alignment.Right]
+              [Some Left; Some Right]
             ),
             0,
             (
@@ -190,7 +194,7 @@ let () =
                 [""; "banana"; "yellow"];
                 [""; "lime"; "green"];
               ],
-              [None; Some Table.Alignment.Left; Some Table.Alignment.Right]
+              [None; Some Left; Some Right]
             )
           );
           (
@@ -201,7 +205,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Table.Alignment.Left; Some Table.Alignment.Right]
+              [Some Left; Some Right]
             ),
             1,
             (
@@ -211,7 +215,7 @@ let () =
                 ["banana"; ""; "yellow"];
                 ["lime"; ""; "green"];
               ],
-              [Some Table.Alignment.Left; None; Some Table.Alignment.Right]
+              [Some Left; None; Some Right]
             )
           );
           (
@@ -222,7 +226,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Table.Alignment.Left; Some Table.Alignment.Right]
+              [Some Left; Some Right]
             ),
             2,
             (
@@ -232,7 +236,7 @@ let () =
                 ["banana"; "yellow"; ""];
                 ["lime"; "green"; ""];
               ],
-              [Some Table.Alignment.Left; Some Table.Alignment.Right; None]
+              [Some Left; Some Right; None]
             )
           );
         ] begin fun ((h, b, a), i, e) ->
@@ -244,6 +248,8 @@ let () =
       end;
 
       describe "swap_rows" begin fun () ->
+        let open Table.Alignment in
+
         testAll "should swap two body rows of the table" [
           (
             (
@@ -253,7 +259,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Table.Alignment.Left; Some Table.Alignment.Right]
+              [Some Left; Some Right]
             ),
             (0, 1),
             (
@@ -263,7 +269,7 @@ let () =
                 ["apple"; "red"];
                 ["lime"; "green"];
               ],
-              [Some Table.Alignment.Left; Some Table.Alignment.Right]
+              [Some Left; Some Right]
             )
           );
           (
@@ -274,7 +280,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Table.Alignment.Left; Some Table.Alignment.Right]
+              [Some Left; Some Right]
             ),
             (0, 1),
             (
@@ -284,7 +290,7 @@ let () =
                 ["apple"; "red"];
                 ["lime"; "green"];
               ],
-              [Some Table.Alignment.Left; Some Table.Alignment.Right]
+              [Some Left; Some Right]
             )
           );
           (
@@ -295,7 +301,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Table.Alignment.Left; Some Table.Alignment.Right]
+              [Some Left; Some Right]
             ),
             (0, 2),
             (
@@ -305,7 +311,7 @@ let () =
                 ["banana"; "yellow"];
                 ["apple"; "red"];
               ],
-              [Some Table.Alignment.Left; Some Table.Alignment.Right]
+              [Some Left; Some Right]
             )
           );
           (
@@ -316,7 +322,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Table.Alignment.Left; Some Table.Alignment.Right]
+              [Some Left; Some Right]
             ),
             (1, 2),
             (
@@ -326,7 +332,7 @@ let () =
                 ["lime"; "green"];
                 ["banana"; "yellow"];
               ],
-              [Some Table.Alignment.Left; Some Table.Alignment.Right]
+              [Some Left; Some Right]
             )
           );
         ] begin fun ((h, b, a), (i, j), e) ->
@@ -338,6 +344,8 @@ let () =
       end;
 
       describe "swap_columns" begin fun () ->
+        let open Table.Alignment in
+
         testAll "should swap two columns in the table" [
           (
             (
@@ -347,7 +355,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Table.Alignment.Left; Some Table.Alignment.Right]
+              [Some Left; Some Right]
             ),
             (0, 1),
             (
@@ -357,7 +365,7 @@ let () =
                 ["yellow"; "banana"];
                 ["green"; "lime"];
               ],
-              [Some Table.Alignment.Right; Some Table.Alignment.Left]
+              [Some Right; Some Left]
             )
           );
           (
@@ -368,7 +376,7 @@ let () =
                 ["banana"; "yellow"];
                 ["lime"; "green"];
               ],
-              [Some Table.Alignment.Left; Some Table.Alignment.Right]
+              [Some Left; Some Right]
             ),
             (0, 1),
             (
@@ -378,7 +386,7 @@ let () =
                 ["yellow"; "banana"];
                 ["green"; "lime"];
               ],
-              [Some Table.Alignment.Right; Some Table.Alignment.Left]
+              [Some Right; Some Left]
             )
           );
         ] begin fun ((h, b, a), (i, j), e) ->
