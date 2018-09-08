@@ -19,6 +19,8 @@ module Unnormalized = struct
   let alignments table = table.alignments
 end
 
+include Unnormalized
+
 module Normalized = struct
   type t = {
     header: string list option;
@@ -50,4 +52,8 @@ module Normalized = struct
   let width table = table.width
 end
 
-include Unnormalized
+module Focus = struct
+  type t =
+    | Offset of Point.t * int
+    | Select of Point.t
+end

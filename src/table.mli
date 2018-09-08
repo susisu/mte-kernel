@@ -53,3 +53,10 @@ module Normalized: sig
   (** Gets the width (number of the columns) of the given table. *)
   val width: t -> int
 end
+
+module Focus: sig
+  (** Focus.t represents a focus on a cell. *)
+  type t =
+    | Offset of Point.t * int (* With offset in the cell. *)
+    | Select of Point.t       (* With selection of the whole content of the cell. *)
+end
