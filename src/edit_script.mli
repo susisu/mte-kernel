@@ -2,7 +2,7 @@
 
 (** A command represents a single operation which can be applied to a text editor. *)
 type command =
-  | Noop                   (** No operation (used as a dummy). *)
+  | Noop                   (** No operation (used as dummy). *)
   | Insert of int * string (** Insert a line. *)
   | Delete of int          (** Delete a line. *)
 

@@ -1,18 +1,30 @@
+(** *)
+
 module Cursor: sig
+  (** Cursor.t represents a position of a cursor in the text editor. *)
   type t
 
+  (** Creates a cursor. Rows and columns must be >= 0. *)
   val create: Point.t -> t
 
+  (** Gets the row of a cursor. *)
   val row: t -> int
+
+  (** Gets the column of a cursor. *)
   val column: t -> int
 end
 
 module Selection: sig
+  (** Selection.t represents a selection in the text editor, consists of two cursors. *)
   type t
 
+  (** Creates a new selection. *)
   val create: start_cursor:Cursor.t -> end_cursor:Cursor.t -> t
 
+  (** Gets the start position (cursor) of the selection. *)
   val start_cursor: t -> Cursor.t
+
+  (** Gets the end position (cursor) of the selection. *)
   val end_cursor: t -> Cursor.t
 end
 
