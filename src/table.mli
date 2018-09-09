@@ -60,3 +60,15 @@ module Focus: sig
     | Offset of Point.t * int (* With offset in the cell. *)
     | Select of Point.t       (* With selection of the whole content of the cell. *)
 end
+
+module Format: sig
+  (** Format.syntax represents syntax of tables. *)
+  type syntax =
+    | Md       (* Markdown table syntax. *)
+    | Md_light (* Markdown table syntax without leading and trailing pipes. *)
+
+  type t = {
+    syntax: syntax;
+    margin_left: string;
+  }
+end

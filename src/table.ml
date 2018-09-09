@@ -57,3 +57,14 @@ module Focus = struct
     | Offset of Point.t * int
     | Select of Point.t
 end
+
+module Format = struct
+  type syntax =
+    | Md
+    | Md_light
+
+  type t = {
+    syntax: syntax;
+    margin_left: string;
+  }
+end
