@@ -2,7 +2,7 @@ module Prim = struct
   module List = struct
     include List
 
-    let relicate n e =
+    let replicate n e =
       let rec loop n xs =
         if n > 0 then loop (n - 1) (e :: xs)
         else xs
@@ -43,7 +43,7 @@ module Prim = struct
       let open Table.Normalized in
       (header table, body table, alignments table, width table)
     in
-    let empty_row = List.relicate width "" in
+    let empty_row = List.replicate width "" in
     let row = max row 0 in
     Table.Normalized.create ~header ~body:(List.insert row empty_row body) ~alignments
 
