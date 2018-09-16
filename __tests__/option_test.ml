@@ -6,6 +6,24 @@ let () =
   describe "Option" begin fun () ->
     let open Option in
 
+    describe "is_none" begin fun () ->
+      testAll "should checks if the value is None" [
+        (None, true);
+        (Some 42, false);
+      ] begin fun (x, e) ->
+        expect (is_none x) |> toBe e
+      end;
+    end;
+
+    describe "is_some" begin fun () ->
+      testAll "should checks if the value is Some" [
+        (None, false);
+        (Some 42, true);
+      ] begin fun (x, e) ->
+        expect (is_some x) |> toBe e
+      end;
+    end;
+
     describe "get_exn" begin fun () ->
       test "should retrieve the content of an optional value" begin fun () ->
         let opt = Some 42 in

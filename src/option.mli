@@ -1,5 +1,8 @@
 (** *)
 
+val is_none: 'a option -> bool
+val is_some: 'a option -> bool
+
 (** Retrieves the content of an optional value. It thorws error if None is given. *)
 val get_exn: 'a option -> 'a
 
