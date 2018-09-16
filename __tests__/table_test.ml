@@ -134,4 +134,17 @@ let () =
         end;
       end;
     end;
+
+    describe "Focus" begin fun () ->
+      let open Focus in
+
+      describe "to_point" begin fun () ->
+        testAll "should retrieve the focused position as a point" [
+          (Offset ({ row = 0; column = 1 }, 2), Point.{ row = 0; column = 1 });
+          (Select { row = 0; column = 1 }, Point.{ row = 0; column = 1 });
+        ] begin fun (f, p) ->
+          expect (Focus.to_point f) |> toEqual p
+        end;
+      end;
+    end;
   end

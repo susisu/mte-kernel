@@ -56,6 +56,10 @@ module Focus = struct
   type t =
     | Offset of Point.t * int
     | Select of Point.t
+
+  let to_point = function
+    | Offset (p, _) -> p
+    | Select p -> p
 end
 
 module Format = struct

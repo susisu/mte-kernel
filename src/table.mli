@@ -59,6 +59,8 @@ module Focus: sig
   type t =
     | Offset of Point.t * int (* With offset in the cell. *)
     | Select of Point.t       (* With selection of the whole content of the cell. *)
+
+  val to_point: t -> Point.t
 end
 
 module Format: sig
