@@ -472,4 +472,215 @@ let () =
         end;
       end;
     end;
+
+    describe "align" begin fun () ->
+      let open Table in
+      let open Table.Alignment in
+
+      testAll "should set alignment of the focused column" [
+        (
+          (
+            Table.Normalized.create
+              ~header:None
+              ~body:[
+                ["apple"; "red"];
+                ["banana"; "yellow"];
+                ["lime"; "green"];
+              ]
+              ~alignments:[Some Left; Some Right],
+            Focus.Offset ({ row = 0; column = 0 }, 0)
+          ),
+          None,
+          (
+            Table.Normalized.create
+              ~header:None
+              ~body:[
+                ["apple"; "red"];
+                ["banana"; "yellow"];
+                ["lime"; "green"];
+              ]
+              ~alignments:[None; Some Right],
+            Focus.Offset ({ row = 0; column = 0 }, 0)
+          )
+        );
+        (
+          (
+            Table.Normalized.create
+              ~header:(Some ["name"; "color"])
+              ~body:[
+                ["apple"; "red"];
+                ["banana"; "yellow"];
+                ["lime"; "green"];
+              ]
+              ~alignments:[Some Left; Some Right],
+            Focus.Offset ({ row = 0; column = 0 }, 0)
+          ),
+          None,
+          (
+            Table.Normalized.create
+              ~header:(Some ["name"; "color"])
+              ~body:[
+                ["apple"; "red"];
+                ["banana"; "yellow"];
+                ["lime"; "green"];
+              ]
+              ~alignments:[None; Some Right],
+            Focus.Offset ({ row = 0; column = 0 }, 0)
+          )
+        );
+        (
+          (
+            Table.Normalized.create
+              ~header:(Some ["name"; "color"])
+              ~body:[
+                ["apple"; "red"];
+                ["banana"; "yellow"];
+                ["lime"; "green"];
+              ]
+              ~alignments:[Some Left; Some Right],
+            Focus.Select { row = 0; column = 0 }
+          ),
+          None,
+          (
+            Table.Normalized.create
+              ~header:(Some ["name"; "color"])
+              ~body:[
+                ["apple"; "red"];
+                ["banana"; "yellow"];
+                ["lime"; "green"];
+              ]
+              ~alignments:[None; Some Right],
+            Focus.Select { row = 0; column = 0 }
+          )
+        );
+        (
+          (
+            Table.Normalized.create
+              ~header:(Some ["name"; "color"])
+              ~body:[
+                ["apple"; "red"];
+                ["banana"; "yellow"];
+                ["lime"; "green"];
+              ]
+              ~alignments:[Some Left; Some Right],
+            Focus.Offset ({ row = 0; column = 0 }, 0)
+          ),
+          Some Center,
+          (
+            Table.Normalized.create
+              ~header:(Some ["name"; "color"])
+              ~body:[
+                ["apple"; "red"];
+                ["banana"; "yellow"];
+                ["lime"; "green"];
+              ]
+              ~alignments:[Some Center; Some Right],
+            Focus.Offset ({ row = 0; column = 0 }, 0)
+          )
+        );
+        (
+          (
+            Table.Normalized.create
+              ~header:(Some ["name"; "color"])
+              ~body:[
+                ["apple"; "red"];
+                ["banana"; "yellow"];
+                ["lime"; "green"];
+              ]
+              ~alignments:[Some Left; Some Right],
+            Focus.Offset ({ row = 1; column = 1 }, 1)
+          ),
+          None,
+          (
+            Table.Normalized.create
+              ~header:(Some ["name"; "color"])
+              ~body:[
+                ["apple"; "red"];
+                ["banana"; "yellow"];
+                ["lime"; "green"];
+              ]
+              ~alignments:[Some Left; None],
+            Focus.Offset ({ row = 1; column = 1 }, 1)
+          )
+        );
+        (
+          (
+            Table.Normalized.create
+              ~header:(Some ["name"; "color"])
+              ~body:[
+                ["apple"; "red"];
+                ["banana"; "yellow"];
+                ["lime"; "green"];
+              ]
+              ~alignments:[Some Left; Some Right],
+            Focus.Offset ({ row = -1; column = 0 }, 0)
+          ),
+          None,
+          (
+            Table.Normalized.create
+              ~header:(Some ["name"; "color"])
+              ~body:[
+                ["apple"; "red"];
+                ["banana"; "yellow"];
+                ["lime"; "green"];
+              ]
+              ~alignments:[None; Some Right],
+            Focus.Offset ({ row = -1; column = 0 }, 0)
+          )
+        );
+        (
+          (
+            Table.Normalized.create
+              ~header:(Some ["name"; "color"])
+              ~body:[
+                ["apple"; "red"];
+                ["banana"; "yellow"];
+                ["lime"; "green"];
+              ]
+              ~alignments:[Some Left; Some Right],
+            Focus.Offset ({ row = 0; column = -1 }, 0)
+          ),
+          None,
+          (
+            Table.Normalized.create
+              ~header:(Some ["name"; "color"])
+              ~body:[
+                ["apple"; "red"];
+                ["banana"; "yellow"];
+                ["lime"; "green"];
+              ]
+              ~alignments:[Some Left; Some Right],
+            Focus.Offset ({ row = 0; column = -1 }, 0)
+          )
+        );
+        (
+          (
+            Table.Normalized.create
+              ~header:(Some ["name"; "color"])
+              ~body:[
+                ["apple"; "red"];
+                ["banana"; "yellow"];
+                ["lime"; "green"];
+              ]
+              ~alignments:[Some Left; Some Right],
+            Focus.Offset ({ row = 0; column = 2 }, 0)
+          ),
+          None,
+          (
+            Table.Normalized.create
+              ~header:(Some ["name"; "color"])
+              ~body:[
+                ["apple"; "red"];
+                ["banana"; "yellow"];
+                ["lime"; "green"];
+              ]
+              ~alignments:[Some Left; Some Right],
+            Focus.Offset ({ row = 0; column = 2 }, 0)
+          )
+        );
+      ] begin fun ((t, f), a, e) ->
+        let (state', table, focus) = align a State.init t f in
+        expect (state', (table, focus)) |> toEqual (State.init, e)
+      end;
+    end;
   end

@@ -105,3 +105,16 @@ module State = struct
     smart_cursor = None;
   }
 end
+
+type t = State.t -> Table.Normalized.t -> Table.Focus.t -> State.t * Table.Normalized.t * Table.Focus.t
+
+let align alignment state table focus =
+  let p = Table.Focus.to_point focus in
+  let width = Table.Normalized.width table in
+  let table' =
+    if 0 <= p.column && p.column <= width - 1 then
+      Prim.set_alignment p.column alignment table
+    else
+      table
+  in
+  (state, table', focus)
