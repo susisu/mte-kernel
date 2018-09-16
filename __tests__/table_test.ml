@@ -42,8 +42,9 @@ let () =
               header table,
               body table,
               alignments table,
-              width table
-            ) |> toEqual (h, b, a, 2)
+              width table,
+              body_height table
+            ) |> toEqual (h, b, a, 2, 3)
           end;
 
           test "should fail if there are no columns" begin fun () ->
@@ -92,8 +93,9 @@ let () =
               header table,
               body table,
               alignments table,
-              width table
-            ) |> toEqual (None, b, a, 2)
+              width table,
+              body_height table
+            ) |> toEqual (None, b, a, 2, 3)
           end;
 
           test "should fail if there are no columns" begin fun () ->

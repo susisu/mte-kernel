@@ -27,6 +27,7 @@ module Normalized = struct
     body: string list list;
     alignments: Alignment.t option list;
     width: int;
+    body_height: int;
   }
 
   let create ~header ~body ~alignments =
@@ -36,7 +37,8 @@ module Normalized = struct
       assert (width > 0);
       assert (List.for_all (fun row -> List.length row = width) body);
       assert (List.length alignments = width);
-      { header; body; alignments; width }
+      let body_height = List.length body in
+      { header; body; alignments; width; body_height }
     | None ->
       (* When there is no header, body must have at least one row *)
       assert (List.length body > 0);
@@ -44,12 +46,14 @@ module Normalized = struct
       assert (width > 0);
       assert (List.for_all (fun row -> List.length row = width) body);
       assert (List.length alignments = width);
-      { header; body; alignments; width }
+      let body_height = List.length body in
+      { header; body; alignments; width; body_height }
 
   let header table = table.header
   let body table = table.body
   let alignments table = table.alignments
   let width table = table.width
+  let body_height table = List.length table.body
 end
 
 module Focus = struct
