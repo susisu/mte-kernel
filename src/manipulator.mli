@@ -7,3 +7,8 @@ module Prim: sig
   val swap_rows: int -> int -> Table.Normalized.t -> Table.Normalized.t
   val swap_columns:int -> int -> Table.Normalized.t -> Table.Normalized.t
 end
+
+module State: sig
+  type t
+  val init: t
+end

@@ -77,3 +77,18 @@ module Prim = struct
       ~body:(List.map swap body)
       ~alignments:(swap alignments)
 end
+
+module State = struct
+  type smart_cursor = {
+    start: Point.t;
+    last: Point.t;
+  }
+
+  type t = {
+    smart_cursor: smart_cursor option;
+  }
+
+  let init = {
+    smart_cursor = None;
+  }
+end
