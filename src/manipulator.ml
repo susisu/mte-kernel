@@ -118,3 +118,7 @@ let align alignment state table focus =
       table
   in
   (state, table', focus)
+
+let select state table focus =
+  let focus' = Table.Focus.Select (Table.Focus.to_point focus) in
+  (state, table, focus')

@@ -474,8 +474,8 @@ let () =
     end;
 
     describe "align" begin fun () ->
-      let open Table in
       let open Table.Alignment in
+      let open Table.Focus in
 
       testAll "should set alignment of the focused column" [
         (
@@ -488,7 +488,7 @@ let () =
                 ["lime"; "green"];
               ]
               ~alignments:[Some Left; Some Right],
-            Focus.Offset ({ row = 0; column = 0 }, 0)
+            Offset ({ row = 0; column = 0 }, 0)
           ),
           None,
           (
@@ -500,7 +500,7 @@ let () =
                 ["lime"; "green"];
               ]
               ~alignments:[None; Some Right],
-            Focus.Offset ({ row = 0; column = 0 }, 0)
+            Offset ({ row = 0; column = 0 }, 0)
           )
         );
         (
@@ -513,7 +513,7 @@ let () =
                 ["lime"; "green"];
               ]
               ~alignments:[Some Left; Some Right],
-            Focus.Offset ({ row = 0; column = 0 }, 0)
+            Offset ({ row = 0; column = 0 }, 0)
           ),
           None,
           (
@@ -525,7 +525,7 @@ let () =
                 ["lime"; "green"];
               ]
               ~alignments:[None; Some Right],
-            Focus.Offset ({ row = 0; column = 0 }, 0)
+            Offset ({ row = 0; column = 0 }, 0)
           )
         );
         (
@@ -538,7 +538,7 @@ let () =
                 ["lime"; "green"];
               ]
               ~alignments:[Some Left; Some Right],
-            Focus.Select { row = 0; column = 0 }
+            Select { row = 0; column = 0 }
           ),
           None,
           (
@@ -550,7 +550,7 @@ let () =
                 ["lime"; "green"];
               ]
               ~alignments:[None; Some Right],
-            Focus.Select { row = 0; column = 0 }
+            Select { row = 0; column = 0 }
           )
         );
         (
@@ -563,7 +563,7 @@ let () =
                 ["lime"; "green"];
               ]
               ~alignments:[Some Left; Some Right],
-            Focus.Offset ({ row = 0; column = 0 }, 0)
+            Offset ({ row = 0; column = 0 }, 0)
           ),
           Some Center,
           (
@@ -575,7 +575,7 @@ let () =
                 ["lime"; "green"];
               ]
               ~alignments:[Some Center; Some Right],
-            Focus.Offset ({ row = 0; column = 0 }, 0)
+            Offset ({ row = 0; column = 0 }, 0)
           )
         );
         (
@@ -588,7 +588,7 @@ let () =
                 ["lime"; "green"];
               ]
               ~alignments:[Some Left; Some Right],
-            Focus.Offset ({ row = 1; column = 1 }, 1)
+            Offset ({ row = 1; column = 1 }, 1)
           ),
           None,
           (
@@ -600,7 +600,7 @@ let () =
                 ["lime"; "green"];
               ]
               ~alignments:[Some Left; None],
-            Focus.Offset ({ row = 1; column = 1 }, 1)
+            Offset ({ row = 1; column = 1 }, 1)
           )
         );
         (
@@ -613,7 +613,7 @@ let () =
                 ["lime"; "green"];
               ]
               ~alignments:[Some Left; Some Right],
-            Focus.Offset ({ row = -1; column = 0 }, 0)
+            Offset ({ row = -1; column = 0 }, 0)
           ),
           None,
           (
@@ -625,7 +625,7 @@ let () =
                 ["lime"; "green"];
               ]
               ~alignments:[None; Some Right],
-            Focus.Offset ({ row = -1; column = 0 }, 0)
+            Offset ({ row = -1; column = 0 }, 0)
           )
         );
         (
@@ -638,7 +638,7 @@ let () =
                 ["lime"; "green"];
               ]
               ~alignments:[Some Left; Some Right],
-            Focus.Offset ({ row = 0; column = -1 }, 0)
+            Offset ({ row = 0; column = -1 }, 0)
           ),
           None,
           (
@@ -650,7 +650,7 @@ let () =
                 ["lime"; "green"];
               ]
               ~alignments:[Some Left; Some Right],
-            Focus.Offset ({ row = 0; column = -1 }, 0)
+            Offset ({ row = 0; column = -1 }, 0)
           )
         );
         (
@@ -663,7 +663,7 @@ let () =
                 ["lime"; "green"];
               ]
               ~alignments:[Some Left; Some Right],
-            Focus.Offset ({ row = 0; column = 2 }, 0)
+            Offset ({ row = 0; column = 2 }, 0)
           ),
           None,
           (
@@ -675,12 +675,34 @@ let () =
                 ["lime"; "green"];
               ]
               ~alignments:[Some Left; Some Right],
-            Focus.Offset ({ row = 0; column = 2 }, 0)
+            Offset ({ row = 0; column = 2 }, 0)
           )
         );
       ] begin fun ((t, f), a, e) ->
-        let (state', table, focus) = align a State.init t f in
-        expect (state', (table, focus)) |> toEqual (State.init, e)
+        let (s', t', f') = align a State.init t f in
+        expect (s', (t', f')) |> toEqual (State.init, e)
+      end;
+    end;
+
+    describe "select" begin fun () ->
+      let open Table.Alignment in
+      let open Table.Focus in
+
+      testAll "should select the cell content" [
+        (Offset ({ row = 0; column = 1 }, 2), Select { row = 0; column = 1 });
+        (Select { row = 0; column = 1 }, Select { row = 0; column = 1 });
+      ] begin fun (f, e) ->
+        let t = Table.Normalized.create
+            ~header:(Some ["name"; "color"])
+            ~body:[
+              ["apple"; "red"];
+              ["banana"; "yellow"];
+              ["lime"; "green"];
+            ]
+            ~alignments:[Some Left; Some Right]
+        in
+        let (s', t', f') = select State.init t f in
+        expect (s', t', f') |> toEqual (State.init, t, e)
       end;
     end;
   end

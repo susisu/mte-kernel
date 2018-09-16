@@ -17,3 +17,4 @@ end
 type t = State.t -> Table.Normalized.t -> Table.Focus.t -> State.t * Table.Normalized.t * Table.Focus.t
 
 val align: Table.Alignment.t option -> t
+val select: t
