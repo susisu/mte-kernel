@@ -396,5 +396,80 @@ let () =
           expect (header table', body table', alignments table') |> toEqual e
         end;
       end;
+
+      describe "set_alignment" begin fun () ->
+        let open Table.Alignment in
+
+        testAll "should set column alignment of the table" [
+          (
+            (
+              None,
+              [
+                ["apple"; "red"];
+                ["banana"; "yellow"];
+                ["lime"; "green"];
+              ],
+              [Some Left; Some Right]
+            ),
+            (0, None),
+            (
+              None,
+              [
+                ["apple"; "red"];
+                ["banana"; "yellow"];
+                ["lime"; "green"];
+              ],
+              [None; Some Right]
+            )
+          );
+          (
+            (
+              Some ["name"; "color"],
+              [
+                ["apple"; "red"];
+                ["banana"; "yellow"];
+                ["lime"; "green"];
+              ],
+              [Some Left; Some Right]
+            ),
+            (0, None),
+            (
+              Some ["name"; "color"],
+              [
+                ["apple"; "red"];
+                ["banana"; "yellow"];
+                ["lime"; "green"];
+              ],
+              [None; Some Right]
+            )
+          );
+          (
+            (
+              Some ["name"; "color"],
+              [
+                ["apple"; "red"];
+                ["banana"; "yellow"];
+                ["lime"; "green"];
+              ],
+              [Some Left; Some Right]
+            ),
+            (1, Some Center),
+            (
+              Some ["name"; "color"],
+              [
+                ["apple"; "red"];
+                ["banana"; "yellow"];
+                ["lime"; "green"];
+              ],
+              [Some Left; Some Center]
+            )
+          );
+        ] begin fun ((h, b, a), (i, a'), e) ->
+          let open Table.Normalized in
+          let table = create ~header:h ~body:b ~alignments:a in
+          let table' = set_alignment i a' table in
+          expect (header table', body table', alignments table') |> toEqual e
+        end;
+      end;
     end;
   end

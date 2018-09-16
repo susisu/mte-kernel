@@ -36,6 +36,9 @@ module Prim = struct
           loop (k + 1) xs (xk :: ys)
       in
       loop 0 xs [] |> List.rev
+
+    let set i x xs =
+      List.mapi (fun j x' -> if i = j then x else x') xs
   end
 
   let insert_empty_row row table =
@@ -76,6 +79,16 @@ module Prim = struct
       ~header:(Option.map swap header)
       ~body:(List.map swap body)
       ~alignments:(swap alignments)
+
+  let set_alignment column alignment table =
+    let (header, body, alignments) =
+      let open Table.Normalized in
+      (header table, body table, alignments table)
+    in
+    Table.Normalized.create
+      ~header
+      ~body
+      ~alignments:(List.set column alignment alignments)
 end
 
 module State = struct
