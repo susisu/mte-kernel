@@ -477,229 +477,206 @@ let () =
       let open Table.Alignment in
       let open Table.Focus in
 
+      let table_without_header =
+        Table.Normalized.create
+          ~header:None
+          ~body:[
+            ["apple"; "red"];
+            ["banana"; "yellow"];
+            ["lime"; "green"];
+          ]
+          ~alignments:[Some Left; Some Right]
+      in
+      let table_with_header =
+        Table.Normalized.create
+          ~header:(Some ["name"; "color"])
+          ~body:[
+            ["apple"; "red"];
+            ["banana"; "yellow"];
+            ["lime"; "green"];
+          ]
+          ~alignments:[Some Left; Some Right]
+      in
       testAll "should set alignment of the focused column" [
         (
+          "without header",
           (
-            Table.Normalized.create
-              ~header:None
-              ~body:[
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ]
-              ~alignments:[Some Left; Some Right],
+            table_without_header,
             Offset ({ row = 0; column = 0 }, 0)
           ),
           None,
-          (
-            Table.Normalized.create
-              ~header:None
-              ~body:[
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ]
-              ~alignments:[None; Some Right],
-            Offset ({ row = 0; column = 0 }, 0)
-          )
+          Table.Normalized.create
+            ~header:None
+            ~body:[
+              ["apple"; "red"];
+              ["banana"; "yellow"];
+              ["lime"; "green"];
+            ]
+            ~alignments:[None; Some Right]
         );
         (
+          "with header - offset focus 1",
           (
-            Table.Normalized.create
-              ~header:(Some ["name"; "color"])
-              ~body:[
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ]
-              ~alignments:[Some Left; Some Right],
+            table_with_header,
             Offset ({ row = 0; column = 0 }, 0)
           ),
           None,
-          (
-            Table.Normalized.create
-              ~header:(Some ["name"; "color"])
-              ~body:[
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ]
-              ~alignments:[None; Some Right],
-            Offset ({ row = 0; column = 0 }, 0)
-          )
-        );
-        (
-          (
-            Table.Normalized.create
-              ~header:(Some ["name"; "color"])
-              ~body:[
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ]
-              ~alignments:[Some Left; Some Right],
-            Select { row = 0; column = 0 }
-          ),
-          None,
-          (
-            Table.Normalized.create
-              ~header:(Some ["name"; "color"])
-              ~body:[
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ]
-              ~alignments:[None; Some Right],
-            Select { row = 0; column = 0 }
-          )
-        );
-        (
-          (
-            Table.Normalized.create
-              ~header:(Some ["name"; "color"])
-              ~body:[
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ]
-              ~alignments:[Some Left; Some Right],
-            Offset ({ row = 0; column = 0 }, 0)
-          ),
-          Some Center,
-          (
-            Table.Normalized.create
-              ~header:(Some ["name"; "color"])
-              ~body:[
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ]
-              ~alignments:[Some Center; Some Right],
-            Offset ({ row = 0; column = 0 }, 0)
-          )
-        );
-        (
-          (
-            Table.Normalized.create
-              ~header:(Some ["name"; "color"])
-              ~body:[
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ]
-              ~alignments:[Some Left; Some Right],
-            Offset ({ row = 1; column = 1 }, 1)
-          ),
-          None,
-          (
-            Table.Normalized.create
-              ~header:(Some ["name"; "color"])
-              ~body:[
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ]
-              ~alignments:[Some Left; None],
-            Offset ({ row = 1; column = 1 }, 1)
-          )
-        );
-        (
-          (
-            Table.Normalized.create
-              ~header:(Some ["name"; "color"])
-              ~body:[
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ]
-              ~alignments:[Some Left; Some Right],
-            Offset ({ row = -1; column = 0 }, 0)
-          ),
-          None,
-          (
-            Table.Normalized.create
-              ~header:(Some ["name"; "color"])
-              ~body:[
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ]
-              ~alignments:[None; Some Right],
-            Offset ({ row = -1; column = 0 }, 0)
-          )
-        );
-        (
-          (
-            Table.Normalized.create
-              ~header:(Some ["name"; "color"])
-              ~body:[
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ]
-              ~alignments:[Some Left; Some Right],
-            Offset ({ row = 0; column = -1 }, 0)
-          ),
-          None,
-          (
-            Table.Normalized.create
-              ~header:(Some ["name"; "color"])
-              ~body:[
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ]
-              ~alignments:[Some Left; Some Right],
-            Offset ({ row = 0; column = -1 }, 0)
-          )
-        );
-        (
-          (
-            Table.Normalized.create
-              ~header:(Some ["name"; "color"])
-              ~body:[
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ]
-              ~alignments:[Some Left; Some Right],
-            Offset ({ row = 0; column = 2 }, 0)
-          ),
-          None,
-          (
-            Table.Normalized.create
-              ~header:(Some ["name"; "color"])
-              ~body:[
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ]
-              ~alignments:[Some Left; Some Right],
-            Offset ({ row = 0; column = 2 }, 0)
-          )
-        );
-      ] begin fun ((t, f), a, e) ->
-        let (s', t', f') = align a State.init t f in
-        expect (s', (t', f')) |> toEqual (State.init, e)
-      end;
-    end;
-
-    describe "select" begin fun () ->
-      let open Table.Focus in
-
-      testAll "should select the cell content" [
-        (Offset ({ row = 0; column = 1 }, 2), Select { row = 0; column = 1 });
-        (Select { row = 0; column = 1 }, Select { row = 0; column = 1 });
-      ] begin fun (f, e) ->
-        let t = Table.Normalized.create
+          Table.Normalized.create
             ~header:(Some ["name"; "color"])
             ~body:[
               ["apple"; "red"];
               ["banana"; "yellow"];
               ["lime"; "green"];
             ]
-            ~alignments:[Some Left; Some Right]
-        in
+            ~alignments:[None; Some Right]
+        );
+        (
+          "with header - offset focus 2",
+          (
+            table_with_header,
+            Offset ({ row = 0; column = 0 }, 0)
+          ),
+          Some Center,
+          Table.Normalized.create
+            ~header:(Some ["name"; "color"])
+            ~body:[
+              ["apple"; "red"];
+              ["banana"; "yellow"];
+              ["lime"; "green"];
+            ]
+            ~alignments:[Some Center; Some Right]
+        );
+        (
+          "with header - offset focus 3",
+          (
+            table_with_header,
+            Offset ({ row = 1; column = 1 }, 1)
+          ),
+          None,
+          Table.Normalized.create
+            ~header:(Some ["name"; "color"])
+            ~body:[
+              ["apple"; "red"];
+              ["banana"; "yellow"];
+              ["lime"; "green"];
+            ]
+            ~alignments:[Some Left; None]
+        );
+        (
+          "with header - offset focus in header",
+          (
+            table_with_header,
+            Offset ({ row = -1; column = 0 }, 0)
+          ),
+          None,
+          Table.Normalized.create
+            ~header:(Some ["name"; "color"])
+            ~body:[
+              ["apple"; "red"];
+              ["banana"; "yellow"];
+              ["lime"; "green"];
+            ]
+            ~alignments:[None; Some Right]
+        );
+        (
+          "with header - offset focus in gutter",
+          (
+            table_with_header,
+            Offset ({ row = 0; column = -1 }, 0)
+          ),
+          None,
+          table_with_header
+        );
+        (
+          "with header - offset focus in gutter",
+          (
+            table_with_header,
+            Offset ({ row = 0; column = 2 }, 0)
+          ),
+          None,
+          table_with_header
+        );
+        (
+          "with header - select focus",
+          (
+            table_with_header,
+            Select { row = 0; column = 0 }
+          ),
+          None,
+          Table.Normalized.create
+            ~header:(Some ["name"; "color"])
+            ~body:[
+              ["apple"; "red"];
+              ["banana"; "yellow"];
+              ["lime"; "green"];
+            ]
+            ~alignments:[None; Some Right]
+        );
+      ] begin fun (_, (t, f), a, e) ->
+        let (s', t', f') = align a State.init t f in
+        expect (s', f', t') |> toEqual (State.init, f, e)
+      end;
+    end;
+
+    describe "select" begin fun () ->
+      let open Table.Focus in
+
+      let table_without_header = Table.Normalized.create
+          ~header:None
+          ~body:[
+            ["apple"; "red"];
+            ["banana"; "yellow"];
+            ["lime"; "green"];
+          ]
+          ~alignments:[Some Left; Some Right]
+      in
+      let table_with_header = Table.Normalized.create
+          ~header:(Some ["name"; "color"])
+          ~body:[
+            ["apple"; "red"];
+            ["banana"; "yellow"];
+            ["lime"; "green"];
+          ]
+          ~alignments:[Some Left; Some Right]
+      in
+      testAll "should select the cell content" [
+        (
+          "without header - offset focus",
+          table_without_header,
+          Offset ({ row = 0; column = 1 }, 2),
+          Select { row = 0; column = 1 }
+        );
+        (
+          "without header - select focus",
+          table_without_header,
+          Select { row = 0; column = 1 },
+          Select { row = 0; column = 1 }
+        );
+        (
+          "with header - offset focus",
+          table_with_header,
+          Offset ({ row = 0; column = 1 }, 2),
+          Select { row = 0; column = 1 }
+        );
+        (
+          "with header - select focus",
+          table_with_header,
+          Select { row = 0; column = 1 },
+          Select { row = 0; column = 1 }
+        );
+        (
+          "with header - offset focus in header",
+          table_with_header,
+          Offset ({ row = -1; column = 1 }, 2),
+          Select { row = -1; column = 1 }
+        );
+        (
+          "with header - select focus in header",
+          table_with_header,
+          Select { row = -1; column = 1 },
+          Select { row = -1; column = 1 }
+        );
+      ] begin fun (_, t, f, e) ->
         let (s', t', f') = select State.init t f in
         expect (s', t', f') |> toEqual (State.init, t, e)
       end;
