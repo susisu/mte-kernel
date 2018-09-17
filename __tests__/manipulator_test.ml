@@ -529,6 +529,30 @@ let () =
         let (s', t', f') = align a State.init t f in
         expect (s', t', f') |> toEqual (State.init, e, f)
       end;
+
+      test "should keep state intact" begin fun () ->
+        let s = State.{
+            smart_cursor = Some {
+                start = { row = 0; column = 0 };
+                last = { row = 0; column = 1 };
+              }
+          }
+        in
+        let t = table_with_header in
+        let f = Offset ({ row = 0; column = 1 }, 2) in
+        let a = None in
+        let e = Table.Normalized.create
+            ~header:(Some ["name"; "color"])
+            ~body:[
+              ["apple"; "red"];
+              ["banana"; "yellow"];
+              ["lime"; "green"];
+            ]
+            ~alignments:[Some Left; None]
+        in
+        let (s', t', f') = align a s t f in
+        expect (s', t', f') |> toEqual (s, e, f)
+      end;
     end;
 
     describe "select" begin fun () ->
@@ -592,6 +616,21 @@ let () =
       ] begin fun (_, t, f, e) ->
         let (s', t', f') = select State.init t f in
         expect (s', t', f') |> toEqual (State.init, t, e)
+      end;
+
+      test "should keep state intact" begin fun () ->
+        let s = State.{
+            smart_cursor = Some {
+                start = { row = 0; column = 0 };
+                last = { row = 0; column = 1 };
+              }
+          }
+        in
+        let t = table_with_header in
+        let f = Offset ({ row = 0; column = 1 }, 2) in
+        let e = Select { row = 0; column = 1 } in
+        let (s', t', f') = select s t f in
+        expect (s', t', f') |> toEqual (s, t, e)
       end;
     end;
 
@@ -816,6 +855,33 @@ let () =
       ] begin fun (_, t, f, (r, c), e) ->
         let (s', t', f') = move_focus r c State.init t f in
         expect (s', t', f') |> toEqual (State.init, t, e)
+      end;
+
+      let dirty_state = State.{
+          smart_cursor = Some {
+              start = { row = 0; column = 0 };
+              last = { row = 0; column = 1 };
+            }
+        }
+      in
+      test "should reset state only if focus is moved" begin fun () ->
+        let s = dirty_state in
+        let t = table_with_header in
+        let f = Offset ({ row = 0; column = 1 }, 2) in
+        let (r, c) = (0, -1) in
+        let e = Select { row = 0; column = 0 } in
+        let (s', t', f') = move_focus r c s t f in
+        expect (s', t', f') |> toEqual (State.init, t, e)
+      end;
+
+      test "should keep state intact if focus is not moved" begin fun () ->
+        let s = dirty_state in
+        let t = table_with_header in
+        let f = Offset ({ row = 0; column = 1 }, 2) in
+        let (r, c) = (0, 1) in
+        let e = Offset ({ row = 0; column = 1 }, 2) in
+        let (s', t', f') = move_focus r c s t f in
+        expect (s', t', f') |> toEqual (s, t, e)
       end;
     end;
   end
