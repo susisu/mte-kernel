@@ -26,3 +26,4 @@ type t = State.t -> Table.Normalized.t -> Table.Focus.t -> State.t * Table.Norma
 
 val align: Table.Alignment.t option -> t
 val select: t
+val move_focus: int -> int -> t

@@ -685,7 +685,6 @@ let () =
     end;
 
     describe "select" begin fun () ->
-      let open Table.Alignment in
       let open Table.Focus in
 
       testAll "should select the cell content" [
@@ -702,6 +701,230 @@ let () =
             ~alignments:[Some Left; Some Right]
         in
         let (s', t', f') = select State.init t f in
+        expect (s', t', f') |> toEqual (State.init, t, e)
+      end;
+    end;
+
+    describe "move_focus" begin fun () ->
+      let open Table.Focus in
+
+      let table_without_header = Table.Normalized.create
+          ~header:None
+          ~body:[
+            ["apple"; "red"];
+            ["banana"; "yellow"];
+            ["lime"; "green"];
+          ]
+          ~alignments:[Some Left; Some Right]
+      in
+      let table_with_header = Table.Normalized.create
+          ~header:(Some ["name"; "color"])
+          ~body:[
+            ["apple"; "red"];
+            ["banana"; "yellow"];
+            ["lime"; "green"];
+          ]
+          ~alignments:[Some Left; Some Right]
+      in
+      testAll "should move focus" [
+        (
+          "without header - no move",
+          table_without_header,
+          Offset ({ row = 0; column = 0 }, 0),
+          (0, 0),
+          Offset ({ row = 0; column = 0 }, 0)
+        );
+        (
+          "without header - move up",
+          table_without_header,
+          Offset ({ row = 1; column = 0 }, 0),
+          (-1, 0),
+          Select { row = 0; column = 0 }
+        );
+        (
+          "without header - move up cancelled",
+          table_without_header,
+          Offset ({ row = 0; column = 0 }, 0),
+          (-1, 0),
+          Offset ({ row = 0; column = 0 }, 0)
+        );
+        (
+          "without header - move down",
+          table_without_header,
+          Offset ({ row = 0; column = 0 }, 0),
+          (1, 0),
+          Select { row = 1; column = 0 }
+        );
+        (
+          "without header - move down cancelled",
+          table_without_header,
+          Offset ({ row = 2; column = 0 }, 0),
+          (1, 0),
+          Offset ({ row = 2; column = 0 }, 0)
+        );
+        (
+          "without header - move left",
+          table_without_header,
+          Offset ({ row = 0; column = 1 }, 0),
+          (0, -1),
+          Select { row = 0; column = 0 }
+        );
+        (
+          "without header - move left from gutter",
+          table_without_header,
+          Offset ({ row = 0; column = 2 }, 0),
+          (0, -1),
+          Select { row = 0; column = 1 }
+        );
+        (
+          "without header - move left cancelled",
+          table_without_header,
+          Offset ({ row = 0; column = 0 }, 0),
+          (0, -1),
+          Offset ({ row = 0; column = 0 }, 0)
+        );
+        (
+          "without header - move left from gutter cancelled",
+          table_without_header,
+          Offset ({ row = 0; column = -1 }, 0),
+          (0, -1),
+          Offset ({ row = 0; column = -1 }, 0)
+        );
+        (
+          "without header - move right",
+          table_without_header,
+          Offset ({ row = 0; column = 0 }, 0),
+          (0, 1),
+          Select { row = 0; column = 1 }
+        );
+        (
+          "without header - move right from gutter",
+          table_without_header,
+          Offset ({ row = 0; column = -1 }, 0),
+          (0, 1),
+          Select { row = 0; column = 0 }
+        );
+        (
+          "without header - move right cancelled",
+          table_without_header,
+          Offset ({ row = 0; column = 1 }, 0),
+          (0, 1),
+          Offset ({ row = 0; column = 1 }, 0)
+        );
+        (
+          "without header - move right from gutter cancelled",
+          table_without_header,
+          Offset ({ row = 0; column = 2 }, 0),
+          (0, 1),
+          Offset ({ row = 0; column = 2 }, 0)
+        );
+        (
+          "with header - no move",
+          table_with_header,
+          Offset ({ row = 0; column = 0 }, 0),
+          (0, 0),
+          Offset ({ row = 0; column = 0 }, 0)
+        );
+        (
+          "with header - move up",
+          table_with_header,
+          Offset ({ row = 1; column = 0 }, 0),
+          (-1, 0),
+          Select { row = 0; column = 0 }
+        );
+        (
+          "with header - move up to header",
+          table_with_header,
+          Offset ({ row = 0; column = 0 }, 0),
+          (-1, 0),
+          Select { row = -1; column = 0 }
+        );
+        (
+          "with header - move up cancelled",
+          table_with_header,
+          Offset ({ row = -1; column = 0 }, 0),
+          (-1, 0),
+          Offset ({ row = -1; column = 0 }, 0)
+        );
+        (
+          "with header - move down",
+          table_with_header,
+          Offset ({ row = 0; column = 0 }, 0),
+          (1, 0),
+          Select { row = 1; column = 0 }
+        );
+        (
+          "with header - move down from header",
+          table_with_header,
+          Offset ({ row = -1; column = 0 }, 0),
+          (1, 0),
+          Select { row = 0; column = 0 }
+        );
+        (
+          "with header - move down cancelled",
+          table_with_header,
+          Offset ({ row = 2; column = 0 }, 0),
+          (1, 0),
+          Offset ({ row = 2; column = 0 }, 0)
+        );
+        (
+          "with header - move left",
+          table_with_header,
+          Offset ({ row = 0; column = 1 }, 0),
+          (0, -1),
+          Select { row = 0; column = 0 }
+        );
+        (
+          "with header - move left from gutter",
+          table_with_header,
+          Offset ({ row = 0; column = 2 }, 0),
+          (0, -1),
+          Select { row = 0; column = 1 }
+        );
+        (
+          "with header - move left cancelled",
+          table_with_header,
+          Offset ({ row = 0; column = 0 }, 0),
+          (0, -1),
+          Offset ({ row = 0; column = 0 }, 0)
+        );
+        (
+          "with header - move left from gutter cancelled",
+          table_with_header,
+          Offset ({ row = 0; column = -1 }, 0),
+          (0, -1),
+          Offset ({ row = 0; column = -1 }, 0)
+        );
+        (
+          "with header - move right",
+          table_with_header,
+          Offset ({ row = 0; column = 0 }, 0),
+          (0, 1),
+          Select { row = 0; column = 1 }
+        );
+        (
+          "with header - move right from gutter",
+          table_with_header,
+          Offset ({ row = 0; column = -1 }, 0),
+          (0, 1),
+          Select { row = 0; column = 0 }
+        );
+        (
+          "with header - move right cancelled",
+          table_with_header,
+          Offset ({ row = 0; column = 1 }, 0),
+          (0, 1),
+          Offset ({ row = 0; column = 1 }, 0)
+        );
+        (
+          "with header - move right from gutter cancelled",
+          table_with_header,
+          Offset ({ row = 0; column = 2 }, 0),
+          (0, 1),
+          Offset ({ row = 0; column = 2 }, 0)
+        );
+      ] begin fun (_, t, f, (r, c), e) ->
+        let (s', t', f') = move_focus r c State.init t f in
         expect (s', t', f') |> toEqual (State.init, t, e)
       end;
     end;

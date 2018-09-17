@@ -109,9 +109,9 @@ end
 type t = State.t -> Table.Normalized.t -> Table.Focus.t -> State.t * Table.Normalized.t * Table.Focus.t
 
 let align alignment state table focus =
-  let p = Table.Focus.to_point focus in
-  let width = Table.Normalized.width table in
   let table' =
+    let width = Table.Normalized.width table in
+    let p = Table.Focus.to_point focus in
     if 0 <= p.column && p.column <= width - 1 then
       Prim.set_alignment p.column alignment table
     else
@@ -122,3 +122,40 @@ let align alignment state table focus =
 let select state table focus =
   let focus' = Table.Focus.Select (Table.Focus.to_point focus) in
   (state, table, focus')
+
+let clip min max (n: int) =
+  if n < min then min
+  else if n > max then max
+  else n
+
+let normalize_input_focus_point table p =
+  let open Table.Normalized in
+  let min_row = if Option.is_some @@ header table then -1 else 0 in
+  let max_row = body_height table - 1 in
+  let min_column = -1 in
+  let max_colmun = width table in
+  Point.{
+    row = clip min_row max_row p.row;
+    column = clip min_column max_colmun p.column;
+  }
+
+let move_focus row_offset column_offset state table focus =
+  let (state', focus') =
+    let p = normalize_input_focus_point table @@ Table.Focus.to_point focus in
+    let p' =
+      let row' =
+        let min_row = if Option.is_some @@ Table.Normalized.header table then -1 else 0 in
+        let max_row = Table.Normalized.body_height table - 1 in
+        clip min_row max_row (p.row + row_offset)
+      in
+      let column' =
+        let min_column = min p.column 0 in
+        let max_colmun = max p.column (Table.Normalized.width table - 1) in
+        clip min_column max_colmun (p.column + column_offset)
+      in
+      Point.{ row = row'; column = column' }
+    in
+    if Point.equal p p' then (state, focus)
+    else (State.init, Table.Focus.Select p')
+  in
+  (state', table, focus')
