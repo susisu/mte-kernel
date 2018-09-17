@@ -11,139 +11,124 @@ let () =
       describe "insert_empty_row" begin fun () ->
         let open Table.Alignment in
 
+        let table_without_header = (
+          None,
+          [
+            ["apple"; "red"];
+            ["banana"; "yellow"];
+            ["lime"; "green"];
+          ],
+          [Some Left; Some Right]
+        ) in
+        let table_with_header = (
+          Some ["name"; "color"],
+          [
+            ["apple"; "red"];
+            ["banana"; "yellow"];
+            ["lime"; "green"];
+          ],
+          [Some Left; Some Right]
+        ) in
         testAll "should insert an empty row to a table" [
           (
-            (
-              None,
-              [
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ],
-              [Some Left; Some Right]
-            ),
-            -1,
-            (
-              None,
-              [
-                [""; ""];
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ],
-              [Some Left; Some Right]
-            )
-          );
-          (
-            (
-              Some ["name"; "color"],
-              [
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ],
-              [Some Left; Some Right]
-            ),
-            -1,
-            (
-              Some ["name"; "color"],
-              [
-                [""; ""];
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ],
-              [Some Left; Some Right]
-            )
-          );
-          (
-            (
-              None,
-              [
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ],
-              [Some Left; Some Right]
-            ),
+            "without header",
+            table_without_header,
             0,
-            (
-              None,
-              [
-                [""; ""];
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ],
-              [Some Left; Some Right]
-            )
+            [
+              [""; ""];
+              ["apple"; "red"];
+              ["banana"; "yellow"];
+              ["lime"; "green"];
+            ]
           );
           (
-            (
-              None,
-              [
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ],
-              [Some Left; Some Right]
-            ),
+            "without header - top gutter",
+            table_without_header,
+            -1,
+            [
+              [""; ""];
+              ["apple"; "red"];
+              ["banana"; "yellow"];
+              ["lime"; "green"];
+            ]
+          );
+          (
+            "with header 1",
+            table_with_header,
+            0,
+            [
+              [""; ""];
+              ["apple"; "red"];
+              ["banana"; "yellow"];
+              ["lime"; "green"];
+            ]
+          );
+          (
+            "with header 2",
+            table_with_header,
             1,
-            (
-              None,
-              [
-                ["apple"; "red"];
-                [""; ""];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ],
-              [Some Left; Some Right]
-            )
+            [
+              ["apple"; "red"];
+              [""; ""];
+              ["banana"; "yellow"];
+              ["lime"; "green"];
+            ]
           );
           (
-            (
-              None,
-              [
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ],
-              [Some Left; Some Right]
-            ),
-            3,
-            (
-              None,
-              [
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-                [""; ""];
-              ],
-              [Some Left; Some Right]
-            )
+            "with header - top gutter",
+            table_with_header,
+            -1,
+            [
+              [""; ""];
+              ["apple"; "red"];
+              ["banana"; "yellow"];
+              ["lime"; "green"];
+            ]
           );
-        ] begin fun ((h, b, a), i, e) ->
+          (
+            "with header - bottom gutter",
+            table_with_header,
+            3,
+            [
+              ["apple"; "red"];
+              ["banana"; "yellow"];
+              ["lime"; "green"];
+              [""; ""];
+            ]
+          );
+        ] begin fun (_, (h, b, a), i, e) ->
           let open Table.Normalized in
           let table = create ~header:h ~body:b ~alignments:a in
           let table' = insert_empty_row i table in
-          expect (header table', body table', alignments table') |> toEqual e
+          expect (header table', body table', alignments table') |> toEqual (h, e, a)
         end;
       end;
 
       describe "insert_empty_column" begin fun () ->
         let open Table.Alignment in
 
+        let table_without_header = (
+          None,
+          [
+            ["apple"; "red"];
+            ["banana"; "yellow"];
+            ["lime"; "green"];
+          ],
+          [Some Left; Some Right]
+        ) in
+        let table_with_header = (
+          Some ["name"; "color"],
+          [
+            ["apple"; "red"];
+            ["banana"; "yellow"];
+            ["lime"; "green"];
+          ],
+          [Some Left; Some Right]
+        ) in
         testAll "should insert an empty column to a table" [
           (
-            (
-              None,
-              [
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ],
-              [Some Left; Some Right]
-            ),
+            "without header",
+            table_without_header,
             0,
             (
               None,
@@ -156,36 +141,8 @@ let () =
             )
           );
           (
-            (
-              Some ["name"; "color"],
-              [
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ],
-              [Some Left; Some Right]
-            ),
-            -1,
-            (
-              Some [""; "name"; "color"],
-              [
-                [""; "apple"; "red"];
-                [""; "banana"; "yellow"];
-                [""; "lime"; "green"];
-              ],
-              [None; Some Left; Some Right]
-            )
-          );
-          (
-            (
-              Some ["name"; "color"],
-              [
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ],
-              [Some Left; Some Right]
-            ),
+            "with header 1",
+            table_with_header,
             0,
             (
               Some [""; "name"; "color"],
@@ -198,15 +155,8 @@ let () =
             )
           );
           (
-            (
-              Some ["name"; "color"],
-              [
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ],
-              [Some Left; Some Right]
-            ),
+            "with header 2",
+            table_with_header,
             1,
             (
               Some ["name"; ""; "color"],
@@ -219,15 +169,22 @@ let () =
             )
           );
           (
+            "with header - left gutter",
+            table_with_header,
+            -1,
             (
-              Some ["name"; "color"],
+              Some [""; "name"; "color"],
               [
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
+                [""; "apple"; "red"];
+                [""; "banana"; "yellow"];
+                [""; "lime"; "green"];
               ],
-              [Some Left; Some Right]
-            ),
+              [None; Some Left; Some Right]
+            )
+          );
+          (
+            "with header - right gutter",
+            table_with_header,
             2,
             (
               Some ["name"; "color"; ""],
@@ -239,7 +196,7 @@ let () =
               [Some Left; Some Right; None]
             )
           );
-        ] begin fun ((h, b, a), i, e) ->
+        ] begin fun (_, (h, b, a), i, e) ->
           let open Table.Normalized in
           let table = create ~header:h ~body:b ~alignments:a in
           let table' = insert_empty_column i table in
@@ -250,104 +207,80 @@ let () =
       describe "swap_rows" begin fun () ->
         let open Table.Alignment in
 
+        let table_without_header = (
+          None,
+          [
+            ["apple"; "red"];
+            ["banana"; "yellow"];
+            ["lime"; "green"];
+          ],
+          [Some Left; Some Right]
+        ) in
+        let table_with_header = (
+          Some ["name"; "color"],
+          [
+            ["apple"; "red"];
+            ["banana"; "yellow"];
+            ["lime"; "green"];
+          ],
+          [Some Left; Some Right]
+        ) in
         testAll "should swap two body rows of the table" [
           (
-            (
-              None,
-              [
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ],
-              [Some Left; Some Right]
-            ),
+            "without header",
+            table_without_header,
             (0, 1),
-            (
-              None,
-              [
-                ["banana"; "yellow"];
-                ["apple"; "red"];
-                ["lime"; "green"];
-              ],
-              [Some Left; Some Right]
-            )
+            [
+              ["banana"; "yellow"];
+              ["apple"; "red"];
+              ["lime"; "green"];
+            ]
           );
           (
-            (
-              Some ["name"; "color"],
-              [
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ],
-              [Some Left; Some Right]
-            ),
+            "with header 1",
+            table_with_header,
             (0, 1),
-            (
-              Some ["name"; "color"],
-              [
-                ["banana"; "yellow"];
-                ["apple"; "red"];
-                ["lime"; "green"];
-              ],
-              [Some Left; Some Right]
-            )
+            [
+              ["banana"; "yellow"];
+              ["apple"; "red"];
+              ["lime"; "green"];
+            ]
           );
           (
-            (
-              Some ["name"; "color"],
-              [
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ],
-              [Some Left; Some Right]
-            ),
+            "with header 2",
+            table_with_header,
             (0, 2),
-            (
-              Some ["name"; "color"],
-              [
-                ["lime"; "green"];
-                ["banana"; "yellow"];
-                ["apple"; "red"];
-              ],
-              [Some Left; Some Right]
-            )
+            [
+              ["lime"; "green"];
+              ["banana"; "yellow"];
+              ["apple"; "red"];
+            ]
           );
           (
-            (
-              Some ["name"; "color"],
-              [
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ],
-              [Some Left; Some Right]
-            ),
+            "with header 3",
+            table_with_header,
             (1, 2),
-            (
-              Some ["name"; "color"],
-              [
-                ["apple"; "red"];
-                ["lime"; "green"];
-                ["banana"; "yellow"];
-              ],
-              [Some Left; Some Right]
-            )
+            [
+              ["apple"; "red"];
+              ["lime"; "green"];
+              ["banana"; "yellow"];
+            ]
           );
-        ] begin fun ((h, b, a), (i, j), e) ->
+        ] begin fun (_, (h, b, a), (i, j), e) ->
           let open Table.Normalized in
           let table = create ~header:h ~body:b ~alignments:a in
           let table' = swap_rows i j table in
-          expect (header table', body table', alignments table') |> toEqual e
+          expect (header table', body table', alignments table') |> toEqual (h, e, a)
         end;
       end;
 
       describe "swap_columns" begin fun () ->
         let open Table.Alignment in
 
+
         testAll "should swap two columns in the table" [
           (
+            "without header",
             (
               None,
               [
@@ -369,6 +302,7 @@ let () =
             )
           );
           (
+            "with header",
             (
               Some ["name"; "color"],
               [
@@ -389,7 +323,7 @@ let () =
               [Some Right; Some Left]
             )
           );
-        ] begin fun ((h, b, a), (i, j), e) ->
+        ] begin fun (_, (h, b, a), (i, j), e) ->
           let open Table.Normalized in
           let table = create ~header:h ~body:b ~alignments:a in
           let table' = swap_columns i j table in
@@ -400,75 +334,54 @@ let () =
       describe "set_alignment" begin fun () ->
         let open Table.Alignment in
 
+        let table_without_header = (
+          None,
+          [
+            ["apple"; "red"];
+            ["banana"; "yellow"];
+            ["lime"; "green"];
+          ],
+          [Some Left; Some Right]
+        ) in
+        let table_with_header = (
+          Some ["name"; "color"],
+          [
+            ["apple"; "red"];
+            ["banana"; "yellow"];
+            ["lime"; "green"];
+          ],
+          [Some Left; Some Right]
+        ) in
         testAll "should set column alignment of the table" [
           (
-            (
-              None,
-              [
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ],
-              [Some Left; Some Right]
-            ),
+            "without header - none",
+            table_without_header,
             (0, None),
-            (
-              None,
-              [
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ],
-              [None; Some Right]
-            )
+            [None; Some Right]
           );
           (
-            (
-              Some ["name"; "color"],
-              [
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ],
-              [Some Left; Some Right]
-            ),
-            (0, None),
-            (
-              Some ["name"; "color"],
-              [
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ],
-              [None; Some Right]
-            )
-          );
-          (
-            (
-              Some ["name"; "color"],
-              [
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ],
-              [Some Left; Some Right]
-            ),
+            "without header - some",
+            table_without_header,
             (1, Some Center),
-            (
-              Some ["name"; "color"],
-              [
-                ["apple"; "red"];
-                ["banana"; "yellow"];
-                ["lime"; "green"];
-              ],
-              [Some Left; Some Center]
-            )
+            [Some Left; Some Center]
           );
-        ] begin fun ((h, b, a), (i, a'), e) ->
+          (
+            "with header - none",
+            table_with_header,
+            (0, None),
+            [None; Some Right]
+          );
+          (
+            "with header - some",
+            table_with_header,
+            (1, Some Center),
+            [Some Left; Some Center]
+          );
+        ] begin fun (_, (h, b, a), (i, a'), e) ->
           let open Table.Normalized in
           let table = create ~header:h ~body:b ~alignments:a in
           let table' = set_alignment i a' table in
-          expect (header table', body table', alignments table') |> toEqual e
+          expect (header table', body table', alignments table') |> toEqual (h, b, e)
         end;
       end;
     end;
@@ -614,7 +527,7 @@ let () =
         );
       ] begin fun (_, (t, f), a, e) ->
         let (s', t', f') = align a State.init t f in
-        expect (s', f', t') |> toEqual (State.init, f, e)
+        expect (s', t', f') |> toEqual (State.init, e, f)
       end;
     end;
 
