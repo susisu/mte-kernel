@@ -20,7 +20,7 @@
     "lint": "eslint lib test",
     "fix": "eslint lib test --fix",
     "test": "mocha --require @babel/register",
-    "cover": "nyc -r html -r text npm test",
+    "cover": "nyc -r html -r text yarn test",
     "build": "rollup -c",
     "prepublishOnly": "run-s clean lint test build",
     "clean": "rimraf .nyc_output coverage dist"
