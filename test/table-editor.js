@@ -5028,6 +5028,34 @@ describe("TableEditor", () => {
           "| E | F |",
           "  | G | H |"
         ]);
+        textEditor.setCursorPosition(new Point(0, 0));
+        const tableEditor = new TableEditor(textEditor);
+        const ops = {};
+        tableEditor.formatAll(options(ops));
+        const pos = textEditor.getCursorPosition();
+        expect(pos.row).to.equal(0);
+        expect(pos.column).to.equal(0);
+        expect(textEditor.getSelectionRange()).to.be.null;
+        expect(textEditor.getLines()).to.deep.equal([
+          "foo",
+          "| A   | B   |",
+          "| --- | --- |",
+          "| C   | D   |",
+          "bar",
+          "| E   | F   |",
+          "| --- | --- |",
+          "| G   | H   |"
+        ]);
+      }
+      {
+        const textEditor = new TextEditor([
+          "foo",
+          "| A | B |",
+          "  | C | D |",
+          "bar",
+          "| E | F |",
+          "  | G | H |"
+        ]);
         textEditor.setCursorPosition(new Point(4, 2));
         const tableEditor = new TableEditor(textEditor);
         const ops = {};
