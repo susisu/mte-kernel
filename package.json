@@ -22,9 +22,8 @@
     "test": "mocha --require babel-core/register",
     "cover": "nyc -r html -r text npm test",
     "build": "rollup -c",
-    "doc": "esdoc",
-    "prepublishOnly": "run-s lint test build doc",
-    "clean": "rimraf .nyc_output coverage dist doc"
+    "prepublishOnly": "run-s lint test build",
+    "clean": "rimraf .nyc_output coverage dist"
   },
   "repository": {
     "type": "git",
@@ -40,9 +39,6 @@
     "babel-core": "^6.26.3",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "chai": "^4.1.2",
-    "esdoc": "^1.1.0",
-    "esdoc-importpath-plugin": "^1.0.2",
-    "esdoc-standard-plugin": "^1.0.0",
     "eslint": "^4.19.1",
     "mocha": "^5.1.1",
     "npm-run-all": "^4.1.3",

@@ -61,7 +61,6 @@ typings/
 
 # Builds
 /dist/
-/doc/
 
 # Temporary/working files
 temp/
