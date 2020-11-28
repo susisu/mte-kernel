@@ -48,6 +48,6 @@
     "rollup": "^2.33.3"
   },
   "dependencies": {
-    "meaw": "^4.3.0"
+    "meaw": "^5.0.0"
   }
 }
