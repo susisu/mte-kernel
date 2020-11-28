@@ -19,7 +19,7 @@
   "scripts": {
     "lint": "eslint lib test",
     "fix": "eslint lib test --fix",
-    "test": "mocha --require babel-core/register",
+    "test": "mocha --require @babel/register",
     "cover": "nyc -r html -r text npm test",
     "build": "rollup -c",
     "prepublishOnly": "run-s clean lint test build",
@@ -36,8 +36,9 @@
   },
   "homepage": "https://github.com/susisu/mte-kernel#readme",
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "@babel/core": "^7.12.9",
+    "@babel/plugin-transform-modules-commonjs": "^7.12.1",
+    "@babel/register": "^7.12.1",
     "chai": "^4.1.2",
     "eslint": "^7.14.0",
     "mocha": "^8.2.1",
